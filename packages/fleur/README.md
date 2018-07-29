@@ -1,5 +1,5 @@
-# 🌼 Fleur 🌼
-An Fully-typed Flux framework inspired by Fluxible.  
+# 🌼 Fleur 🌼 [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur.svg)](https://www.npmjs.com/package/@ragg/fleur) ![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)
+An Fully-typed Flux framework inspired by Fluxible.
 Runs on Node / Web.
 
 (No dependence to React. see [this](https://www.npmjs.com/package/@ragg/fleur-react) if you want to use with React.)
@@ -31,7 +31,7 @@ export default class SomeStore extends Store {
         this.produce(draft => draft.count -= payload.amount)
     })
 
-    public getCount() { 
+    public getCount() {
         return this.state.count
     }
 }
