@@ -14,7 +14,7 @@ install:
     - yarn install
 
 script:
-    - cd - && cd packages/fleur
+    - cd packages/fleur
     - yarn prepublishOnly
     - yarn test --coverage --verbose
 
