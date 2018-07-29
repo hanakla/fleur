@@ -10,12 +10,17 @@ describe('benchmark', () => {
 
         const incrementAction = action()
         const incrementOperation = operation((ctx) => { ctx.dispatch(incrementAction, {}) })
+
         class TestStore extends Store<{count: number}> {
+            public static storeName = 'TestStore'
+
             public state = { count: 0 }
+
             private handleIncrement = listen(incrementAction, (payload) => {
                 callCounter()
                 this.updateWith(d => d.count++ )
             })
+
             get count() { return this.state.count }
         }
 
@@ -50,13 +55,18 @@ describe('benchmark', () => {
 
         const incrementAction = action()
         const incrementOperation = operation((ctx) => { ctx.dispatch(incrementAction, {}) })
+
         const stores = Array.from(Array(numOfStores)).map(_ => (
             class TestStore extends Store<{count: number}> {
+                public static storeName = 'TestStore'
+
                 public state = { count: 0 }
+
                 private handleIncrement = listen(incrementAction, (payload) => {
                     callCounter()
                     this.updateWith(d => d.count++ )
                 })
+
                 get count() { return this.state.count }
             }
         ))
