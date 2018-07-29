@@ -32,8 +32,9 @@ describe('benchmark', () => {
             }
         ))
 
-        const app = new Fleur()
-        app.registerStore(TestStore)
+        const app = new Fleur({
+            stores: [ TestStore ]
+         })
 
         const context = app.createContext()
         context.getStore(TestStore)
@@ -56,9 +57,9 @@ describe('benchmark', () => {
         const incrementAction = action()
         const incrementOperation = operation((ctx) => { ctx.dispatch(incrementAction, {}) })
 
-        const stores = Array.from(Array(numOfStores)).map(_ => (
+        const stores = Array.from(Array(numOfStores)).map((_, idx) => (
             class TestStore extends Store<{count: number}> {
-                public static storeName = 'TestStore'
+                public static storeName = `TestStore${idx}`
 
                 public state = { count: 0 }
 
