@@ -17,6 +17,8 @@ describe('connectToStores', () => {
 
         // Store
         const TestStore = class extends Store<{count: number}> {
+            public static storeName = 'TestStore'
+
             public state = { count: 10 }
 
             get count() { return this.state.count }

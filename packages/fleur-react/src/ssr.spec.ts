@@ -20,6 +20,8 @@ describe('Sever side rendering', () => {
             })
 
             class TestStore extends Store {
+                public static storeName = 'TestStore'
+
                 protected state = { count: 0 }
 
                 private increase = listen(increaseIdent, ({increase}) => {
