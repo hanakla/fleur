@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fleur-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-react",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "prepublishOnly": "rm -rf typings \n tsc --emitDeclarationOnly --declaration --outDir ./typings \n tsc --outDir lib \n exit 0"
+    "prepublishOnly": "rm -rf ./{lib,typings} \n tsc --emitDeclarationOnly --declaration --outDir ./typings \n tsc --outDir lib"
   },
   "peerDependencies": {
     "react": "16.3.1",
