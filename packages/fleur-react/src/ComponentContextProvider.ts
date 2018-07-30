@@ -2,9 +2,6 @@ import * as React from 'react'
 
 import { ComponentContext } from '@ragg/fleur'
 
-const ComponentContextProvider: {
-    Provider: React.ComponentClass<{value: ComponentContext}>,
-    Consumer: React.ComponentClass<{children: (context: ComponentContext) => React.ReactNode}>,
-} = (React as any).createContext()
-
-export { ComponentContextProvider as default }
+// `null as any` - ignore out of context case
+const ComponentContextProvider = React.createContext<ComponentContext>(null as any)
+export default ComponentContextProvider
