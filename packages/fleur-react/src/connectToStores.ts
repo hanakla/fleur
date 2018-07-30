@@ -37,13 +37,13 @@ class StoreHandler extends React.PureComponent<StoreHandlerProps, StoreHandlerSt
 
     public render(): any {
         const { childComponent, context } = this.props
-        return React.createElement(childComponent, { context, ...this.state.childrenProps})
+        return React.createElement(childComponent, { context, ...this.state.childrenProps })
     }
 }
 
 const connectToStores = <Props extends ContextProp, Mapped = {}>(stores: StoreClass[], mapStoresToProps: StoreToPropMapper<Props, Mapped>) => (
-    (Component: React.ComponentClass<Props>) => (
-        class ConnectToStoreComponent extends React.PureComponent<Exclude<Props, Mapped>> {
+    <ComponentProps extends object>(Component: React.ComponentClass<ComponentProps>) => (
+        class ConnectToStoreComponent extends React.PureComponent<Pick<ComponentProps, Exclude<keyof ComponentProps, keyof Mapped>>> {
             public render() {
                 return (
                     React.createElement(withComponentContext(StoreHandler), {
