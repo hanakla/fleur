@@ -1,7 +1,7 @@
 import { ComponentContext, StoreClass } from '@ragg/fleur'
 import * as React from 'react'
 
-import withComponentContext, { ContextProp } from './withComponentContext'
+import withComponentContext from './withComponentContext'
 
 type StoreToPropMapper<P, T> = (context: ComponentContext, props: P) => T
 
@@ -36,12 +36,12 @@ class StoreHandler extends React.PureComponent<StoreHandlerProps, StoreHandlerSt
     }
 
     public render(): any {
-        const { childComponent, context } = this.props
-        return React.createElement(childComponent, { context, ...this.state.childrenProps })
+        const { childComponent } = this.props
+        return React.createElement(childComponent, { ...this.state.childrenProps })
     }
 }
 
-const connectToStores = <Props extends ContextProp, Mapped = {}>(stores: StoreClass[], mapStoresToProps: StoreToPropMapper<Props, Mapped>) => (
+const connectToStores = <Props, Mapped = {}>(stores: StoreClass[], mapStoresToProps: StoreToPropMapper<Props, Mapped>) => (
     <ComponentProps extends object>(Component: React.ComponentClass<ComponentProps>) => (
         class ConnectToStoreComponent extends React.PureComponent<Pick<ComponentProps, Exclude<keyof ComponentProps, keyof Mapped>>> {
             public render() {
