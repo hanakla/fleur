@@ -5,6 +5,8 @@ import withComponentContext from './withComponentContext'
 
 type StoreToPropMapper<P, T> = (context: ComponentContext, props: P) => T
 
+type ConnectedComponent<Props, MappedProps> = React.ComponentClass<Pick<Props, Exclude<keyof Props, keyof MappedProps>>>
+
 export interface StoreHandlerProps {
     mapStoresToProps: (...args: any[]) => any
     context: ComponentContext,
@@ -41,9 +43,9 @@ class StoreHandler extends React.PureComponent<StoreHandlerProps, StoreHandlerSt
     }
 }
 
-const connectToStores = <Props, Mapped = {}>(stores: StoreClass[], mapStoresToProps: StoreToPropMapper<Props, Mapped>) => (
-    <ComponentProps extends object>(Component: React.ComponentClass<ComponentProps>) => (
-        class ConnectToStoreComponent extends React.PureComponent<Pick<ComponentProps, Exclude<keyof ComponentProps, keyof Mapped>>> {
+const connectToStores = <Props, MappedProps = {}>(stores: StoreClass[], mapStoresToProps: StoreToPropMapper<Props, MappedProps>) => (
+    <ComponentProps extends object>(Component: React.ComponentClass<ComponentProps>): ConnectedComponent<ComponentProps, MappedProps> => (
+        class ConnectToStoreComponent extends React.PureComponent<Pick<ComponentProps, Exclude<keyof ComponentProps, keyof MappedProps>>> {
             public render() {
                 return (
                     React.createElement(withComponentContext(StoreHandler), {
