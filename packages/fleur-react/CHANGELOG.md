@@ -1,3 +1,6 @@
+### 0.0.5
+- Fix to passing received props to child component with connectToStores() `440fe27`
+
 ### 0.0.4
 - Improve generated declarations
 
