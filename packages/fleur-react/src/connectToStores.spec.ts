@@ -1,54 +1,64 @@
 import Fleur, { action, ComponentContext, listen, operation, Store } from '@ragg/fleur'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { mount } from 'enzyme'
 
 import connectToStores from './connectToStores'
 import { createElementWithContext } from './createElementWithContext'
 
 describe('connectToStores', () => {
-    it('Should map stores to props', async () => {
-        let countOfProp: number
+    // Action Identifier
+    const ident = action<{ increase: number }>()
 
-        // Action Identifier
-        const ident = action<{increase: number}>()
+    // Operation
+    const op = operation((context) => { context.dispatch(ident, { increase: 10 }) })
 
-        // Operation
-        const op = operation((context) => { context.dispatch(ident, { increase: 10 }) })
+    // Store
+    const TestStore = class extends Store<{ count: number }> {
+        public static storeName = 'TestStore'
 
-        // Store
-        const TestStore = class extends Store<{count: number}> {
-            public static storeName = 'TestStore'
+        public state = { count: 10 }
 
-            public state = { count: 10 }
+        get count() { return this.state.count }
 
-            get count() { return this.state.count }
-
-            private increase = listen(ident, (payload) => {
-                this.updateWith(d => d.count += payload.increase)
-            })
-        }
-
-        // Component
-        const Component = connectToStores([TestStore], (context: ComponentContext, ) => ({
-            count: context.getStore(TestStore).count
-        }))(class extends React.Component<{count: number}> {
-            public render() {
-                countOfProp = this.props.count
-                return null
-            }
+        private increase = listen(ident, (payload) => {
+            this.updateWith(d => d.count += payload.increase)
         })
+    }
 
-        // App
-        const app = new Fleur()
+    // Component
+    const Component = connectToStores([TestStore], (context: ComponentContext, ) => ({
+        count: context.getStore(TestStore).count
+    }))(class Component extends React.Component<{ count: number, anotherProp: string }> {
+        public render() {
+            return null
+        }
+    })
 
-        app.registerStore(TestStore)
+    // App
+    const app = new Fleur({ stores: [TestStore] })
+
+
+    it('Should passed non connected props', () => {
         const context = app.createContext()
+        const wrapper = mount(createElementWithContext(context, Component, { anotherProp: 'anotherProp' }))
 
-        const div = document.createElement('div')
-        await new Promise(r => ReactDOM.render(createElementWithContext(context, Component, {}), div, r))
+        expect(wrapper.find('Component').props()).toEqual(
+            expect.objectContaining({
+                anotherProp: 'anotherProp'
+            })
+        )
+    })
 
-        expect(countOfProp).toBe(10)
-        context.executeOperation(op, {})
-        expect(countOfProp).toBe(20)
+    it('Should map stores to props', async () => {
+        const context = app.createContext()
+        const wrapper = mount(createElementWithContext(context, Component))
+
+        expect(wrapper.find('Component').props()).toEqual({ count: 10 })
+
+        await context.executeOperation(op, {})
+        wrapper.update()
+        expect(wrapper.find('Component').props()).toEqual({ count: 20 })
+
     })
 })

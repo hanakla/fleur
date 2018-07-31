@@ -11,35 +11,39 @@ export interface StoreHandlerProps {
     mapStoresToProps: (...args: any[]) => any
     context: ComponentContext,
     stores: StoreClass[],
+    childProps: any
     childComponent: React.ComponentClass
 }
 
 interface StoreHandlerState {
-    childrenProps: any
+    childProps: any
 }
 
 class StoreHandler extends React.PureComponent<StoreHandlerProps, StoreHandlerState> {
-    public static getDerivedStateFromProps(nextProps: StoreHandlerProps, prevState: StoreHandlerState): StoreHandlerState {
+    public static getDerivedStateFromProps(nextProps: StoreHandlerProps): StoreHandlerState {
         return {
-            childrenProps: nextProps.mapStoresToProps(nextProps.context, prevState.childrenProps)
+            childProps: {
+                ...nextProps.childProps,
+                ...nextProps.mapStoresToProps(nextProps.context, nextProps.childProps)
+            }
         }
     }
 
-    public state: any = { childrenProps: {} }
+    public state: any = { childProps: {} }
 
     public componentDidMount(): any {
         const { context, stores, mapStoresToProps} = this.props
 
         stores.forEach(store => {
             context.getStore(store).on('onChange', () => {
-                this.setState({ childrenProps: mapStoresToProps(context, this.props) })
+                this.setState({ childProps: mapStoresToProps(context, this.props) })
             })
         })
     }
 
     public render(): any {
         const { childComponent } = this.props
-        return React.createElement(childComponent, { ...this.state.childrenProps })
+        return React.createElement(childComponent, { ...this.state.childProps })
     }
 }
 
@@ -51,6 +55,7 @@ const connectToStores = <Props, MappedProps = {}>(stores: StoreClass[], mapStore
                     React.createElement(withComponentContext(StoreHandler), {
                         mapStoresToProps,
                         stores,
+                        childProps: this.props,
                         childComponent: Component,
                     })
                 )
