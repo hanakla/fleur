@@ -1,6 +1,5 @@
 import Fleur, { action, ComponentContext, listen, operation, Store } from '@ragg/fleur'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 
 import connectToStores from './connectToStores'
