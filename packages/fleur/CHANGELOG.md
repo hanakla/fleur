@@ -1,3 +1,8 @@
+### 0.0.4
+### API Changes
+- Accept storeName: string in AppContext.getStore for improve debuggerbility  
+  No supports in another context getStore methods. (Usable only AppContext.getStore)
+
 ### 0.0.3
 #### API Changes
 - Accept many listener per Action in one Store
