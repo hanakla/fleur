@@ -56,4 +56,23 @@ describe('AppContext', () => {
             expect(ctx.getStore(Some2Store).state).toEqual({ some2: 2 })
         })
     })
+
+    describe('getStore', () => {
+        class SomeStore extends Store {
+            public static storeName = 'SomeStore'
+            public state = { some: 1 }
+        }
+
+        const app = new Fleur({ stores: [ SomeStore ] })
+
+        it('Should get Store instance from StoreClass', () => {
+            const context = app.createContext()
+            expect(context.getStore(SomeStore)).toBeInstanceOf(SomeStore)
+        })
+
+        it('Should get Store instance from store name', () => {
+            const context = app.createContext()
+            expect(context.getStore('SomeStore')).toBeInstanceOf(SomeStore)
+        })
+    })
 })

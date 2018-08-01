@@ -48,13 +48,17 @@ export default class AppContext<Actions extends ActionIdentifier<any> = ActionId
         })
     }
 
-    public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T> {
+    public getStore(storeName: string): Store;
+    public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T>;
+    public getStore<T extends StoreClass<any>>(StoreClass: T | string): InstanceType<T> {
+        const storeName = typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
+
         if (process.env.NODE_ENV !== 'production') {
-            const storeRegistered = this.app.stores.has(StoreClass.storeName)
-            invariant(storeRegistered, `Store ${StoreClass.storeName} is must be registered`)
+            const storeRegistered = this.app.stores.has(storeName)
+            invariant(storeRegistered, `Store ${storeName} is must be registered`)
         }
 
-        return (this.stores.get(StoreClass.storeName) as any) || this.initializeStore(StoreClass)
+        return (this.stores.get(storeName) as any) || this.initializeStore(storeName)
     }
 
     public async executeOperation<T extends Operation<Actions>>(operation: T, arg: OperationArg<T>): Promise<void> {
@@ -65,15 +69,20 @@ export default class AppContext<Actions extends ActionIdentifier<any> = ActionId
         this.dispatcher.dispatch(actionIdentifier, payload)
     }
 
-    private initializeStore(StoreClass: StoreClass<any>) {
+    private initializeStore(storName: string): Store;
+    private initializeStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T>;
+    private initializeStore(StoreClass: StoreClass<any> | string) {
+        const storeName = typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
+
         if (process.env.NODE_ENV !== 'production') {
-            const storeRegistered = this.app.stores.has(StoreClass.storeName)
-            invariant(storeRegistered, `Store ${StoreClass.storeName} is must be registered`)
+            const storeRegistered = this.app.stores.has(storeName)
+            invariant(storeRegistered, `Store ${storeName} is must be registered`)
         }
 
-        const store = new StoreClass()
+        const StoreConstructor = this.app.stores.get(storeName)!
+        const store = new StoreConstructor()
         const actionCallbackMap = new Map<ActionIdentifier<any>, ((payload: any) => void)[]>()
-        this.stores.set(StoreClass.storeName, store)
+        this.stores.set(storeName, store)
 
         Object.keys(store)
             .filter(key => (store as any)[key] != null && (store as any)[key].__fleurHandler)
@@ -85,10 +94,10 @@ export default class AppContext<Actions extends ActionIdentifier<any> = ActionId
                 actionCallbackMap.set(actionIdentifier, actionCallbacks)
             })
 
-        this.actionCallbackMap.set(StoreClass, actionCallbackMap)
+        this.actionCallbackMap.set(StoreConstructor, actionCallbackMap)
 
         this.dispatcher.listen(action => {
-            const actionCallbackMap = this.actionCallbackMap.get(StoreClass)!
+            const actionCallbackMap = this.actionCallbackMap.get(StoreConstructor)!
             const handlers = actionCallbackMap.get(action.type)
             handlers && handlers.forEach((handler) => handler(action.payload))
         })
