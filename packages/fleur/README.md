@@ -23,12 +23,12 @@ export default class SomeStore extends Store {
     public state: { count: number } = { count: 0 }
 
     private handleIncrease = listen(actions.increase, (payload) => {
-        // `this.produce` is immutable changing `this.state` with `immer.js`
-        this.produce(draft => draft.count += payload.amount)
+        // `this.updateWith` is immutable changing `this.state` with `immer.js`
+        this.updateWith(draft => draft.count += payload.amount)
     })
 
     private handleDecrease = listen(actions.decrease, (payload) => {
-        this.produce(draft => draft.count -= payload.amount)
+        this.updateWith(draft => draft.count -= payload.amount)
     })
 
     public getCount() {
