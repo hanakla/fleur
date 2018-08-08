@@ -1,4 +1,4 @@
-# 🌼 Fleur 🌼 ![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)
+# 🌼 Fleur 🌼 [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 An Fully-typed Flux framework inspired by Fluxible.
 Runs on Node / Web.
 
