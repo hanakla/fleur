@@ -7,7 +7,7 @@ class OperationContext<Actions extends ActionIdentifier<any>> {
     constructor(private context: AppContext) {}
 
     public async executeOperation<O extends Operation<Actions>>(operator: O, arg: OperationArg<O> ): Promise<void> {
-        operator(this, arg)
+        await this.context.executeOperation(operator, arg)
     }
 
     public getStore<T extends StoreClass>(storeClass: T): InstanceType<T> {
