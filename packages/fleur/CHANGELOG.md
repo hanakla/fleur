@@ -1,3 +1,8 @@
+### 0.0.5
+#### Fixes
+- Fix missing async-process waiting for OperationContext#e
+xecuteOperation
+
 ### 0.0.4
 ### API Changes
 - Accept storeName: string in AppContext.getStore for improve debuggerbility  
