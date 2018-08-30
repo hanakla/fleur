@@ -19,7 +19,7 @@ interface StoreHandlerState {
     childProps: any
 }
 
-class StoreHandler extends React.PureComponent<StoreHandlerProps, StoreHandlerState> {
+const StoreHandler = withComponentContext(class StoreHandler extends React.PureComponent<StoreHandlerProps, StoreHandlerState> {
     public static getDerivedStateFromProps(nextProps: StoreHandlerProps): StoreHandlerState {
         return {
             childProps: {
@@ -45,14 +45,14 @@ class StoreHandler extends React.PureComponent<StoreHandlerProps, StoreHandlerSt
         const { childComponent } = this.props
         return React.createElement(childComponent, { ...this.state.childProps })
     }
-}
+})
 
 const connectToStores = <Props, MappedProps = {}>(stores: StoreClass[], mapStoresToProps: StoreToPropMapper<Props, MappedProps>) => (
     <ComponentProps extends object>(Component: React.ComponentClass<ComponentProps>): ConnectedComponent<ComponentProps, MappedProps> => (
         class ConnectToStoreComponent extends React.PureComponent<Pick<ComponentProps, Exclude<keyof ComponentProps, keyof MappedProps>>> {
             public render() {
                 return (
-                    React.createElement(withComponentContext(StoreHandler), {
+                    React.createElement(StoreHandler, {
                         mapStoresToProps,
                         stores,
                         childProps: this.props,
