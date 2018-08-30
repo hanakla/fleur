@@ -1,5 +1,8 @@
+### 0.0.6
+- `760a5ab` Fix connectToStores components renews each update
+
 ### 0.0.5
-- Fix to passing received props to child component with connectToStores() `440fe27`
+- `440fe27` Fix to passing received props to child component with connectToStores()
 
 ### 0.0.4
 - Improve generated declarations
