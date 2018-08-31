@@ -1072,6 +1072,10 @@ cliui@^4.0.0:
     strip-ansi "^4.0.0"
     wrap-ansi "^2.0.0"
 
+closest-file-data@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/closest-file-data/-/closest-file-data-0.1.4.tgz#975f87c132f299d24a0375b9f63ca3fb88f72b3a"
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -5207,6 +5211,15 @@ ts-jest@23.0.1:
     lodash "^4.17.10"
     pkg-dir "^3.0.0"
     yargs "^12.0.1"
+
+ts-jest@23.1.4:
+  version "23.1.4"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-23.1.4.tgz#66ac1d8d3fbf8f9a98432b11aa377aa850664b2b"
+  dependencies:
+    closest-file-data "^0.1.4"
+    fs-extra "6.0.1"
+    json5 "^0.5.0"
+    lodash "^4.17.10"
 
 ts-loader@4.4.2:
   version "4.4.2"
