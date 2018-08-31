@@ -1,3 +1,6 @@
+### 0.0.7
+- `ba40c75` Use `React.Component` instead of `React.PureComponent` in `connectToStores` and `withComponentContext`
+
 ### 0.0.6
 - `760a5ab` Fix connectToStores components renews each update
 
