@@ -10,7 +10,7 @@ export interface ContextProp {
 type ExcludeContextProp<P extends ContextProp> = Pick<P, Exclude<keyof P, keyof ContextProp>>
 
 const withComponentContext = <Props extends ContextProp>(Component: React.ComponentClass<Props>): React.ComponentClass<ExcludeContextProp<Props>> => (
-    class WithComponentContext extends React.PureComponent<ExcludeContextProp<Props>> {
+    class WithComponentContext extends React.Component<ExcludeContextProp<Props>> {
         public render() {
             return React.createElement(ComponentContextProvider.Consumer, {
                 children: (context: ComponentContext) => {
