@@ -1,3 +1,6 @@
+### 0.0.8
+- `7e26d63` Loosen peerDependencies versions
+
 ### 0.0.7
 - `ba40c75` Use `React.Component` instead of `React.PureComponent` in `connectToStores` and `withComponentContext`
 
