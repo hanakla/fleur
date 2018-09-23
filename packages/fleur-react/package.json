@@ -11,8 +11,8 @@
     "prepublishOnly": "rm -rf ./{lib,typings} \n tsc --emitDeclarationOnly --declaration --outDir ./typings \n tsc --outDir lib"
   },
   "peerDependencies": {
-    "react": "16.3.1",
-    "react-dom": "16.3.1"
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1"
   },
   "devDependencies": {
     "@types/cheerio": "0.22.8",
