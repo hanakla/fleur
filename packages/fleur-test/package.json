@@ -1,0 +1,22 @@
+{
+  "name": "@ragg/fluer-test",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "types": "typings/index.d.ts",
+  "author": "Ragg<ragg.devpr@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib",
+    "test": "jest --verbose"
+  },
+  "peerDependencies": {
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "@ragg/fleur": "0.0.5"
+  },
+  "devDependencies": {
+    "jest": "23.6.0",
+    "ts-jest": "23.10.1",
+    "typescript": "3.0.3"
+  }
+}
