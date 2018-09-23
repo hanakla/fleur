@@ -7,8 +7,9 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js'],
     globals: {
       'ts-jest': {
-        tsConfigFile: 'tsconfig.test.json'
-      }
+        tsConfigFile: 'tsconfig.test.json',
+        typeCheck: false,
+      },
     },
     testURL: "http://localhost/"
   };
