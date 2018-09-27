@@ -23,11 +23,11 @@ export default class Store<T = any> extends Emitter<StoreEvents> {
 
     protected state: T
 
-    public rehydrate(state: T): void {
+    public rehydrate(state: any): void {
         this.state = state
     }
 
-    public dehydrate(): T {
+    public dehydrate(): any {
         return this.state
     }
 
