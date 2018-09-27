@@ -1,11 +1,15 @@
+### 0.0.6
+#### API Changes
+- Allow to any types in Store#rehydrate,dehydrate
+
 ### 0.0.5
 #### Fixes
 - Fix missing async-process waiting for OperationContext#e
 xecuteOperation
 
 ### 0.0.4
-### API Changes
-- Accept storeName: string in AppContext.getStore for improve debuggerbility  
+#### API Changes
+- Accept storeName: string in AppContext.getStore for improve debuggerbility
   No supports in another context getStore methods. (Usable only AppContext.getStore)
 
 ### 0.0.3
