@@ -27,7 +27,7 @@ export default class AppContext<Actions extends ActionIdentifier<any> = ActionId
     }
 
     public dehydrate(): HydrateState {
-        const state: HydrateState = { stores: {}  }
+        const state: HydrateState = { stores: {} }
 
         this.stores.forEach((store, storeName) => {
             state.stores[storeName] = store.dehydrate()
