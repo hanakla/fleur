@@ -2,7 +2,6 @@ import { action } from '@ragg/fleur'
 
 export interface NavigationPayload {
     url: string,
-    method: string
     error?: Error
 }
 

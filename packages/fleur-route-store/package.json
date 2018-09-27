@@ -13,10 +13,13 @@
   },
   "dependencies": {
     "@ragg/fleur": "*",
-    "routr": "2.1.0"
+    "history": "4.7.2",
+    "path-to-regexp": "2.4.0"
   },
   "devDependencies": {
+    "@types/history": "4.7.0",
     "jest": "23.4.1",
-    "ts-jest": "23.1.4"
+    "ts-jest": "23.1.4",
+    "typescript": "3.0.3"
   }
 }
