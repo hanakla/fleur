@@ -1,4 +1,4 @@
-import { ActionIdentifier } from './ActionIdentifier'
+import { ActionIdentifier } from './Action'
 import AppContext from './AppContext'
 import { Operation, OperationArg } from './Operations'
 import { StoreClass } from './Store'

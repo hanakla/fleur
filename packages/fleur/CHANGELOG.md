@@ -1,3 +1,17 @@
+### 0.0.7
+### API Changes
+- Accept action name in first argument of `action()`
+  ``` typescript
+  const increase = action<{ amount: number }>('increase')
+  ```
+- Add `actions()` for auto naming actions
+  ```typescript
+  export const CountActions = actions('Count', {
+      increase: action<{ amount: number }>(), // It names 'Count/increase'
+  })
+  ```
+- `ExtractActionIdentifiersFromObject` renamed to `ActionsOf`
+
 ### 0.0.6
 #### API Changes
 - Allow to any types in Store#rehydrate,dehydrate

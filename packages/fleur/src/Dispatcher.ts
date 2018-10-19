@@ -1,4 +1,4 @@
-import { ActionIdentifier } from './ActionIdentifier'
+import { ActionIdentifier } from './Action'
 import Emitter from './Emitter'
 
 export interface Events {

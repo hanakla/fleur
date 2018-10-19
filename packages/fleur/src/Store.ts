@@ -1,6 +1,6 @@
 import immer, { Draft } from 'immer'
 
-import { ActionIdentifier, ExtractPayloadType } from './ActionIdentifier'
+import { ActionIdentifier, ExtractPayloadType } from './Action'
 import Emitter from './Emitter'
 
 export interface StoreClass<T = {}> {
