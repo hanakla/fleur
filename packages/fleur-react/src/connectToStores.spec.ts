@@ -58,6 +58,5 @@ describe('connectToStores', () => {
         await context.executeOperation(op, {})
         wrapper.update()
         expect(wrapper.find('Component').props()).toEqual({ count: 20 })
-
     })
 })
