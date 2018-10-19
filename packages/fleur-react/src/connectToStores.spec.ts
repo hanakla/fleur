@@ -47,6 +47,8 @@ describe('connectToStores', () => {
                 anotherProp: 'anotherProp'
             })
         )
+
+        wrapper.unmount()
     })
 
     it('Should map stores to props', async () => {
@@ -58,6 +60,15 @@ describe('connectToStores', () => {
         await context.executeOperation(op, {})
         wrapper.update()
         expect(wrapper.find('Component').props()).toEqual({ count: 20 })
+        wrapper.unmount()
+    })
 
+    it('Should unlisten on component unmounted', () => {
+        const context = app.createContext()
+        const wrapper = mount(createElementWithContext(context, Component))
+
+        expect(context.getStore(TestStore).listeners['onChange']).toHaveLength(1)
+        wrapper.unmount()
+        expect(context.getStore(TestStore).listeners['onChange']).toHaveLength(0)
     })
 })

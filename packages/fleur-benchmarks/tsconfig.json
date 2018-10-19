@@ -18,9 +18,6 @@
         ],
         "outDir": "dist"
     },
-    "files": [
-        "./src/index.ts"
-    ],
     "exclude": [
         "node_modules"
     ]
