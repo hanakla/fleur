@@ -1,10 +1,10 @@
-// import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
 import * as Fluxible from 'fluxible'
 import { connectToStores, createElementWithContext } from 'fluxible-addons-react'
 import * as BaseStore from 'fluxible/addons/BaseStore'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-// import { connectToStores, ContextProp, createElementWithContext, withComponentContext } from '../../fleur-react/src'
+
+jest.setTimeout(10000)
 
 describe('benchmark', () => {
     it('Fluxible', async () => {
