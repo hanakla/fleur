@@ -1,6 +1,6 @@
 import * as invariant from 'invariant'
 
-import { ActionIdentifier, ExtractPayloadType } from './ActionIdentifier'
+import { ActionIdentifier, ExtractPayloadType } from './Action'
 import ComponentContext from './ComponentContext'
 import Dispatcher from './Dispatcher'
 import Fleur from './Fleur'

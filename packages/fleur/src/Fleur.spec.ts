@@ -1,4 +1,4 @@
-import { action, ExtractActionIdentifiersFromObject } from './ActionIdentifier'
+import { action, ExtractActionIdentifiersFromObject } from './Action'
 import Fleur from './Fleur'
 import { operation } from './Operations'
 import Store, { listen } from './Store'
@@ -6,8 +6,8 @@ import Store, { listen } from './Store'
 describe('Fleur', () => {
     it('flows', () => {
         const actions = {
-            increase: action<{ increase: number }>(),
-            decrease: action<{ decrease: number }>()
+            increase: action<{ increase: number }>('increase'),
+            decrease: action<{ decrease: number }>('decrease'),
         }
 
         class TestStore extends Store {
