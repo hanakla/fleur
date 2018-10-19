@@ -15,21 +15,21 @@
     "react-dom": "^16.3.1"
   },
   "devDependencies": {
-    "@types/cheerio": "0.22.8",
-    "@types/enzyme": "3.1.12",
+    "@types/cheerio": "0.22.9",
+    "@types/enzyme": "3.1.14",
     "@types/express": "4.16.0",
-    "@types/jest": "23.3.1",
-    "@types/react": "16.4.7",
+    "@types/jest": "23.3.5",
+    "@types/react": "16.4.18",
     "@types/request-promise": "4.1.42",
     "cheerio": "1.0.0-rc.2",
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "npm:enzyme-react-adapter-future",
-    "express": "4.16.3",
-    "jest": "23.4.1",
-    "react": "16.4.1",
-    "react-dom": "16.4.1",
+    "express": "4.16.4",
+    "jest": "23.6.0",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
     "request-promise": "4.2.2",
-    "ts-jest": "23.1.4"
+    "ts-jest": "23.10.4"
   },
   "sideEffects": false
 }
