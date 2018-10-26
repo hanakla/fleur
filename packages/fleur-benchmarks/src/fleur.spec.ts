@@ -3,7 +3,14 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { connectToStores, ContextProp, createElementWithContext, withComponentContext } from '../../fleur-react/src'
 
+jest.setTimeout(10000)
+
 describe('benchmark', () => {
+    beforeEach(() => {
+        jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb());
+    });
+
+
     it('Fleur / rendering time', async () => {
         const numOfDispatches = 10000
         const callCounter = jest.fn()

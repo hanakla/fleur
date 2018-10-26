@@ -10,24 +10,26 @@ Runs on Node / Web.
 // actions.ts (Action typings)
 import { action } from '@ragg/fleur'
 
-export const increase = action<{ amount: number }>();
-export const decrease = action<{ amount: number }>();
+export const CounterActions = actions('CounterAction', {
+    increase: action<{ amount: number }>(),
+    decrease: action<{ amount: number }>(),
+}
 ```
 
 ``` typescript
 // store.ts (Store)
 import { listen, Store } from '@ragg/fleur'
-import * as actions from './actions.ts'
+import { CounterActions } from './actions.ts'
 
 export default class SomeStore extends Store {
     public state: { count: number } = { count: 0 }
 
-    private handleIncrease = listen(actions.increase, (payload) => {
+    private handleIncrease = listen(CounterActions.increase, (payload) => {
         // `this.updateWith` is immutable changing `this.state` with `immer.js`
         this.updateWith(draft => draft.count += payload.amount)
     })
 
-    private handleDecrease = listen(actions.decrease, (payload) => {
+    private handleDecrease = listen(CounterActions.decrease, (payload) => {
         this.updateWith(draft => draft.count -= payload.amount)
     })
 
@@ -40,14 +42,14 @@ export default class SomeStore extends Store {
 ``` typescript
 // operations.ts (Action Creator)
 import { operation } from '@ragg/fleur'
-import * as actions from './actions.ts'
+import { CounterActions } from './actions.ts'
 
 export const increaseOperation = operation((ctx, { amount }: { amount: number }) => {
-    ctx.dispatch(actions.increase, { amount })
+    ctx.dispatch(CounterActions.increase, { amount })
 })
 
 export const decreaseOperation = operation((ctx, { amount }: { amount: number }) => {
-    ctx.dispatch(actions.decrease, { amount })
+    ctx.dispatch(CounterActions.decrease, { amount })
 })
 ```
 
@@ -61,7 +63,7 @@ const app = new Fleur({
 })
 
 const ctx = app.createContext()
-ctx.executeOperation(increaseOperation, { increase: 10 })
+ctx.executeOperation(increaseOperation, { amount: 10 })
 console.log(ctx.getStore(SomeStore).getCount()) // => 10
 ```
 

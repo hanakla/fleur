@@ -1,4 +1,4 @@
-import { ActionIdentifier } from './ActionIdentifier'
+import { ActionIdentifier } from './Action'
 import OperationContext from './OperationContext'
 
 export interface Operation<Actions extends ActionIdentifier<any>> {

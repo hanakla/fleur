@@ -12,15 +12,13 @@
         "strictNullChecks": true,
         "forceConsistentCasingInFileNames": true,
         "lib": [
+            "dom",
             "es2015",
             "es2016",
             "es2017"
         ],
         "outDir": "dist"
     },
-    "files": [
-        "./src/index.ts"
-    ],
     "exclude": [
         "node_modules"
     ]

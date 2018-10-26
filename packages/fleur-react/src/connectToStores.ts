@@ -31,14 +31,25 @@ const StoreHandler = withComponentContext(class StoreHandler extends React.Compo
 
     public state: any = { childProps: {} }
 
-    public componentDidMount(): any {
-        const { context, stores, mapStoresToProps} = this.props
+    public componentWillUnmount() {
+        const { stores, context } = this.props
 
         stores.forEach(store => {
-            context.getStore(store).on('onChange', () => {
-                this.setState({ childProps: mapStoresToProps(context, this.props) })
-            })
+            context.getStore(store).off('onChange', this.mapStoresToProps)
         })
+    }
+
+    public componentDidMount() {
+        const { context, stores } = this.props
+
+        stores.forEach(store => {
+            context.getStore(store).on('onChange', this.mapStoresToProps)
+        })
+    }
+
+    private mapStoresToProps = () => {
+        const { context, mapStoresToProps } = this.props
+        this.setState({ childProps: mapStoresToProps(context, this.props) })
     }
 
     public render(): any {
