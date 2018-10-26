@@ -6,6 +6,11 @@ import { connectToStores, ContextProp, createElementWithContext, withComponentCo
 jest.setTimeout(10000)
 
 describe('benchmark', () => {
+    beforeEach(() => {
+        jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb());
+    });
+
+
     it('Fleur / rendering time', async () => {
         const numOfDispatches = 10000
         const callCounter = jest.fn()

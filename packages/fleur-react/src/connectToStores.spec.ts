@@ -58,6 +58,7 @@ describe('connectToStores', () => {
         expect(wrapper.find('Component').props()).toEqual({ count: 10 })
 
         await context.executeOperation(op, {})
+        await new Promise(r => requestAnimationFrame(r))
         wrapper.update()
         expect(wrapper.find('Component').props()).toEqual({ count: 20 })
         wrapper.unmount()

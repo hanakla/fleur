@@ -22,6 +22,7 @@ export default class Store<T = any> extends Emitter<StoreEvents> {
     public static storeName: string = ''
 
     protected state: T
+    protected requestId: number | null = null
 
     public rehydrate(state: any): void {
         this.state = state
@@ -37,6 +38,13 @@ export default class Store<T = any> extends Emitter<StoreEvents> {
 
     protected updateWith(producer: (draft: Draft<T>) => void): void {
         this.state = immer(this.state, draft => { producer(draft) })
-        this.emitChange()
+
+        // Batched update only client side
+        if (typeof requestAnimationFrame === 'function') {
+            this.requestId != null && cancelAnimationFrame(this.requestId)
+            this.requestId = requestAnimationFrame(() => this.emitChange())
+        } else {
+            this.emitChange()
+        }
     }
 }

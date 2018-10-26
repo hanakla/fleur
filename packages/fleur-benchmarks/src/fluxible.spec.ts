@@ -23,6 +23,7 @@ describe('benchmark', () => {
             private handleIncrement(payload) {
                 callCounter()
                 this.state = { count: this.state.count + 1 }
+                this.emitChange()
             }
 
             get count() { return this.state.count }
@@ -71,6 +72,7 @@ describe('benchmark', () => {
                 private handleIncrement(payload) {
                     callCounter()
                     this.state = { count: this.state.count + 1 }
+                    this.emitChange()
                 }
 
                 get count() { return this.state.count }
