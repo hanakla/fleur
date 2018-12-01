@@ -1,5 +1,10 @@
+### 0.0.8
+#### Behavior changes
+- `Store#emitChange` is batched by `requestAnimationFrame` only client side.
+  (In server side, synced not batched)
+
 ### 0.0.7
-### API Changes
+#### API Changes
 - Accept action name in first argument of `action()`
   ``` typescript
   const increase = action<{ amount: number }>('increase')
