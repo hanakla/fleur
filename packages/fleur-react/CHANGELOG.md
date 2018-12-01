@@ -1,3 +1,6 @@
+### 0.0.9
+- `c4964d7` Unlisten store change events when componentWillUnmount
+
 ### 0.0.8
 - `7e26d63` Loosen peerDependencies versions
 
