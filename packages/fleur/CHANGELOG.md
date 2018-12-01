@@ -1,3 +1,6 @@
+### 0.0.9
+- Update dependency (immer -> 1.8.0)
+
 ### 0.0.8
 #### Behavior changes
 - `Store#emitChange` is batched by `requestAnimationFrame` only client side.
