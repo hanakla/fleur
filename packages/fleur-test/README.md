@@ -4,4 +4,4 @@ Test utils for fleurs
 
 ## Example
 
-See [this spec](https://github.com/ra-gg/fleur/blob/master/packages/fleur-test/src/mockOperationContext.spec.ts)
+See [this spec](./src/mockOperationContext.spec.ts)
