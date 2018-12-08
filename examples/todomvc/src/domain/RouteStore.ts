@@ -1,8 +1,8 @@
-import { withStaticRoutes } from '@ragg/fleur-route-store-dom'
+import { createStoreWithStaticRoutes } from '@ragg/fleur-route-store-dom'
 import { Index } from '../routes/Index'
 import { TodoFilterType } from './constants'
 
-export const RouteStore = withStaticRoutes({
+export const RouteStore = createStoreWithStaticRoutes({
   index: {
     path: '/',
     handler: Index,

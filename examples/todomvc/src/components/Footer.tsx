@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import React from 'react'
 import { withComponentContext, ContextProp } from '@ragg/fleur-react'
 import { clearCompleted } from '../domain/Todo/operations'
+import { Link } from '@ragg/fleur-route-store-dom'
 
 interface Props extends ContextProp {
   completedCount: number
@@ -15,6 +16,7 @@ class TodoFooterComponent extends React.Component<Props, {}> {
   public render() {
     const { nowShowing, completedCount, count } = this.props
 
+    console.log(nowShowing)
     return (
       <footer className="footer">
         <span className="todo-count">
@@ -22,34 +24,34 @@ class TodoFooterComponent extends React.Component<Props, {}> {
         </span>
         <ul className="filters">
           <li>
-            <a
-              href="#/"
+            <Link
+              href="/"
               className={classNames({
                 selected: nowShowing === TodoFilterType.all,
               })}
             >
               All
-            </a>
+            </Link>
           </li>{' '}
           <li>
-            <a
-              href="#/active"
+            <Link
+              href="/active"
               className={classNames({
                 selected: nowShowing === TodoFilterType.active,
               })}
             >
               Active
-            </a>
+            </Link>
           </li>{' '}
           <li>
-            <a
-              href="#/completed"
+            <Link
+              href="/completed"
               className={classNames({
                 selected: nowShowing === TodoFilterType.completed,
               })}
             >
               Completed
-            </a>
+            </Link>
           </li>
         </ul>
         {completedCount > 0 && (

@@ -11,11 +11,7 @@ import { TodoStore, TodoEntity } from '../domain/Todo/store'
 import { TodoFooter } from '../components/Footer'
 import { TodoItem } from '../components/TodoItem'
 import { ENTER_KEY, TodoFilterType } from '../domain/constants'
-import {
-  addTodo,
-  toggleAllTodo,
-  clearCompleted,
-} from '../domain/Todo/operations'
+import { addTodo, toggleAllTodo } from '../domain/Todo/operations'
 import { AppStore } from '../domain/App/store'
 
 interface Props extends ContextProp {
@@ -36,10 +32,6 @@ const mapStoresToProps = (context: ComponentContext) => ({
 })
 
 class IndexComponent extends React.Component<Props, State> {
-  public state: State = {
-    nowShowing: this.props.meta.nowShowing,
-  }
-
   private newFieldRef = React.createRef<HTMLInputElement>()
 
   private handleNewTodoKeyDown = (event: React.KeyboardEvent) => {
@@ -60,7 +52,7 @@ class IndexComponent extends React.Component<Props, State> {
 
   get shownTodos(): TodoEntity[] {
     return this.props.todos.filter(todo => {
-      switch (this.state.nowShowing) {
+      switch (this.props.meta.nowShowing) {
         case TodoFilterType.active:
           return !todo.completed
         case TodoFilterType.completed:
@@ -78,24 +70,25 @@ class IndexComponent extends React.Component<Props, State> {
   }
 
   public render() {
-    const { todos } = this.props
+    const { todos, meta } = this.props
 
     const activeTodoCount = this.todoCount
     const completedCount = todos.length - activeTodoCount
+    const hasTodo = !!(activeTodoCount || completedCount)
 
     return (
       <div>
         <header className="header">
           <h1>todos</h1>
           <input
-            ref="newField"
+            ref={this.newFieldRef}
             className="new-todo"
             placeholder="What needs to be done?"
             onKeyDown={e => this.handleNewTodoKeyDown(e)}
             autoFocus={true}
           />
         </header>
-        {todos.length && (
+        {todos.length !== 0 && (
           <section className="main">
             <input
               id="toggle-all"
@@ -112,11 +105,11 @@ class IndexComponent extends React.Component<Props, State> {
             </ul>
           </section>
         )}
-        {(activeTodoCount || completedCount) && (
+        {hasTodo && (
           <TodoFooter
             count={activeTodoCount}
             completedCount={completedCount}
-            nowShowing={this.state.nowShowing}
+            nowShowing={meta.nowShowing}
           />
         )}
       </div>

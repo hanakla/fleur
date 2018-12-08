@@ -6,7 +6,7 @@
   "dependencies": {
     "@ragg/fleur": "0.0.12",
     "@ragg/fleur-react": "0.0.9",
-    "@ragg/fleur-route-store-dom": "0.0.1",
+    "@ragg/fleur-route-store-dom": "0.0.1-pre",
     "classnames": "^2.1.5",
     "director": "^1.2.0",
     "react": "16.6.3",

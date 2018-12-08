@@ -14,10 +14,7 @@ server.use('/node_modules', express.static(join(process.cwd(), 'node_modules')))
 
 server.use(async (req, res) => {
   const context = ((req as any).context = app.createContext())
-  await context.executeOperation(navigateOperation, {
-    method: req.method,
-    url: req.path,
-  })
+  await context.executeOperation(navigateOperation, { url: req.path })
 
   const content = ReactDOM.renderToString(
     createElementWithContext(context, App),

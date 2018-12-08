@@ -1,18 +1,22 @@
 import { connectToStores } from '@ragg/fleur-react'
 import { RouteStore } from '../domain/RouteStore'
 import React from 'react'
-import { Route } from '@ragg/fleur-route-store-dom'
+import { MatchedRoute, HistoryHandler } from '@ragg/fleur-route-store-dom'
 
 interface Props {
-  route: Route
+  route: MatchedRoute
 }
 
 class AppComponent extends React.Component<Props> {
   render() {
     const { route } = this.props
-    const Handler = route.handler
-    console.log(route)
-    return <Handler meta={route.meta} />
+    const Handler = route ? route.config.handler : null
+    return (
+      <div>
+        <HistoryHandler />
+        {Handler ? <Handler meta={route.config.meta} /> : null}
+      </div>
+    )
   }
 }
 
