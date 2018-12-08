@@ -1,5 +1,6 @@
 import Fleur from './Fleur'
 
+export { ActionIdentifier } from './Action'
 export { Fleur as default } // Aliasing for editor intellisense
 export { default as Store, StoreClass, listen } from './Store'
 export { default as OperationContext } from './OperationContext'
