@@ -48,7 +48,7 @@ export class MockOperationContext {
   }
 }
 
-export const createMockOperationContext = (options: {
+export const mockOperationContext = (options: {
   stores: MockStore[]
 }): MockOperationContext => {
   return new MockOperationContext(options.stores)

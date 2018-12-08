@@ -1,8 +1,8 @@
 import Fleur, { Store, operation, action, listen } from '@ragg/fleur'
-import { createMockOperationContext } from './MockOperationContext'
+import { mockOperationContext } from './MockOperationContext'
 import { mockStore } from './mockStore'
 
-describe('MockOperationContext', () => {
+describe('mockOperationContext', () => {
   it('Example', async () => {
     // Actions.ts
     const resetAction = action<{}>()
@@ -33,7 +33,7 @@ describe('MockOperationContext', () => {
       context.dispatch(increaseAction, { increase: 10 })
     })
 
-    const context = createMockOperationContext({
+    const context = mockOperationContext({
       stores: [mockStore(CountStore, { count: 100 })],
     })
 
