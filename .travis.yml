@@ -30,5 +30,9 @@ script:
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
+  - cd - && cd packages/fleur-test
+  - yarn prepublishOnly
+  - yarn test --coverage --verbose
+
   - cd - && cd packages/fleur-benchmarks
   - yarn test

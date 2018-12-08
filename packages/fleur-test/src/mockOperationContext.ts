@@ -1,6 +1,6 @@
 import { Store, StoreClass } from '@ragg/fleur'
 import { Operation, OperationArg } from '@ragg/fleur/typings/Operations'
-import { ActionIdentifier } from '@ragg/fleur/typings/ActionIdentifier'
+import { ActionIdentifier } from '@ragg/fleur'
 import { MockStore } from './mockStore'
 
 export class MockOperationContext {
@@ -48,7 +48,7 @@ export class MockOperationContext {
   }
 }
 
-export const createMockOperationContext = (options: {
+export const mockOperationContext = (options: {
   stores: MockStore[]
 }): MockOperationContext => {
   return new MockOperationContext(options.stores)

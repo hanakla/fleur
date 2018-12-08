@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mockStoreContext Should create Store entry correctly 1`] = `
+Object {
+  "name": "SomeStore",
+  "store": SomeStore {
+    "listeners": Object {},
+    "requestId": null,
+    "state": Object {
+      "state": "mock",
+    },
+  },
+}
+`;
