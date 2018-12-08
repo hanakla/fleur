@@ -1,11 +1,11 @@
 import RouteStore from './RouteStore'
-import { withStaticRoutes } from './index'
+import { createStoreWithStaticRoutes } from './index'
 
 describe('RouteStore', () => {
   let store: RouteStore<any>
 
   beforeEach(() => {
-    const StaticRouteStore = withStaticRoutes({
+    const StaticRouteStore = createStoreWithStaticRoutes({
       articlesShow: {
         path: '/articles/:id',
         handler: null,

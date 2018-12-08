@@ -5,7 +5,7 @@ import {
 } from '@ragg/fleur-react'
 import React from 'react'
 import { ComponentContext } from '@ragg/fleur'
-import {} from '@ragg/fleur-route-store'
+import {} from '@ragg/fleur-route-store-dom'
 
 import { TodoStore, TodoEntity } from '../domain/Todo/store'
 import { TodoFooter } from '../components/Footer'

@@ -20,7 +20,7 @@ export interface State {
 export default class RouteStore<R extends RouteDefinitions> extends Store<
   State
 > {
-  public static storeName = 'fleur-route-store/RouteStore'
+  public static storeName = 'fleur-route-store-dom/RouteStore'
 
   protected state: State = {
     currentRoute: null,

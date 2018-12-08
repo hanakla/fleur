@@ -8,7 +8,7 @@ export const createStoreWithStaticRoutes = <R extends RouteDefinitions>(
   new (...args: any[]): RouteStore<R>
 } => {
   return class StaticRouteStore extends RouteStore<R> {
-    public static storeName = 'fleur-route-store/RouteStore'
+    public static storeName = 'fleur-route-store-dom/RouteStore'
 
     constructor() {
       super()

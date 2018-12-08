@@ -1,8 +1,8 @@
 import Fleur from '@ragg/fleur'
-import { navigateOperation, withStaticRoutes } from './index'
+import { navigateOperation, createStoreWithStaticRoutes } from './index'
 
 describe('test', () => {
-  const RouteStore = withStaticRoutes({
+  const RouteStore = createStoreWithStaticRoutes({
     articles: {
       path: '/articles',
       handler: 'ArticleHandler',

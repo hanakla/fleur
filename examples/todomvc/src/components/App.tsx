@@ -1,7 +1,7 @@
 import { connectToStores } from '@ragg/fleur-react'
 import { RouteStore } from '../domain/RouteStore'
 import React from 'react'
-import { Route } from '@ragg/fleur-route-store'
+import { Route } from '@ragg/fleur-route-store-dom'
 
 interface Props {
   route: Route

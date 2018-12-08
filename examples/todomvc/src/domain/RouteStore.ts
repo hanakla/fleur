@@ -1,4 +1,4 @@
-import { withStaticRoutes } from '@ragg/fleur-route-store'
+import { withStaticRoutes } from '@ragg/fleur-route-store-dom'
 import { Index } from '../routes/Index'
 import { TodoFilterType } from './constants'
 
