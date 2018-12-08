@@ -46,15 +46,12 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
   )
 
   // @ts-ignore
-  private handleNavigationSuccess = listen(
-    navigateSuccess,
-    ({ url, method }: NavigationPayload) => {
-      this.updateWith(draft => {
-        draft.error = null
-        draft.isComplete = true
-      })
-    },
-  )
+  private handleNavigationSuccess = listen(navigateSuccess, () => {
+    this.updateWith(draft => {
+      draft.error = null
+      draft.isComplete = true
+    })
+  })
 
   // @ts-ignore
   private handleNavigationFailure = listen(

@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fleur-di",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-di",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
@@ -13,6 +13,6 @@
   "devDependencies": {
     "jest": "23.6.0",
     "ts-jest": "23.10.4",
-    "typescript": "3.1.3"
+    "typescript": "3.2.2"
   }
 }
