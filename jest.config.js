@@ -1,15 +1,15 @@
 module.exports = {
-    rootDir: '.',
-    transform: {
-      '^.+\\.tsx?$': 'ts-jest/preprocessor'
+  rootDir: '.',
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest/preprocessor',
+  },
+  testRegex: 'src/.*\\.spec\\.tsx?$',
+  moduleFileExtensions: ['ts', 'js'],
+  globals: {
+    'ts-jest': {
+      tsConfigFile: 'tsconfig.test.json',
+      typeCheck: false,
     },
-    testRegex: 'src/.*\\.spec\\.tsx?$',
-    moduleFileExtensions: ['ts', 'js'],
-    globals: {
-      'ts-jest': {
-        tsConfigFile: 'tsconfig.test.json',
-        typeCheck: false,
-      },
-    },
-    testURL: "http://localhost/"
-  };
+  },
+  testURL: 'http://localhost/',
+}

@@ -1,4 +1,4 @@
 declare module 'routr' {
-    const _: any
-    export = _
+  const _: any
+  export = _
 }
