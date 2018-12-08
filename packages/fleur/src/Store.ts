@@ -32,7 +32,7 @@ export default class Store<T = any> extends Emitter<StoreEvents> {
         return this.state
     }
 
-    protected emitChange(): void {
+    public emitChange(): void {
         this.emit('onChange', void 0)
     }
 

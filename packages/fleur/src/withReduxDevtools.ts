@@ -31,6 +31,7 @@ export const withReduxDevTools = <T extends AppContext<any>>(context: T, { enabl
 
         const stores = JSON.parse(state)
         context.rehydrate({ stores })
+        context.stores.forEach(store => store.emitChange())
     })
 
     const dispatch = context.dispatch.bind(context)
