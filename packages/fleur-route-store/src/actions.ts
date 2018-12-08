@@ -1,8 +1,9 @@
 import { action } from '@ragg/fleur'
+import { Action } from 'history'
 
 export interface NavigationPayload {
   url: string
-  method: string
+  type?: Action
   error?: Error
 }
 

@@ -1,7 +1,7 @@
 import { OperationContext } from '@ragg/fleur'
+import { Action } from 'history'
 
 export interface Route {
-  method?: 'GET' | 'POST'
   path: string
   action?: (
     context: OperationContext<any>,
@@ -11,11 +11,12 @@ export interface Route {
   meta?: any
 }
 
-export interface MatchedRoute extends Route {
+export interface MatchedRoute {
+  type?: Action
   name: string
   url: string
   params: { [prop: string]: string }
-  query: { [prop: string]: string }
+  query: { [prop: string]: string | string[] | undefined }
   config: Route
 }
 

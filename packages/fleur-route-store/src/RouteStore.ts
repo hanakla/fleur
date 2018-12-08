@@ -1,4 +1,8 @@
 import { listen, Store } from '@ragg/fleur'
+import * as pathToRegexp from 'path-to-regexp'
+import * as qs from 'querystring'
+import * as url from 'url'
+
 import {
   navigateFailure,
   navigateStart,
@@ -24,34 +28,37 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
     isComplete: false,
   }
 
-  protected router: any
   protected routes: RouteDefinitions
 
   // @ts-ignore
   private handleNavigateStart = listen(
     navigateStart,
-    ({ url, method }: NavigationPayload) => {
-      const currentRoute = this.state.currentRoute || { name: null }
-      const nextRoute = this.matchRoute(url, { method })
-
-      if (nextRoute && nextRoute.name === currentRoute.name) {
-        return
-      }
-
+    ({ url }: NavigationPayload) => {
       this.updateWith(draft => {
-        draft.currentRoute = nextRoute
+        draft.error = null
         draft.isComplete = false
       })
     },
   )
 
   // @ts-ignore
-  private handleNavigationSuccess = listen(navigateSuccess, () => {
-    this.updateWith(draft => {
-      draft.error = null
-      draft.isComplete = true
-    })
-  })
+  private handleNavigationSuccess = listen(
+    navigateSuccess,
+    ({ type, url, method }: NavigationPayload) => {
+      const currentRoute = this.state.currentRoute || { name: null }
+      const nextRoute = this.matchRoute(url)
+
+      if (nextRoute && nextRoute.name === currentRoute.name) {
+        return
+      }
+
+      this.updateWith(draft => {
+        draft.currentRoute = nextRoute ? { ...nextRoute, type } : null
+        draft.error = null
+        draft.isComplete = true
+      })
+    },
+  )
 
   // @ts-ignore
   private handleNavigationFailure = listen(
@@ -65,10 +72,15 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
   )
 
   public rehydrate(state: State) {
-    this.updateWith(draft => Object.assign(draft, state))
+    this.updateWith(draft => {
+      Object.assign(draft, state)
+      draft.currentRoute = state.currentRoute
+        ? this.getRoute(state.currentRoute.url)
+        : null
+    })
   }
 
-  public dehydrate() {
+  public dehydrate(): State {
     return this.state
   }
 
@@ -77,7 +89,11 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
     params: object = {},
     query: object = {},
   ): string {
-    return this.router.makePath(routeName, params, query)
+    const path = this.routes[routeName as string]
+    if (!path) throw new Error(`Matched route name not found: ${routeName}`)
+
+    const pathname = pathToRegexp.compile(path.path)(params)
+    return url.format({ pathname: pathname, query })
   }
 
   public getCurrentRoute(): MatchedRoute | null {
@@ -92,8 +108,8 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
     return this.state.isComplete
   }
 
-  public getRoute(url: string, options: { method: string }) {
-    return this.matchRoute(url, options)
+  public getRoute(url: string): MatchedRoute | null {
+    return this.matchRoute(url)
   }
 
   public getRoutes() {
@@ -105,19 +121,33 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
     return !!(currentRoute && currentRoute.url === href)
   }
 
-  private matchRoute(url: string, options: any): MatchedRoute | null {
-    const indexOfHash = url.indexOf('#')
-    const urlWithoutHash = indexOfHash !== -1 ? url.slice(indexOfHash) : url
-    const route = this.router.getRoute(urlWithoutHash, options)
+  private matchRoute(inputUrl: string): MatchedRoute | null {
+    const indexOfHash = inputUrl.indexOf('#')
+    const urlWithoutHash =
+      indexOfHash !== -1 ? inputUrl.slice(0, indexOfHash) : inputUrl
+    const parsed = url.parse(urlWithoutHash)
 
-    if (!route) return null
+    const params = Object.create(null)
+    for (const routeName of Object.keys(this.routes)) {
+      const keys: pathToRegexp.Key[] = []
+      const matcher = pathToRegexp(this.routes[routeName].path, keys)
+      const match = matcher.exec(parsed.pathname!)
+      if (!match) continue
 
-    return {
-      name: route.name,
-      url: route.url,
-      params: route.params,
-      query: route.query,
-      ...route.config,
+      const route = this.routes[routeName]
+      for (let idx = 1; idx < match.length; idx++) {
+        params[keys[idx - 1].name] = match[idx]
+      }
+
+      return {
+        name: routeName,
+        url: urlWithoutHash,
+        params,
+        query: qs.parse(parsed.query!),
+        config: route,
+      }
     }
+
+    return null
   }
 }
