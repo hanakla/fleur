@@ -1,3 +1,11 @@
+### 0.0.11
+- Suport Redux Devtools Extension
+  ```typescript
+  import Fleur, { withReduxDevTools } from '@ragg/fleur'
+  const app = new Fleur({ ... })
+  const context = withReduxDevTools(app.createContext())
+  ```
+
 ### 0.0.9
 - Update dependency (immer -> 1.8.0)
 
