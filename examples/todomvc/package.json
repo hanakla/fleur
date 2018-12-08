@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "webpack --mode development && ts-node ./src/server.tsx"
+  },
+  "dependencies": {
+    "@ragg/fleur": "0.0.12",
+    "@ragg/fleur-react": "0.0.9",
+    "@ragg/fleur-route-store": "0.0.1",
+    "classnames": "^2.1.5",
+    "director": "^1.2.0",
+    "react": "16.6.3",
+    "react-dom": "16.6.3",
+    "todomvc-app-css": "^2.0.0",
+    "todomvc-common": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/classnames": "2.2.6",
+    "@types/express": "4.16.0",
+    "@types/react": "16.7.13",
+    "@types/react-dom": "16.0.11",
+    "@types/webpack": "4.4.20",
+    "ts-loader": "5.3.1",
+    "ts-node": "7.0.1",
+    "webpack": "4.27.1",
+    "webpack-cli": "3.1.2"
+  }
+}
