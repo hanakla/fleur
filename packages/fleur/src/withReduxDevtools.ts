@@ -1,7 +1,7 @@
 import AppContext from "./AppContext";
 
 interface Option {
-    enableTimeTravel: boolean
+    enableTimeTravel?: boolean
 }
 
 type DevToolsAction = {
@@ -12,7 +12,7 @@ type DevToolsAction = {
     state: string;
 }
 
-export const withReduxDevTools = <T extends AppContext<any>>(context: T, { enableTimeTravel = true }: Option): T => {
+export const withReduxDevTools = <T extends AppContext<any>>(context: T, { enableTimeTravel = true }: Option = {}): T => {
     if (!(window as any).__REDUX_DEVTOOLS_EXTENSION__) return context
 
     const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect()
