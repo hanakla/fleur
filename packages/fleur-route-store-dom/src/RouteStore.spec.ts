@@ -15,6 +15,11 @@ describe('RouteStore', () => {
     store = new StaticRouteStore()
   })
 
+  it('Should not route to partialy matched route', async () => {
+    const route = store.getRoute('/articles/not/match')
+    expect(route).toBe(null)
+  })
+
   it('Should correct make path', () => {
     const path = store.makePath('articlesShow', { id: 1 })
     expect(path).toBe('/articles/1')
