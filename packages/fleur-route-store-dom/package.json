@@ -1,8 +1,8 @@
 {
-  "name": "@ragg/fleur-route-store",
-  "version": "0.0.1",
+  "name": "@ragg/fleur-route-store-dom",
+  "version": "0.0.2",
   "description": "Router for fleur",
-  "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-route-store",
+  "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-route-store-dom",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "author": "Ragg<ragg.devpr@gmail.com>",
@@ -13,10 +13,15 @@
   },
   "dependencies": {
     "@ragg/fleur": "*",
-    "routr": "2.1.0"
+    "history": "4.7.2",
+    "lodash": "4.17.11",
+    "path-to-regexp": "2.4.0"
   },
   "devDependencies": {
-    "jest": "23.6.0",
-    "ts-jest": "23.10.4"
+    "@types/history": "4.7.2",
+    "@types/lodash": "4.14.116",
+    "jest": "23.4.1",
+    "ts-jest": "23.1.4",
+    "typescript": "3.0.3"
   }
 }
