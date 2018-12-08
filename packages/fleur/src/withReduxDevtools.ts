@@ -1,4 +1,4 @@
-import { AppContext } from "../typings";
+import AppContext from "./AppContext";
 
 interface Option {
     enableTimeTravel: boolean
