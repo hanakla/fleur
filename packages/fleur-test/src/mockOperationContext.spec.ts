@@ -1,5 +1,5 @@
 import Fleur, { Store, operation, action, listen } from '@ragg/fleur'
-import { mockOperationContext } from './MockOperationContext'
+import { mockOperationContext } from './mockOperationContext'
 import { mockStore } from './mockStore'
 
 describe('mockOperationContext', () => {
