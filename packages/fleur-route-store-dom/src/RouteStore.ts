@@ -98,7 +98,7 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
   }
 
   public getCurrentNavigateError(): Error | null {
-    return this.state.currentRoute && this.state.error
+    return this.state.error
   }
 
   public isNavigationComplete(): boolean {

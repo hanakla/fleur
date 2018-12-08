@@ -1,4 +1,4 @@
-import Fleur from '@ragg/fleur'
+import Fleur, { AppContext } from '@ragg/fleur'
 import { navigateOperation, createStoreWithStaticRoutes } from './index'
 
 describe('test', () => {
@@ -32,13 +32,26 @@ describe('test', () => {
     stores: [RouteStore],
   })
 
-  const context = app.createContext()
+  let context: AppContext
+
+  beforeEach(() => {
+    context = app.createContext()
+  })
 
   it('Should route to correct handler', async () => {
     await context.executeOperation(navigateOperation, { url: '/articles' })
 
     const route = context.getStore(RouteStore).getCurrentRoute()
     expect(route.config.handler).toBe('ArticleHandler')
+  })
+
+  it('Should not route to partialy matched route', async () => {
+    await context.executeOperation(navigateOperation, {
+      url: '/articles/not/match',
+    })
+
+    const route = context.getStore(RouteStore).getCurrentRoute()
+    expect(route).toBe(null)
   })
 
   it('Should route to correct handler with ', async () => {
