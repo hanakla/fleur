@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fluer-test",
-  "version": "0.1.0-pre",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "author": "Ragg<ragg.devpr@gmail.com>",
