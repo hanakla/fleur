@@ -16,9 +16,7 @@
     "@types/invariant": "2.2.29",
     "cache-loader": "1.2.2",
     "eventemitter3": "3.1.0",
-    "husky": "1.1.2",
     "jest": "23.6.0",
-    "lint-staged": "7.3.0",
     "ts-jest": "23.10.4",
     "typescript": "3.1.3"
   },
