@@ -31,20 +31,17 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
   protected routes: RouteDefinitions
 
   // @ts-ignore
-  private handleNavigateStart = listen(
-    navigateStart,
-    ({ url }: NavigationPayload) => {
-      this.updateWith(draft => {
-        draft.error = null
-        draft.isComplete = false
-      })
-    },
-  )
+  private handleNavigateStart = listen(navigateStart, () => {
+    this.updateWith(draft => {
+      draft.error = null
+      draft.isComplete = false
+    })
+  })
 
   // @ts-ignore
   private handleNavigationSuccess = listen(
     navigateSuccess,
-    ({ type, url, method }: NavigationPayload) => {
+    ({ type, url }: NavigationPayload) => {
       const currentRoute = this.state.currentRoute || { name: null }
       const nextRoute = this.matchRoute(url)
 
