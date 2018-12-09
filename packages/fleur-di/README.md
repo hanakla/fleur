@@ -9,8 +9,8 @@ import { inject } from '@ragg/fleur-di'
 import { getUser } from './api'
 
 const fetchUser = inject({ getUser })(
-  ({ getUser }) => async (userId: string) => {
-    await fetchUser(userId)
+  (injects) => async (userId: string) => {
+    await injects.fetchUser(userId)
   },
 )
 
@@ -23,8 +23,8 @@ await fetchUser.inject({ getUser: fetchUserMock }).exec('1')
 
 // with redux-thunk
 export const fetchUserAction = inject({ fetchUser })(
-  ({ fetchUser }) => (userId: string) => async (dispatch, getState) => {
-    const user = await fetchUser(userId)
+  (injects) => (userId: string) => async (dispatch, getState) => {
+    const user = await injects.fetchUser(userId)
     dispatch({ type: 'FETCH_USER_SUCCESS', payload: user })
   },
 )
