@@ -10,7 +10,7 @@ import { getUser } from './api'
 
 const fetchUser = inject({ getUser })(
   (injects) => async (userId: string) => {
-    await injects.fetchUser(userId)
+    await injects.getUser(userId)
   },
 )
 
@@ -22,9 +22,9 @@ const fetchUserMock = (userId: string) => ({ id: userId })
 await fetchUser.inject({ getUser: fetchUserMock }).exec('1')
 
 // with redux-thunk
-export const fetchUserAction = inject({ fetchUser })(
+export const fetchUserAction = inject({ getUser })(
   (injects) => (userId: string) => async (dispatch, getState) => {
-    const user = await injects.fetchUser(userId)
+    const user = await injects.getUser(userId)
     dispatch({ type: 'FETCH_USER_SUCCESS', payload: user })
   },
 )
