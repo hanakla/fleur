@@ -18,8 +18,8 @@ const fetchUser = inject({ getUser })(
 await fetchUser('1')
 
 // Inject mock
-const fetchUserMock = (userId: string) => ({ id: userId })
-await fetchUser.inject({ getUser: fetchUserMock }).exec('1')
+const getUserMock = async (userId: string) => ({ id: userId })
+await fetchUser.inject({ getUser: getUserMock }).exec('1')
 
 // with redux-thunk
 export const fetchUserAction = inject({ getUser })(
@@ -30,5 +30,5 @@ export const fetchUserAction = inject({ getUser })(
 )
 
 // in tests
-dispatch(fetchUserAction.inject({ getUser: fetchUserMock }).exec('1'))
+dispatch(fetchUserAction.inject({ getUser: getUserMock }).exec('1'))
 ```
