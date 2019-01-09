@@ -5,7 +5,7 @@ import ComponentContextProvider from './ComponentContextProvider'
 
 const createElementWithContext = <P>(
   context: AppContext<any>,
-  Component: React.ComponentClass<P>,
+  Component: React.ComponentType<P>,
   props?: P,
 ): React.ReactElement<React.ProviderProps<ComponentContext>> =>
   React.createElement(

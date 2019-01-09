@@ -13,7 +13,7 @@ type ExcludeContextProp<P extends ContextProp> = Pick<
 >
 
 const withComponentContext = <Props extends ContextProp>(
-  Component: React.ComponentClass<Props>,
+  Component: React.ComponentType<Props>,
 ): React.ComponentClass<ExcludeContextProp<Props>> =>
   class WithComponentContext extends React.Component<
     ExcludeContextProp<Props>
@@ -21,7 +21,7 @@ const withComponentContext = <Props extends ContextProp>(
     public render() {
       return React.createElement(ComponentContextProvider.Consumer, {
         children: (context: ComponentContext) => {
-          return React.createElement(Component as React.ComponentClass<Props>, {
+          return React.createElement(Component, {
             ...(this.props as object),
             ...({
               context: {

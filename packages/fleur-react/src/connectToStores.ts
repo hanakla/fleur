@@ -14,7 +14,7 @@ export interface StoreHandlerProps {
   context: ComponentContext
   stores: StoreClass[]
   childProps: any
-  childComponent: React.ComponentClass
+  childComponent: React.ComponentType
 }
 
 interface StoreHandlerState {
@@ -74,7 +74,7 @@ const connectToStores = <Props, MappedProps = {}>(
   stores: StoreClass[],
   mapStoresToProps: StoreToPropMapper<Props, MappedProps>,
 ) => <ComponentProps extends object>(
-  Component: React.ComponentClass<ComponentProps>,
+  Component: React.ComponentType<ComponentProps>,
 ): ConnectedComponent<ComponentProps, MappedProps> =>
   class ConnectToStoreComponent extends React.Component<
     Pick<ComponentProps, Exclude<keyof ComponentProps, keyof MappedProps>>
