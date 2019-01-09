@@ -33,8 +33,8 @@ describe('Sever side rendering', () => {
       }
     }
 
-    const Component = connectToStores([TestStore], ctx => ({
-      count: ctx.getStore(TestStore).getCount(),
+    const Component = connectToStores([TestStore], getStore => ({
+      count: getStore(TestStore).getCount(),
     }))(
       class extends React.PureComponent<{ count: number } & ContextProp> {
         public render() {

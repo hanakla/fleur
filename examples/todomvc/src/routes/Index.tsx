@@ -2,6 +2,7 @@ import {
   withComponentContext,
   connectToStores,
   ContextProp,
+  StoreGetter,
 } from '@ragg/fleur-react'
 import React from 'react'
 import { ComponentContext } from '@ragg/fleur'
@@ -26,9 +27,9 @@ interface State {
   nowShowing: TodoFilterType
 }
 
-const mapStoresToProps = (context: ComponentContext) => ({
-  todos: context.getStore(TodoStore).getTodos(),
-  editing: context.getStore(AppStore).getEditingTodoId(),
+const mapStoresToProps = (getStore: StoreGetter) => ({
+  todos: getStore(TodoStore).getTodos(),
+  editing: getStore(AppStore).getEditingTodoId(),
 })
 
 class IndexComponent extends React.Component<Props, State> {

@@ -19,8 +19,8 @@ type Props = ConnectedProps & ContextProp
 export const HistoryHandler = withComponentContext(
   connectToStores(
     [RouteStore],
-    (context): ConnectedProps => ({
-      route: context.getStore(RouteStore).getCurrentRoute(),
+    (getStore): ConnectedProps => ({
+      route: getStore(RouteStore).getCurrentRoute(),
     }),
   )(
     class HistoryHandler extends React.Component<Props> {

@@ -40,8 +40,8 @@ describe('benchmark', () => {
     }
 
     const Component = withComponentContext(
-      connectToStores([TestStore], ctx => ({
-        count: ctx.getStore(TestStore).count,
+      connectToStores([TestStore], getStore => ({
+        count: getStore(TestStore).count,
       }))(
         class extends React.Component<{ count: number } & ContextProp> {
           public render() {
@@ -103,10 +103,8 @@ describe('benchmark', () => {
     )
 
     const Component = withComponentContext(
-      connectToStores(stores, ctx => ({
-        values: stores.map(s => {
-          ctx.getStore(s).count
-        }),
+      connectToStores(stores, getStore => ({
+        values: stores.map(s => getStore(s).count),
       }))(
         class extends React.Component<{ count: number } & ContextProp> {
           public render() {

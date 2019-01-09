@@ -14,8 +14,8 @@ import SomeStore from './stores/SomeStore'
 
 export default withComponentContext(
     // pick Props from Store with `connectToStores()`
-    connectToStores([CountStore], (context) => ({
-        count: context.getStore(CountStore).getCount()
+    connectToStores([CountStore], getStore => ({
+        count: getStore(CountStore).getCount()
     })
 )(class App extends React.PureComponent {
     private handleCountClick = () => {

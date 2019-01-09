@@ -3,7 +3,9 @@ import * as React from 'react'
 
 import withComponentContext from './withComponentContext'
 
-type StoreToPropMapper<P, T> = (context: ComponentContext, props: P) => T
+export type StoreGettter = ComponentContext['getStore']
+
+type StoreToPropMapper<P, T> = (getStore: StoreGettter, props: P) => T
 
 type ConnectedComponent<Props, MappedProps> = React.ComponentClass<
   Pick<Props, Exclude<keyof Props, keyof MappedProps>>
@@ -33,7 +35,7 @@ const StoreHandler = withComponentContext(
         childProps: {
           ...nextProps.childProps,
           ...nextProps.mapStoresToProps(
-            nextProps.context,
+            nextProps.context.getStore,
             nextProps.childProps,
           ),
         },
@@ -60,7 +62,9 @@ const StoreHandler = withComponentContext(
 
     private mapStoresToProps = () => {
       const { context, mapStoresToProps } = this.props
-      this.setState({ childProps: mapStoresToProps(context, this.props) })
+      this.setState({
+        childProps: mapStoresToProps(context.getStore, this.props),
+      })
     }
 
     public render(): any {
