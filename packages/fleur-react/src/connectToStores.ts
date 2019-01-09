@@ -76,17 +76,16 @@ const connectToStores = <Props, MappedProps = {}>(
 ) => <ComponentProps extends object>(
   Component: React.ComponentType<ComponentProps>,
 ): ConnectedComponent<ComponentProps, MappedProps> =>
-    class ConnectToStoreComponent extends React.Component<
-      Pick<ComponentProps, Exclude<keyof ComponentProps, keyof MappedProps>>
-    > {
-      public render() {
-        return React.createElement(StoreHandler, {
-          mapStoresToProps,
-          stores,
-          childProps: this.props,
-          childComponent: Component,
-        })
-      }
+  class ConnectToStoreComponent extends React.Component<
+    Pick<ComponentProps, Exclude<keyof ComponentProps, keyof MappedProps>>
+  > {
+    public render() {
+      return React.createElement(StoreHandler, {
+        mapStoresToProps,
+        stores,
+        childProps: this.props,
+        childComponent: Component,
+      })
     }
   }
 
