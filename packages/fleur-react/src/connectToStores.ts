@@ -62,7 +62,9 @@ const StoreHandler = withComponentContext(
 
     private mapStoresToProps = () => {
       const { context, mapStoresToProps } = this.props
-      this.setState({ childProps: mapStoresToProps(context, this.props) })
+      this.setState({
+        childProps: mapStoresToProps(context.getStore, this.props),
+      })
     }
 
     public render(): any {
