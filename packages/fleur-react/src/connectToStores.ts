@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import withComponentContext from './withComponentContext'
 
-type StoreToPropMapper<P, T> = (context: ComponentContext, props: P) => T
+type StoreToPropMapper<P, T> = (getStore: ComponentContext['getStore'], props: P) => T
 
 type ConnectedComponent<Props, MappedProps> = React.ComponentClass<
   Pick<Props, Exclude<keyof Props, keyof MappedProps>>
@@ -22,10 +22,7 @@ interface StoreHandlerState {
 }
 
 const StoreHandler = withComponentContext(
-  class StoreHandler extends React.Component<
-    StoreHandlerProps,
-    StoreHandlerState
-  > {
+  class StoreHandler extends React.Component<StoreHandlerProps, StoreHandlerState> {
     public static getDerivedStateFromProps(
       nextProps: StoreHandlerProps,
     ): StoreHandlerState {
@@ -33,7 +30,7 @@ const StoreHandler = withComponentContext(
         childProps: {
           ...nextProps.childProps,
           ...nextProps.mapStoresToProps(
-            nextProps.context,
+            nextProps.context.getStore,
             nextProps.childProps,
           ),
         },
@@ -75,18 +72,18 @@ const connectToStores = <Props, MappedProps = {}>(
   mapStoresToProps: StoreToPropMapper<Props, MappedProps>,
 ) => <ComponentProps extends object>(
   Component: React.ComponentClass<ComponentProps>,
-): ConnectedComponent<ComponentProps, MappedProps> =>
-  class ConnectToStoreComponent extends React.Component<
-    Pick<ComponentProps, Exclude<keyof ComponentProps, keyof MappedProps>>
-  > {
-    public render() {
-      return React.createElement(StoreHandler, {
-        mapStoresToProps,
-        stores,
-        childProps: this.props,
-        childComponent: Component,
-      })
+  ): ConnectedComponent<ComponentProps, MappedProps> =>
+    class ConnectToStoreComponent extends React.Component<
+      Pick<ComponentProps, Exclude<keyof ComponentProps, keyof MappedProps>>
+      > {
+      public render() {
+        return React.createElement(StoreHandler, {
+          mapStoresToProps,
+          stores,
+          childProps: this.props,
+          childComponent: Component,
+        })
+      }
     }
-  }
 
 export { connectToStores as default }
