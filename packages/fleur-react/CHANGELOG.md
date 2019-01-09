@@ -1,3 +1,7 @@
+### 0.0.11
+
+- #12 `connectToStores` now only passing `getStore` to `mapStoresToProps` function
+
 ### 0.0.10
 
 - #13 Accept functional component in some API on typing
