@@ -36,12 +36,9 @@ describe('connectToStores', () => {
   }
 
   // Component
-  const Component = connectToStores(
-    [TestStore],
-    (context: ComponentContext) => ({
-      count: context.getStore(TestStore).count,
-    }),
-  )(
+  const Component = connectToStores([TestStore], getStore => ({
+    count: getStore(TestStore).count,
+  }))(
     class Component extends React.Component<{
       count: number
       anotherProp: string

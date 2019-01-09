@@ -33,9 +33,9 @@ type Props = {
 } & ContextProp
 
 export default withComponentContext(
-    connectToStores([ RouteStore ], (context) => ({
+    connectToStores([ RouteStore ], (getStore) => ({
         // get routed route
-        route: context.getStore(RouteStore).getCurrentRoute()
+        route: getStore(RouteStore).getCurrentRoute()
     }))
 )(class App extends React.Component<Props> {
     render() {

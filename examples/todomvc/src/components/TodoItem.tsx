@@ -3,6 +3,7 @@ import {
   withComponentContext,
   ContextProp,
   connectToStores,
+  StoreGetter,
 } from '@ragg/fleur-react'
 import { ENTER_KEY, ESCAPE_KEY } from '../domain/constants'
 import { TodoEntity } from '../domain/Todo/store'
@@ -13,7 +14,6 @@ import {
   toggleTodo,
 } from '../domain/Todo/operations'
 import { setEditTodoId } from '../domain/App/operations'
-import { ComponentContext } from '@ragg/fleur'
 import { AppStore } from '../domain/App/store'
 
 interface Props extends ContextProp {
@@ -26,8 +26,8 @@ interface State {
   editText: string
 }
 
-const mapStoresToProps = (context: ComponentContext, props: Props) => ({
-  editing: context.getStore(AppStore).getEditingTodoId() === props.todo.id,
+const mapStoresToProps = (getStore: StoreGetter, props: Props) => ({
+  editing: getStore(AppStore).getEditingTodoId() === props.todo.id,
 })
 
 class TodoItemComponent extends React.Component<Props, State> {

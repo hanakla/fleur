@@ -3,10 +3,9 @@ import * as React from 'react'
 
 import withComponentContext from './withComponentContext'
 
-type StoreToPropMapper<P, T> = (
-  getStore: ComponentContext['getStore'],
-  props: P,
-) => T
+export type StoreGettter = ComponentContext['getStore']
+
+type StoreToPropMapper<P, T> = (getStore: StoreGettter, props: P) => T
 
 type ConnectedComponent<Props, MappedProps> = React.ComponentClass<
   Pick<Props, Exclude<keyof Props, keyof MappedProps>>
