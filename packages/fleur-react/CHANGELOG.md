@@ -1,3 +1,7 @@
+### 0.0.12
+
+- `f6b95d` Fix typo (`StoreGettter` → `StoreGetter`)
+
 ### 0.0.11
 
 - #12 `connectToStores` now only passing `getStore` to `mapStoresToProps` function
