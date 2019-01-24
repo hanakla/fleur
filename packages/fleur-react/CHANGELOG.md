@@ -1,3 +1,7 @@
+### 0.0.13
+
+- #14 Support React Hooks (`useStore`, `useComponentContext` added)
+
 ### 0.0.12
 
 - `f6b95d` Fix typo (`StoreGettter` → `StoreGetter`)
