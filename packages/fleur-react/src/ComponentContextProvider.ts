@@ -6,4 +6,4 @@ import { ComponentContext } from '@ragg/fleur'
 const ComponentContextProvider = React.createContext<ComponentContext>(
   null as any,
 )
-export default ComponentContextProvider
+export { ComponentContextProvider }

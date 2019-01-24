@@ -1,7 +1,7 @@
 import { ComponentContext } from '@ragg/fleur'
 import * as React from 'react'
 
-import ComponentContextProvider from './ComponentContextProvider'
+import { ComponentContextProvider } from './ComponentContextProvider'
 
 export interface ContextProp {
   context: ComponentContext
