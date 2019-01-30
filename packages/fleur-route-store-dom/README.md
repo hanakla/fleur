@@ -26,6 +26,7 @@ export default withStaticRoutes({
 
 // App.ts
 import { connectToStores, withComponentContext, ContextProp } from '@ragg/fleur-react'
+import { HistoryHandler } from '@ragg/fleur-route-store-dom'
 import { RouteStore } from './RouteStore'
 
 type Props = {
@@ -50,6 +51,8 @@ export default withComponentContext(
                     {/* heading... */}
                 </head>
                 <body>
+                    {/* Must to mount HistoryHandler component in application once */}
+                    <HistoryHandler />
                     <div>
                         {/* get .meta property from route.meta */}
                         {!route.meta.noHeader && <header />}
