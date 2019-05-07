@@ -1,7 +1,7 @@
 import { ComponentContext } from '@ragg/fleur'
 import * as React from 'react'
 
-import { ComponentContextProvider } from './ComponentContextProvider'
+import { useComponentContext } from './useComponentContext'
 
 export interface ContextProp {
   context: ComponentContext
@@ -14,25 +14,15 @@ type ExcludeContextProp<P extends ContextProp> = Pick<
 
 const withComponentContext = <Props extends ContextProp>(
   Component: React.ComponentType<Props>,
-): React.ComponentClass<ExcludeContextProp<Props>> =>
-  class WithComponentContext extends React.Component<
-    ExcludeContextProp<Props>
-  > {
-    public render() {
-      return React.createElement(ComponentContextProvider.Consumer, {
-        children: (context: ComponentContext) => {
-          return React.createElement(Component, {
-            ...(this.props as object),
-            ...({
-              context: {
-                executeOperation: context.executeOperation,
-                getStore: context.getStore,
-              },
-            } as any),
-          })
-        },
-      })
-    }
+): React.ComponentType<ExcludeContextProp<Props>> => {
+  return (props: Props) => {
+    const { getStore, executeOperation } = useComponentContext()
+
+    return React.createElement(Component, {
+      ...props,
+      context: { getStore, executeOperation },
+    })
   }
+}
 
 export { withComponentContext as default }
