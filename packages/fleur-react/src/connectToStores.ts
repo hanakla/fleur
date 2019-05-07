@@ -28,7 +28,7 @@ const connectToStores = <Props, MappedProps = {}>(
   return (props: any) => {
     const context = useComponentContext()
 
-    const [mappedProps, setState] = React.useState(
+    const [mappedProps, setState] = React.useState<MappedProps>(
       mapStoresToProps(context.getStore, props),
     )
 
