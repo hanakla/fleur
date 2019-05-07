@@ -35,7 +35,7 @@ describe('useStore', () => {
       count: getStore(TestStore).count,
     }))
 
-    return React.createElement('span', {}, count)
+    return `${count}`
   }
 
   // App
@@ -63,18 +63,17 @@ describe('useStore', () => {
     const element = createElementWithContext(context, Component)
     const renderer = create(element)
 
-    expect(renderer.toJSON()).toMatchObject({ children: ['10'] })
+    expect(renderer.root.children).toMatchObject(['10'])
     await context.executeOperation(op, {})
     await new Promise(r => requestAnimationFrame(r))
-    renderer.update(element)
-    expect(renderer.toJSON()).toMatchObject({ children: ['20'] })
+    expect(renderer.root.children).toMatchObject(['20'])
     renderer.unmount()
   })
 
   it('Should unlisten on component unmounted', async () => {
     const context = app.createContext()
     const renderer = create(createElementWithContext(context, Component))
-    await new Promise(r => setTimeout(r))
+    await new Promise(r => requestAnimationFrame(r))
 
     expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
     renderer.unmount()
