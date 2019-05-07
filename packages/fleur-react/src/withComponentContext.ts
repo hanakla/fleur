@@ -17,10 +17,14 @@ const withComponentContext = <Props extends ContextProp>(
 ): React.ComponentType<ExcludeContextProp<Props>> => {
   return (props: Props) => {
     const { getStore, executeOperation } = useComponentContext()
+    const context = React.useMemo(() => ({ getStore, executeOperation }), [
+      getStore,
+      executeOperation,
+    ])
 
     return React.createElement(Component, {
       ...props,
-      context: { getStore, executeOperation },
+      context,
     })
   }
 }
