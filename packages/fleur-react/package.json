@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fleur-react",
-  "version": "0.0.13",
+  "version": "0.0.14-pre.1",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-react",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
