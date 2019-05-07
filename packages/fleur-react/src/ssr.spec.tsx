@@ -8,6 +8,8 @@ import * as request from 'request-promise'
 
 import { ContextProp, createElementWithContext } from '.'
 import connectToStores from './connectToStores'
+import { useStore } from './useStore'
+import { FleurContext } from './ComponentContextProvider'
 
 describe('Sever side rendering', () => {
   let server: Server
@@ -31,11 +33,17 @@ describe('Sever side rendering', () => {
       }
     }
 
-    const Component = connectToStores([TestStore], getStore => ({
-      count: getStore(TestStore).getCount(),
-    }))((props: { count: number } & ContextProp) => (
-      <div>Your count {props.count}</div>
-    ))
+    // const Component = connectToStores([TestStore], getStore => ({
+    //   count: getStore(TestStore).getCount(),
+    // }))((props: { count: number }) => <div>{`Your count ${props.count}`}</div>)
+
+    const Component = () => {
+      const { count } = useStore([TestStore], getStore => ({
+        count: getStore(TestStore).getCount(),
+      }))
+
+      return <div>{`Your count ${count}`}</div>
+    }
 
     app = new Fleur({ stores: [TestStore] })
 
@@ -54,7 +62,11 @@ describe('Sever side rendering', () => {
               <head>
                 <script data-state={JSON.stringify(context.dehydrate())} />
               </head>
-              <body>{createElementWithContext(context, Component, {})}</body>
+              <body>
+                <FleurContext value={context}>
+                  <Component />
+                </FleurContext>
+              </body>
             </html>,
           ),
         )
@@ -68,6 +80,10 @@ describe('Sever side rendering', () => {
     server = serverApp.listen(31987)
   })
 
+  afterAll(() => {
+    server && server.close()
+  })
+
   it('test', async () => {
     try {
       // First request
@@ -77,11 +93,13 @@ describe('Sever side rendering', () => {
           .load(res1)('script')
           .attr('data-state'),
       )
+
       expect(res1).toContain('<div>Your count 10</div>')
       expect(dehydratedState1).toEqual({ stores: { TestStore: { count: 10 } } })
       const clientContext1 = app.createContext()
       clientContext1.rehydrate(dehydratedState1)
       expect(clientContext1.getStore('TestStore').state).toEqual({ count: 10 })
+
       // Another request
       const res2 = await request.get('http://localhost:31987/?amount=20')
       const dehydratedState2 = JSON.parse(
@@ -89,13 +107,13 @@ describe('Sever side rendering', () => {
           .load(res2)('script')
           .attr('data-state'),
       )
+
       expect(res2).toContain('<div>Your count 20</div>')
       expect(dehydratedState2).toEqual({ stores: { TestStore: { count: 20 } } })
       const clientContext2 = app.createContext()
       clientContext2.rehydrate(dehydratedState2)
       expect(clientContext2.getStore('TestStore').state).toEqual({ count: 20 })
     } catch (e) {
-      server && server.close()
       throw e
     }
   })
