@@ -1,3 +1,9 @@
+### 0.0.13
+
+- Trim unnecessory type argument
+  - `executeOperation<Actions>()` => `executeOperation()`
+  - `operation<ActionIdentifier?, Operation?>()` => `operation<Operation?>()`
+
 ### 0.0.12
 
 - Expose `ActionIdentifier` type
