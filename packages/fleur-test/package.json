@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fluer-test",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "author": "Ragg<ragg.devpr@gmail.com>",
@@ -13,5 +13,8 @@
     "jest": "24.8.0",
     "ts-jest": "23.10.4",
     "typescript": "3.4.5"
+  },
+  "dependencies": {
+    "@ragg/fleur": "*"
   }
 }
