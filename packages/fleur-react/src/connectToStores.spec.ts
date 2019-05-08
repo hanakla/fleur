@@ -1,9 +1,8 @@
 import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
-import * as React from 'react'
-import { mount } from 'enzyme'
 
 import connectToStores from './connectToStores'
 import { createElementWithContext } from './createElementWithContext'
+import { create } from 'react-test-renderer'
 
 describe('connectToStores', () => {
   // Action Identifier
@@ -30,58 +29,41 @@ describe('connectToStores', () => {
   }
 
   // Component
-  const Component = connectToStores([TestStore], getStore => ({
+  const Receiver = (props: { count: number; anotherProp: string }) => null
+  const Connected = connectToStores([TestStore], getStore => ({
     count: getStore(TestStore).count,
-  }))(
-    class Component extends React.Component<{
-      count: number
-      anotherProp: string
-    }> {
-      public render() {
-        return null
-      }
-    },
-  )
+  }))(Receiver)
 
   // App
   const app = new Fleur({ stores: [TestStore] })
 
   it('Should passed non connected props', () => {
     const context = app.createContext()
-    const wrapper = mount(
-      createElementWithContext(context, Component, {
-        anotherProp: 'anotherProp',
-      }),
-    )
+    const element = createElementWithContext(context, Connected, {
+      anotherProp: 'anotherProp',
+    })
+    const { root, update, unmount } = create(element)
+    update(element)
 
-    expect(wrapper.find('Component').props()).toEqual(
-      expect.objectContaining({
-        anotherProp: 'anotherProp',
-      }),
-    )
+    expect(root.findByType(Receiver).props).toMatchObject({
+      anotherProp: 'anotherProp',
+    })
 
-    wrapper.unmount()
+    unmount()
   })
 
   it('Should map stores to props', async () => {
     const context = app.createContext()
-    const wrapper = mount(createElementWithContext(context, Component))
+    const element = createElementWithContext(context, Connected, {})
+    const { root, update, unmount } = create(element)
+    update(element)
 
-    expect(wrapper.find('Component').props()).toEqual({ count: 10 })
+    expect(root.findByType(Receiver).props).toEqual({ count: 10 })
 
     await context.executeOperation(op, {})
     await new Promise(r => requestAnimationFrame(r))
-    wrapper.update()
-    expect(wrapper.find('Component').props()).toEqual({ count: 20 })
-    wrapper.unmount()
-  })
 
-  it('Should unlisten on component unmounted', () => {
-    const context = app.createContext()
-    const wrapper = mount(createElementWithContext(context, Component))
-
-    expect(context.getStore(TestStore).listeners['onChange']).toHaveLength(1)
-    wrapper.unmount()
-    expect(context.getStore(TestStore).listeners['onChange']).toHaveLength(0)
+    expect(root.findByType(Receiver).props).toEqual({ count: 20 })
+    unmount()
   })
 })

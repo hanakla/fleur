@@ -1,3 +1,8 @@
+### 0.0.14
+
+- #15 Internal refactoring to using hooks
+- #15 Expose `FleurContext`
+
 ### 0.0.13
 
 - #14 Support React Hooks (`useStore`, `useComponentContext` added)

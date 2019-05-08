@@ -6,6 +6,7 @@ import {
   ContextProp,
   createElementWithContext,
   withComponentContext,
+  useStore,
 } from '../../fleur-react/src'
 
 jest.setTimeout(10000)
@@ -39,17 +40,13 @@ describe('benchmark', () => {
       }
     }
 
-    const Component = withComponentContext(
-      connectToStores([TestStore], getStore => ({
+    const Component = () => {
+      const { count } = useStore([TestStore], getStore => ({
         count: getStore(TestStore).count,
-      }))(
-        class extends React.Component<{ count: number } & ContextProp> {
-          public render() {
-            return React.createElement('div', {}, `${this.props.count}`)
-          }
-        },
-      ),
-    )
+      }))
+
+      return React.createElement('div', {}, `${count}`)
+    }
 
     const app = new Fleur({
       stores: [TestStore],
@@ -102,17 +99,12 @@ describe('benchmark', () => {
         },
     )
 
-    const Component = withComponentContext(
-      connectToStores(stores, getStore => ({
+    const Component = () => {
+      const { values } = useStore(stores, getStore => ({
         values: stores.map(s => getStore(s).count),
-      }))(
-        class extends React.Component<{ count: number } & ContextProp> {
-          public render() {
-            return null
-          }
-        },
-      ),
-    )
+      }))
+      return null
+    }
 
     const app = new Fleur({ stores })
 

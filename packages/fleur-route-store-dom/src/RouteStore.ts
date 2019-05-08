@@ -84,7 +84,7 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
   public makePath(
     routeName: keyof R,
     params: object = {},
-    query: object = {},
+    query: qs.ParsedUrlQueryInput = {},
   ): string {
     const path = this.routes[routeName as string]
     if (!path) throw new Error(`Matched route name not found: ${routeName}`)

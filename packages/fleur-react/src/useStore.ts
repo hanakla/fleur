@@ -1,36 +1,39 @@
-import { useEffect, useState } from 'react'
-import { useComponentContext } from './useComponentContext'
+import { useCallback, useEffect, useState, useLayoutEffect } from 'react'
+
 import { StoreClass } from '@ragg/fleur'
+import { useComponentContext } from './useComponentContext'
 import { StoreGetter } from './connectToStores'
-import { useCallback } from 'react'
 
 type StoreToPropMapper = (getStore: StoreGetter) => any
+
+const useIsomorphicEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export const useStore = <Mapper extends StoreToPropMapper>(
   stores: StoreClass[],
   mapStoresToProps: Mapper,
 ): ReturnType<Mapper> => {
-  const context = useComponentContext()
+  const { getStore } = useComponentContext()
+
   const [state, setState] = useState<ReturnType<Mapper>>(
-    mapStoresToProps(context.getStore),
+    mapStoresToProps(getStore),
   )
 
-  const mapper = useCallback(
-    () => setState(mapStoresToProps(context.getStore)),
-    [],
-  )
+  const mapper = useCallback(() => {
+    setState(mapStoresToProps(getStore))
+  }, [])
 
-  useEffect(() => {
+  useIsomorphicEffect(() => {
     stores.forEach(store => {
-      context.getStore(store).on('onChange', mapper)
+      getStore(store).on('onChange', mapper)
     })
 
     return () => {
       stores.forEach(store => {
-        context.getStore(store).off('onChange', mapper)
+        getStore(store).off('onChange', mapper)
       })
     }
-  })
+  }, [])
 
   return state
 }

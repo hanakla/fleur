@@ -1,9 +1,15 @@
-import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
-import { create } from 'react-test-renderer'
+import Fleur, {
+  action,
+  listen,
+  operation,
+  Store,
+  AppContext,
+} from '@ragg/fleur'
 import * as React from 'react'
+import { renderHook, act } from 'react-hooks-testing-library'
 
 import { useStore } from './useStore'
-import { createElementWithContext } from './createElementWithContext'
+import { FleurContext } from './ComponentContextProvider'
 
 describe('useStore', () => {
   // Action Identifier
@@ -29,55 +35,43 @@ describe('useStore', () => {
     })
   }
 
-  // Component
-  const Component = (props: { anotherProp: string }) => {
-    const { count } = useStore([TestStore], getStore => ({
-      count: getStore(TestStore).count,
-    }))
-
-    return React.createElement('span', {}, count)
-  }
-
   // App
   const app = new Fleur({ stores: [TestStore] })
 
-  it('Should passed non connected props', () => {
+  const wrapperFactory = (context: AppContext) => {
+    return ({ children }: { children: React.ReactNode }) =>
+      React.createElement(FleurContext, { value: context }, children)
+  }
+
+  it('Should map stores to states', async () => {
     const context = app.createContext()
-    const renderer = create(
-      createElementWithContext(context, Component, {
-        anotherProp: 'anotherProp',
-      }),
+    const { result, rerender, unmount } = renderHook(
+      () =>
+        useStore([TestStore], getStore => ({
+          count: getStore(TestStore).count,
+        })),
+      { wrapper: wrapperFactory(context) },
     )
 
-    expect(renderer.root.props).toEqual(
-      expect.objectContaining({
-        anotherProp: 'anotherProp',
-      }),
-    )
+    expect(result.current).toMatchObject({ count: 10 })
 
-    renderer.unmount()
-  })
-
-  it('Should map stores to props', async () => {
-    const context = app.createContext()
-    const element = createElementWithContext(context, Component)
-    const renderer = create(element)
-
-    expect(renderer.toJSON()).toMatchObject({ children: ['10'] })
-    await context.executeOperation(op, {})
+    act(() => {
+      context.executeOperation(op, {})
+    })
     await new Promise(r => requestAnimationFrame(r))
-    renderer.update(element)
-    expect(renderer.toJSON()).toMatchObject({ children: ['20'] })
-    renderer.unmount()
+
+    expect(result.current).toMatchObject({ count: 20 })
+    unmount()
   })
 
   it('Should unlisten on component unmounted', async () => {
     const context = app.createContext()
-    const renderer = create(createElementWithContext(context, Component))
-    await new Promise(r => setTimeout(r))
+    const { unmount } = renderHook(() => useStore([TestStore], () => ({})), {
+      wrapper: wrapperFactory(context),
+    })
 
     expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
-    renderer.unmount()
+    unmount()
     expect(context.getStore(TestStore).listeners.onChange).toHaveLength(0)
   })
 })
