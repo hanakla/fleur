@@ -1,7 +1,7 @@
 import { ComponentContext, StoreClass } from '@ragg/fleur'
 import * as React from 'react'
 
-import { useComponentContext } from './useComponentContext'
+import { useStore } from './useStore'
 
 export type StoreGetter = ComponentContext['getStore']
 
@@ -11,14 +11,6 @@ type ConnectedComponent<Props, MappedProps> = React.ComponentType<
   Pick<Props, Exclude<keyof Props, keyof MappedProps>>
 >
 
-export interface StoreHandlerProps {
-  mapStoresToProps: (...args: any[]) => any
-  context: ComponentContext
-  stores: StoreClass[]
-  childProps: any
-  childComponent: React.ComponentType
-}
-
 const connectToStores = <Props, MappedProps = {}>(
   stores: StoreClass[],
   mapStoresToProps: StoreToPropMapper<Props, MappedProps>,
@@ -26,28 +18,9 @@ const connectToStores = <Props, MappedProps = {}>(
   Component: React.ComponentType<ComponentProps>,
 ): ConnectedComponent<ComponentProps, MappedProps> => {
   return (props: any) => {
-    const context = useComponentContext()
-
-    const [mappedProps, setState] = React.useState<MappedProps>(
-      mapStoresToProps(context.getStore, props),
+    const mappedProps = useStore(stores, (getStore: StoreGetter) =>
+      mapStoresToProps(getStore, props),
     )
-
-    const mapStoresToState = React.useCallback(
-      () => setState(mapStoresToProps(context.getStore, props)),
-      [mapStoresToProps],
-    )
-
-    React.useEffect(() => {
-      stores.forEach(store => {
-        context.getStore(store).on('onChange', mapStoresToState)
-      })
-
-      return () => {
-        stores.forEach(store => {
-          context.getStore(store).off('onChange', mapStoresToState)
-        })
-      }
-    }, [])
 
     return React.createElement(Component, { ...props, ...mappedProps })
   }
