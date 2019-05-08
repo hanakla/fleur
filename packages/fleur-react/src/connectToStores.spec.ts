@@ -1,5 +1,4 @@
 import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
-import * as React from 'react'
 
 import connectToStores from './connectToStores'
 import { createElementWithContext } from './createElementWithContext'
@@ -40,43 +39,31 @@ describe('connectToStores', () => {
 
   it('Should passed non connected props', () => {
     const context = app.createContext()
-    const { root, unmount } = create(
-      createElementWithContext(context, Connected, {
-        anotherProp: 'anotherProp',
-      }),
-    )
+    const element = createElementWithContext(context, Connected, {
+      anotherProp: 'anotherProp',
+    })
+    const { root, update, unmount } = create(element)
+    update(element)
 
-    expect(root.findByType(Connected).props).toEqual(
-      expect.objectContaining({
-        anotherProp: 'anotherProp',
-      }),
-    )
+    expect(root.findByType(Receiver).props).toMatchObject({
+      anotherProp: 'anotherProp',
+    })
 
     unmount()
   })
 
   it('Should map stores to props', async () => {
     const context = app.createContext()
-    const { root, unmount } = create(
-      createElementWithContext(context, Connected),
-    )
+    const element = createElementWithContext(context, Connected, {})
+    const { root, update, unmount } = create(element)
+    update(element)
 
     expect(root.findByType(Receiver).props).toEqual({ count: 10 })
 
     await context.executeOperation(op, {})
     await new Promise(r => requestAnimationFrame(r))
+
     expect(root.findByType(Receiver).props).toEqual({ count: 20 })
     unmount()
-  })
-
-  it('Should unlisten on component unmounted', async () => {
-    const context = app.createContext()
-    const wrapper = create(createElementWithContext(context, Connected))
-    await new Promise(r => requestAnimationFrame(r))
-
-    expect(context.getStore(TestStore).listeners['onChange']).toHaveLength(1)
-    wrapper.unmount()
-    await new Promise(r => requestAnimationFrame(r))
-    expect(context.getStore(TestStore).listeners['onChange']).toHaveLength(0)
   })
 })
