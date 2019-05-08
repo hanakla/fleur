@@ -11,15 +11,15 @@
     "prepublishOnly": "rm -rf ./{lib,typings} \n tsc --emitDeclarationOnly --declaration --outDir ./typings \n tsc --outDir lib"
   },
   "peerDependencies": {
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
     "@types/cheerio": "0.22.9",
     "@types/express": "4.16.0",
     "@types/jest": "23.3.5",
-    "@types/react": "16.7.20",
-    "@types/react-test-renderer": "16.0.3",
+    "@types/react": "16.8.17",
+    "@types/react-test-renderer": "16.8.1",
     "@types/request-promise": "4.1.42",
     "cheerio": "1.0.0-rc.2",
     "express": "4.16.4",
