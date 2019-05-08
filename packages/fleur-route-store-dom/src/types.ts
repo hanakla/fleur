@@ -4,7 +4,7 @@ import { Action } from 'history'
 export interface Route {
   path: string
   action?: (
-    context: OperationContext<any>,
+    context: OperationContext,
     route: MatchedRoute,
   ) => Promise<any> | void
   handler: any

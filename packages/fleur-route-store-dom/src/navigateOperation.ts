@@ -5,7 +5,7 @@ import RouteStore from './RouteStore'
 
 export const navigateOperation = operation(
   async (
-    context: OperationContext<any>,
+    context: OperationContext,
     {
       url,
       type,

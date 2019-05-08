@@ -11,7 +11,7 @@ export class MockOperationContext {
     this.stores = stores
   }
 
-  public async executeOperation<O extends Operation<any>>(
+  public async executeOperation<O extends Operation>(
     operation: O,
     arg: OperationArg<O>,
   ): Promise<void> {

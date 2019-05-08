@@ -1,4 +1,4 @@
-import { action, ExtractActionIdentifiersFromObject } from './Action'
+import { action } from './Action'
 import Fleur from './Fleur'
 import { operation } from './Operations'
 import Store, { listen } from './Store'
@@ -22,8 +22,6 @@ describe('Fleur', () => {
         this.state.count -= p.decrease
       })
     }
-
-    type AppActions = ExtractActionIdentifiersFromObject<typeof actions>
 
     const app = new Fleur({
       stores: [TestStore],
