@@ -3,10 +3,10 @@ import AppContext from './AppContext'
 import { Operation, OperationArg } from './Operations'
 import { StoreClass } from './Store'
 
-class OperationContext<Actions extends ActionIdentifier<any>> {
+class OperationContext {
   constructor(private context: AppContext) {}
 
-  public async executeOperation<O extends Operation<Actions>>(
+  public async executeOperation<O extends Operation>(
     operator: O,
     arg: OperationArg<O>,
   ): Promise<void> {
@@ -17,7 +17,10 @@ class OperationContext<Actions extends ActionIdentifier<any>> {
     return this.context.getStore(storeClass)
   }
 
-  public dispatch<AI extends Actions>(type: AI, payload: ReturnType<AI>): void {
+  public dispatch<AI extends ActionIdentifier<any>>(
+    type: AI,
+    payload: ReturnType<AI>,
+  ): void {
     this.context.dispatch(type, payload)
   }
 }

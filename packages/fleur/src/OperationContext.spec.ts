@@ -3,7 +3,7 @@ import Fleur from './Fleur'
 import OperationContext from './OperationContext'
 
 describe('OperationContext', () => {
-  let context: OperationContext<any>
+  let context: OperationContext
 
   beforeEach(() => {
     const app = new Fleur()

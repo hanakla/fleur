@@ -5,7 +5,7 @@ import { StoreClass } from './Store'
 export default class ComponentContext {
   constructor(private context: AppContext) {}
 
-  public executeOperation = <T extends Operation<any>>(
+  public executeOperation = <T extends Operation>(
     operation: T,
     arg: OperationArg<T>,
   ): void => {

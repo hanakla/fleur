@@ -16,7 +16,7 @@ export default class AppContext<
   Actions extends ActionIdentifier<any> = ActionIdentifier<any>
 > {
   public readonly dispatcher: Dispatcher
-  public readonly operationContext: OperationContext<any>
+  public readonly operationContext: OperationContext
   public readonly componentContext: ComponentContext
   public readonly stores: Map<string, Store<any>> = new Map()
   public readonly actionCallbackMap: Map<
@@ -75,7 +75,7 @@ export default class AppContext<
     )
   }
 
-  public async executeOperation<T extends Operation<Actions>>(
+  public async executeOperation<T extends Operation>(
     operation: T,
     arg: OperationArg<T>,
   ): Promise<void> {
