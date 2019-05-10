@@ -8,7 +8,7 @@ type Props = ContextProp & React.AnchorHTMLAttributes<HTMLAnchorElement>
 export const Link = withComponentContext(
   class Link extends React.Component<Props> {
     public render() {
-      const { context, onClick, ...rest } = this.props
+      const { onClick, ...rest } = this.props
       return React.createElement('a', { ...rest, onClick: this.handleClick })
     }
 
@@ -28,7 +28,7 @@ export const Link = withComponentContext(
       if (!this.isRoutable()) return
 
       e.preventDefault()
-      this.props.context.executeOperation(navigateOperation, {
+      this.props.executeOperation(navigateOperation, {
         url: parse(this.props.href!).pathname!,
       })
     }

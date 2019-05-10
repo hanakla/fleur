@@ -22,7 +22,7 @@ export const AppRoot = props => {
 
   const handleCountClick = useCallback(() => {
     context.executeOperation(increaseOp)
-  })
+  }, [])
 
   return <div onClick={handleCountClick}>{count}</div>
 }
@@ -50,8 +50,8 @@ export default withComponentContext(
   }))(
     class AppRoot extends React.PureComponent {
       private handleCountClick = () => {
-        // ** `this.props.context: Fleur.ComponentContext` provide by `withComponentContext()`
-        this.props.context.executeOperation(increaseOp)
+        // ** `this.props.{executeOperation, getStore}` provide by `withComponentContext()`
+        this.props.executeOperation(increaseOp)
       }
 
       render() {
