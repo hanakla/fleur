@@ -4,6 +4,13 @@ exports[`mockStoreContext Should create Store entry correctly 1`] = `
 Object {
   "name": "SomeStore",
   "store": SomeStore {
+    "context": StoreContext {
+      "animateId": -1,
+      "batch": [Function],
+      "dispatchChange": [Function],
+      "enqueueToUpdate": [Function],
+      "updateQueue": Set {},
+    },
     "listeners": Object {},
     "requestId": null,
     "state": Object {
