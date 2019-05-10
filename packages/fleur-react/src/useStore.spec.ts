@@ -56,7 +56,7 @@ describe('useStore', () => {
     expect(result.current).toMatchObject({ count: 10 })
 
     act(() => {
-      context.executeOperation(op, {})
+      context.executeOperation(op)
     })
     await new Promise(r => requestAnimationFrame(r))
 

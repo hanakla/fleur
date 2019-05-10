@@ -4,7 +4,8 @@ import * as React from 'react'
 import { useComponentContext } from './useComponentContext'
 
 export interface ContextProp {
-  context: ComponentContext
+  getStore: ComponentContext['getStore']
+  executeOperation: ComponentContext['executeOperation']
 }
 
 type ExcludeContextProp<P extends ContextProp> = Pick<
@@ -17,14 +18,11 @@ const withComponentContext = <Props extends ContextProp>(
 ): React.ComponentType<ExcludeContextProp<Props>> => {
   return (props: Props) => {
     const { getStore, executeOperation } = useComponentContext()
-    const context = React.useMemo(() => ({ getStore, executeOperation }), [
-      getStore,
-      executeOperation,
-    ])
 
     return React.createElement(Component, {
       ...props,
-      context,
+      getStore,
+      executeOperation,
     })
   }
 }

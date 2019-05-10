@@ -1,3 +1,7 @@
+### 0.0.15
+
+- #18 Shorten context prop API
+
 ### 0.0.14
 
 - #15 Internal refactoring to using hooks

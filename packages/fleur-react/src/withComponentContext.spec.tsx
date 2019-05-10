@@ -18,10 +18,8 @@ describe('withComponentContext', () => {
     )
 
     expect(root.findByType(Receiver).props).toEqual({
-      context: {
-        executeOperation: context.componentContext.executeOperation,
-        getStore: context.componentContext.getStore,
-      },
+      executeOperation: context.componentContext.executeOperation,
+      getStore: context.componentContext.getStore,
       prop: 'prop string',
     })
 
