@@ -3,6 +3,11 @@ import Store from './Store'
 export class StoreContext {
   private updateQueue = new Set<Store>()
   private animateId: number = -1
+  private batch = (cb: () => void) => cb()
+
+  public injectBatch(batch: () => void) {
+    this.batch = batch
+  }
 
   public enqueueToUpdate(store: Store) {
     this.updateQueue.add(store)
@@ -18,7 +23,10 @@ export class StoreContext {
 
   private dispatchChange = () => {
     if (this.updateQueue.size <= 0) return
-    this.updateQueue.forEach(store => store.emit('onChange', void 0))
-    this.updateQueue.clear()
+
+    this.batch(() => {
+      this.updateQueue.forEach(store => store.emit('onChange', void 0))
+      this.updateQueue.clear()
+    })
   }
 }
