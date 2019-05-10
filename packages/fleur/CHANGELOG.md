@@ -1,3 +1,8 @@
+### 0.0.14
+
+- #17 Accept multiple arguments in `.executeOperation()`
+  `.executeOperation((context, payload) => {})` => `.executeOperation((context, arg1, arg2) => {})`
+
 ### 0.0.13
 
 - Trim unnecessory type argument
