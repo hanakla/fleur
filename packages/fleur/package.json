@@ -21,7 +21,7 @@
     "typescript": "3.4.5"
   },
   "dependencies": {
-    "immer": "1.8.0",
-    "invariant": "2.2.4"
+    "immer": "^1.8.0",
+    "invariant": "^2.2.4"
   }
 }

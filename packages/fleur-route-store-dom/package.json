@@ -12,13 +12,13 @@
     "prepublishOnly": "rm -rf typings && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib"
   },
   "peerDependencies": {
-    "@ragg/fleur": "*",
-    "@ragg/fleur-react": "*"
+    "@ragg/fleur": ">= 0.0.14",
+    "@ragg/fleur-react": ">= 0.0.14"
   },
   "dependencies": {
-    "history": "4.7.2",
-    "lodash": "4.17.11",
-    "path-to-regexp": "2.4.0"
+    "history": "^4.7.2",
+    "lodash": "^4.17.11",
+    "path-to-regexp": "^2.4.0"
   },
   "devDependencies": {
     "@types/history": "4.7.2",
