@@ -23,5 +23,6 @@
   "dependencies": {
     "immer": "^1.8.0",
     "invariant": "^2.2.4"
-  }
+  },
+  "sideEffects": false
 }
