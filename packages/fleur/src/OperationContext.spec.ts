@@ -10,9 +10,15 @@ describe('OperationContext', () => {
     context = app.createContext().operationContext
   })
 
+  it('#executeOperation should receive arguments', () => {
+    const spy = jest.fn()
+    context.executeOperation(spy, 'a', 'b')
+    expect(spy).toBeCalledWith(context, 'a', 'b')
+  })
+
   it('#executeOperation should returns Promise', () => {
-    const op = operation(async (context, a: string, b: string) => {})
-    const returns = context.executeOperation(op, 'a', 'b')
+    const op = operation(() => {})
+    const returns = context.executeOperation(op)
     expect(returns).toBeInstanceOf(Promise)
   })
 })
