@@ -1,5 +1,5 @@
 import { Store, StoreClass } from '@ragg/fleur'
-import { Operation, OperationArg } from '@ragg/fleur/typings/Operations'
+import { Operation, OperationArgs } from '@ragg/fleur/typings/Operations'
 import { ActionIdentifier } from '@ragg/fleur'
 import { MockStore } from './mockStore'
 
@@ -13,9 +13,9 @@ export class MockOperationContext {
 
   public async executeOperation<O extends Operation>(
     operation: O,
-    arg: OperationArg<O>,
+    ...args: OperationArgs<O>
   ): Promise<void> {
-    await Promise.resolve(operation(this as any, arg))
+    await Promise.resolve(operation(this as any, ...args))
   }
 
   public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T> {

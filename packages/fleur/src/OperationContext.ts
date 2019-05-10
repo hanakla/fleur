@@ -1,6 +1,6 @@
 import { ActionIdentifier } from './Action'
 import AppContext from './AppContext'
-import { Operation, OperationArg } from './Operations'
+import { Operation, OperationArgs } from './Operations'
 import { StoreClass } from './Store'
 
 class OperationContext {
@@ -8,9 +8,9 @@ class OperationContext {
 
   public async executeOperation<O extends Operation>(
     operator: O,
-    arg: OperationArg<O>,
+    ...args: OperationArgs<O>
   ): Promise<void> {
-    await this.context.executeOperation(operator, arg)
+    await this.context.executeOperation(operator, ...args)
   }
 
   public getStore<T extends StoreClass>(storeClass: T): InstanceType<T> {

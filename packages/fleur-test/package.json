@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fluer-test",
-  "version": "0.1.1",
+  "version": "0.1.2-pre.1",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "author": "Ragg<ragg.devpr@gmail.com>",
@@ -9,12 +9,12 @@
     "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib",
     "test": "jest --verbose"
   },
+  "peerDependencies": {
+    "@ragg/fleur": "*"
+  },
   "devDependencies": {
     "jest": "24.8.0",
     "ts-jest": "23.10.4",
     "typescript": "3.4.5"
-  },
-  "dependencies": {
-    "@ragg/fleur": "*"
   }
 }

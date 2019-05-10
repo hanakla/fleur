@@ -1,6 +1,6 @@
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
 import Fleur from './Fleur'
 import OperationContext from './OperationContext'
+import { operation } from './Operations'
 
 describe('OperationContext', () => {
   let context: OperationContext
@@ -10,9 +10,15 @@ describe('OperationContext', () => {
     context = app.createContext().operationContext
   })
 
+  it('#executeOperation should receive arguments', () => {
+    const spy = jest.fn()
+    context.executeOperation(spy, 'a', 'b')
+    expect(spy).toBeCalledWith(context, 'a', 'b')
+  })
+
   it('#executeOperation should returns Promise', () => {
-    const op = async () => {}
-    const returns = context.executeOperation(op, {})
+    const op = operation(() => {})
+    const returns = context.executeOperation(op)
     expect(returns).toBeInstanceOf(Promise)
   })
 })
