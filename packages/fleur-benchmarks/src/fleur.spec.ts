@@ -13,7 +13,9 @@ jest.setTimeout(10000)
 
 describe('benchmark', () => {
   beforeEach(() => {
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb())
+    jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation(cb => setTimeout(cb))
   })
 
   it('Fleur / rendering time', async () => {
