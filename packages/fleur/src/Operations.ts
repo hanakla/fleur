@@ -1,10 +1,10 @@
 import OperationContext from './OperationContext'
 
 export interface Operation {
-  (context: OperationContext, arg: any): Promise<void> | void
+  (_: OperationContext, ...args: any[]): Promise<void> | void
 }
 
-export type OperationArg<T> = T extends (_: any, arg: infer A) => any
+export type OperationArgs<T> = T extends (_: any, ...args: infer A) => any
   ? A
   : never
 

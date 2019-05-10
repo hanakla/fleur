@@ -5,7 +5,7 @@ import ComponentContext from './ComponentContext'
 import Dispatcher from './Dispatcher'
 import Fleur from './Fleur'
 import OperationContext from './OperationContext'
-import { Operation, OperationArg } from './Operations'
+import { Operation, OperationArgs } from './Operations'
 import Store, { StoreClass } from './Store'
 
 export interface HydrateState {
@@ -75,11 +75,11 @@ export default class AppContext<
     )
   }
 
-  public async executeOperation<T extends Operation>(
-    operation: T,
-    arg: OperationArg<T>,
+  public async executeOperation<O extends Operation>(
+    operation: O,
+    ...args: OperationArgs<O>
   ): Promise<void> {
-    await Promise.resolve(operation(this.operationContext, arg))
+    await Promise.resolve(operation(this.operationContext, ...args))
   }
 
   public dispatch<A extends Actions>(
