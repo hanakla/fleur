@@ -1,3 +1,7 @@
+### 0.0.17
+
+- #20 Support forwardRef
+
 ### 0.0.16
 
 - # 19 FleurContext injects `unstable_batchedUpdates` into StoreContext on mounted
