@@ -3,6 +3,7 @@ import Fleur from './Fleur'
 export { ActionIdentifier } from './Action'
 export { Fleur as default } // Aliasing for editor intellisense
 export { default as Store, StoreClass, listen } from './Store'
+export { StoreContext } from './StoreContext'
 export { default as OperationContext } from './OperationContext'
 export { action, actions, ActionsOf } from './Action'
 export { default as AppContext } from './AppContext'

@@ -2,10 +2,11 @@ import immer, { Draft } from 'immer'
 
 import { ActionIdentifier, ExtractPayloadType } from './Action'
 import Emitter from './Emitter'
+import { StoreContext } from './StoreContext'
 
 export interface StoreClass<T = {}> {
   storeName: string
-  new (...args: any[]): Store<T>
+  new (context: StoreContext): Store<T>
 }
 
 export const listen = <A extends ActionIdentifier<any>>(
@@ -27,6 +28,10 @@ export default class Store<T = any> extends Emitter<StoreEvents> {
   protected state: T
   protected requestId: number | null = null
 
+  constructor(private context: StoreContext) {
+    super()
+  }
+
   public rehydrate(state: any): void {
     this.state = state
   }
@@ -44,12 +49,6 @@ export default class Store<T = any> extends Emitter<StoreEvents> {
       producer(draft)
     })
 
-    // Batched update only client side
-    if (typeof requestAnimationFrame === 'function') {
-      this.requestId != null && cancelAnimationFrame(this.requestId)
-      this.requestId = requestAnimationFrame(() => this.emitChange())
-    } else {
-      this.emitChange()
-    }
+    this.context.enqueueToUpdate(this)
   }
 }

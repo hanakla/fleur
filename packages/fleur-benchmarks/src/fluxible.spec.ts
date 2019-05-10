@@ -54,21 +54,23 @@ describe('benchmark', () => {
     const context = app.createContext()
     context.getStore(TestStore)
     const div = document.createElement('div')
+    await new Promise(r =>
+      ReactDOM.render(createElementWithContext(context, {}), div, r),
+    )
 
     console.time(`Fluxible dispatch action ${numOfDispatches} times`)
     for (let count = 1; count < numOfDispatches + 1; count++) {
       await context.executeAction(incrementOperation, {})
-      await new Promise(r =>
-        ReactDOM.render(createElementWithContext(context, {}), div, r),
-      )
-      expect(div.innerHTML).toBe(`<div>${count}</div>`)
     }
+
+    await new Promise(r => requestAnimationFrame(r))
+    expect(div.innerHTML).toBe(`<div>${numOfDispatches}</div>`)
     expect(callCounter.mock.calls.length).toBe(numOfDispatches)
     console.timeEnd(`Fluxible dispatch action ${numOfDispatches} times`)
   })
 
   it('Fluxible / Store update time', async () => {
-    const numOfStores = 100000
+    const numOfStores = 1000
     const callCounter = jest.fn()
 
     const incrementOperation = ctx => {
@@ -109,16 +111,17 @@ describe('benchmark', () => {
       component: Component,
       stores: stores,
     })
-
     const context = app.createContext()
     stores.forEach(s => context.getStore(s))
     const div = document.createElement('div')
-
-    console.time(`Fluxible update ${numOfStores} stores once`)
-    await context.executeAction(incrementOperation, {})
     await new Promise(r =>
       ReactDOM.render(createElementWithContext(context, {}), div, r),
     )
+
+    console.time(`Fluxible update ${numOfStores} stores once`)
+    await context.executeAction(incrementOperation, {})
+    await new Promise(r => requestAnimationFrame(r))
+
     expect(callCounter.mock.calls.length).toBe(numOfStores)
     console.timeEnd(`Fluxible update ${numOfStores} stores once`)
   })

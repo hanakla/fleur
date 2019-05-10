@@ -7,6 +7,7 @@ import Fleur from './Fleur'
 import OperationContext from './OperationContext'
 import { Operation, OperationArgs } from './Operations'
 import Store, { StoreClass } from './Store'
+import { StoreContext } from './StoreContext'
 
 export interface HydrateState {
   stores: { [storeName: string]: object }
@@ -18,6 +19,7 @@ export default class AppContext<
   public readonly dispatcher: Dispatcher
   public readonly operationContext: OperationContext
   public readonly componentContext: ComponentContext
+  public readonly storeContext: StoreContext
   public readonly stores: Map<string, Store<any>> = new Map()
   public readonly actionCallbackMap: Map<
     StoreClass,
@@ -28,6 +30,7 @@ export default class AppContext<
     this.dispatcher = new Dispatcher()
     this.operationContext = new OperationContext(this)
     this.componentContext = new ComponentContext(this)
+    this.storeContext = new StoreContext()
     this.app.stores.forEach(StoreClass => {
       this.initializeStore(StoreClass)
     })
@@ -103,7 +106,7 @@ export default class AppContext<
     }
 
     const StoreConstructor = this.app.stores.get(storeName)!
-    const store = new StoreConstructor()
+    const store = new StoreConstructor(this.storeContext)
     const actionCallbackMap = new Map<
       ActionIdentifier<any>,
       ((payload: any) => void)[]

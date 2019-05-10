@@ -1,18 +1,16 @@
-import { AppContext, ComponentContext } from '@ragg/fleur'
+import { AppContext } from '@ragg/fleur'
 import * as React from 'react'
 
-import { ComponentContextProvider } from './ComponentContextProvider'
+import { FleurContext } from './ComponentContextProvider'
 
 const createElementWithContext = <P>(
   context: AppContext<any>,
   Component: React.ComponentType<P>,
   props?: P,
-): React.ReactElement<React.ProviderProps<ComponentContext>> =>
+): React.ReactElement =>
   React.createElement(
-    ComponentContextProvider.Provider,
-    {
-      value: context.componentContext,
-    },
+    FleurContext,
+    { value: context },
     React.createElement(Component, props || ({} as any)),
   )
 

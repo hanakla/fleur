@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fleur-react",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-react",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
@@ -11,8 +11,8 @@
     "prepublishOnly": "rm -rf ./{lib,typings} \n tsc --emitDeclarationOnly --declaration --outDir ./typings \n tsc --outDir lib"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": ">= 16.8.x",
+    "react-dom": ">= 16.8.x"
   },
   "devDependencies": {
     "@types/cheerio": "0.22.9",
