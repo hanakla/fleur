@@ -1,3 +1,7 @@
+### 0.0.16
+
+- #19 Store update group batched by requestAnimationFrame
+
 ### 0.0.15
 
 - Loose production dependency version
