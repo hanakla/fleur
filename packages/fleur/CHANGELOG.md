@@ -1,3 +1,8 @@
+### 0.0.15
+
+- Loose production dependency version
+- Enable `sideEffects: false`
+
 ### 0.0.14
 
 - #17 Accept multiple arguments in `.executeOperation()`
