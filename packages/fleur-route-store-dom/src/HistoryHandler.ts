@@ -79,7 +79,7 @@ export const HistoryHandler = withComponentContext(
         { pathname },
         action,
       ) => {
-        this.props.context.executeOperation(navigateOperation, {
+        this.props.executeOperation(navigateOperation, {
           type: action,
           url: pathname,
         })

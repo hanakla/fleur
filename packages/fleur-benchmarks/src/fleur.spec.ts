@@ -1,13 +1,7 @@
 import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {
-  connectToStores,
-  ContextProp,
-  createElementWithContext,
-  withComponentContext,
-  useStore,
-} from '../../fleur-react/src'
+import { createElementWithContext, useStore } from '../../fleur-react/src'
 
 jest.setTimeout(10000)
 
@@ -113,7 +107,7 @@ describe('benchmark', () => {
     const div = document.createElement('div')
 
     console.time(`Fleur update ${numOfStores} stores once`)
-    await context.executeOperation(incrementOperation, {})
+    await context.executeOperation(incrementOperation)
     await new Promise(r =>
       ReactDOM.render(createElementWithContext(context, Component, {}), div, r),
     )
