@@ -36,6 +36,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   const mapStoresToState = () => setState(mapStoresToProps(getStore))
 
   const changeHandler = useCallback(
+    // Synchronous mapping on SSR
     canUseDOM ? bounce(mapStoresToState, 10) : mapStoresToState,
     [],
   )
