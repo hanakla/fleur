@@ -1,6 +1,6 @@
 {
   "name": "@ragg/fleur",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",

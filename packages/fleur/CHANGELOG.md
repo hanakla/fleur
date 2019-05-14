@@ -1,3 +1,7 @@
+### 0.0.17
+
+- #21 Improve performance on dispatch action
+
 ### 0.0.16
 
 - #19 Store update group batched by requestAnimationFrame
