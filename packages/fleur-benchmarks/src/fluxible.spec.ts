@@ -10,7 +10,7 @@ import * as ReactDOM from 'react-dom'
 jest.setTimeout(10000)
 
 describe('benchmark', () => {
-  it('Fluxible', async () => {
+  it('Fluxible / dispatch time', async () => {
     const numOfDispatches = 10000
     const callCounter = jest.fn()
 
@@ -62,8 +62,8 @@ describe('benchmark', () => {
     for (let count = 1; count < numOfDispatches + 1; count++) {
       await context.executeAction(incrementOperation, {})
     }
-
     await new Promise(r => requestAnimationFrame(r))
+
     expect(div.innerHTML).toBe(`<div>${numOfDispatches}</div>`)
     expect(callCounter.mock.calls.length).toBe(numOfDispatches)
     console.timeEnd(`Fluxible dispatch action ${numOfDispatches} times`)
@@ -98,14 +98,8 @@ describe('benchmark', () => {
     )
 
     const Component = connectToStores(stores, ctx => ({
-      values: stores.map(s => ctx.getStore(s).count),
-    }))(
-      class extends React.Component<{ count: number }> {
-        public render() {
-          return null // React.createElement('div', {}, `${this.props.count}`)
-        }
-      },
-    )
+      sum: stores.reduce((accum, s) => accum + ctx.getStore(s).count, 0),
+    }))(({ sum }: any) => `${sum}`)
 
     const app = new Fluxible({
       component: Component,
@@ -122,6 +116,7 @@ describe('benchmark', () => {
     await context.executeAction(incrementOperation, {})
     await new Promise(r => requestAnimationFrame(r))
 
+    expect(div.innerHTML).toBe(`${numOfStores}`)
     expect(callCounter.mock.calls.length).toBe(numOfStores)
     console.timeEnd(`Fluxible update ${numOfStores} stores once`)
   })

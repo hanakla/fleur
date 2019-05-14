@@ -53,8 +53,8 @@ describe('benchmark', () => {
     for (let count = 1; count < numOfDispatches + 1; count++) {
       await context.executeOperation(incrementOperation)
     }
-
     await new Promise(r => requestAnimationFrame(r))
+
     expect(div.innerHTML).toBe(`<div>${numOfDispatches}</div>`)
     expect(callCounter.mock.calls.length).toBe(numOfDispatches)
     console.timeEnd(`Fleur dispatch action ${numOfDispatches} times`)
@@ -88,23 +88,25 @@ describe('benchmark', () => {
     )
 
     const Component = () => {
-      const { values } = useStore(stores, getStore => ({
-        values: stores.map(s => getStore(s).count),
+      const { sum } = useStore(stores, getStore => ({
+        sum: stores.reduce((accum, s) => accum + getStore(s).count, 0),
       }))
-      return null
+
+      return `${sum}`
     }
 
     const app = new Fleur({ stores })
     const context = app.createContext()
+    const element = createElementWithContext(context, Component, {})
+
     const div = document.createElement('div')
-    await new Promise(r =>
-      ReactDOM.render(createElementWithContext(context, Component, {}), div, r),
-    )
+    await new Promise(r => ReactDOM.render(element, div, r))
 
     console.time(`Fleur update ${numOfStores} stores once`)
     await context.executeOperation(incrementOperation)
-
     await new Promise(r => requestAnimationFrame(r))
+
+    expect(div.innerHTML).toBe(`${numOfStores}`)
     expect(callCounter.mock.calls.length).toBe(numOfStores)
     console.timeEnd(`Fleur update ${numOfStores} stores once`)
   })
