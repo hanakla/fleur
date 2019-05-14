@@ -1,3 +1,7 @@
+### 0.0.18
+
+- #21 Improve client side performance (Store changes bounced)
+
 ### 0.0.17
 
 - #20 Support forwardRef
