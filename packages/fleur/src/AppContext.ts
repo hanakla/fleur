@@ -131,7 +131,9 @@ export default class AppContext<
     this.dispatcher.listen(action => {
       const actionCallbackMap = this.actionCallbackMap.get(StoreConstructor)!
       const handlers = actionCallbackMap.get(action.type)
-      handlers && handlers.forEach(handler => handler(action.payload))
+      if (handlers) {
+        for (const handler of handlers) handler(action.payload)
+      }
     })
 
     return store

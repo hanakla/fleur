@@ -6,8 +6,22 @@ import { StoreGetter } from './connectToStores'
 
 type StoreToPropMapper = (getStore: StoreGetter) => any
 
-const useIsomorphicEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+const canUseDOM = typeof window !== 'undefined'
+
+const useIsomorphicEffect = canUseDOM ? useLayoutEffect : useEffect
+
+const bounce = (fn: () => void, bounceTime: number) => {
+  let lastExecuteTime = 0
+
+  return () => {
+    const now = Date.now()
+
+    if (now - lastExecuteTime > bounceTime) {
+      fn()
+      lastExecuteTime = now
+    }
+  }
+}
 
 export const useStore = <Mapper extends StoreToPropMapper>(
   stores: StoreClass[],
@@ -19,18 +33,22 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     mapStoresToProps(getStore),
   )
 
-  const mapper = useCallback(() => {
-    setState(mapStoresToProps(getStore))
-  }, [])
+  const mapStoresToState = () => setState(mapStoresToProps(getStore))
+
+  const changeHandler = useCallback(
+    // Synchronous mapping on SSR
+    canUseDOM ? bounce(mapStoresToState, 10) : mapStoresToState,
+    [],
+  )
 
   useIsomorphicEffect(() => {
     stores.forEach(store => {
-      getStore(store).on('onChange', mapper)
+      getStore(store).on('onChange', changeHandler)
     })
 
     return () => {
       stores.forEach(store => {
-        getStore(store).off('onChange', mapper)
+        getStore(store).off('onChange', changeHandler)
       })
     }
   }, [])
