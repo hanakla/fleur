@@ -1,18 +1,20 @@
 import { action } from './Action'
 import Fleur from './Fleur'
-import { operation } from './Operations'
-import Store, { listen } from './Store'
+import { operation, operations } from './Operations'
+import Store, { listen, store } from './Store'
 
 describe('Fleur', () => {
-  it('flows', () => {
+  it('flows', async () => {
     const actions = {
       increase: action<{ increase: number }>('increase'),
       decrease: action<{ decrease: number }>('decrease'),
     }
 
+    type State = { count: number }
+
     class TestStore extends Store {
       public static storeName = 'TestStore'
-      public state: { count: number } = { count: 0 }
+      public state: State = { count: 0 }
 
       private handleIncrease = listen(actions.increase, p => {
         this.state.count += p.increase
@@ -23,16 +25,30 @@ describe('Fleur', () => {
       })
     }
 
+    const Test2Store = store<State>('Test2Store', () => ({ count: 0 }))
+      .listen(actions.increase, (p, draft) => (draft.count += p.increase))
+      .listen(actions.decrease, (p, draft) => (draft.count -= p.decrease))
+
     const app = new Fleur({
-      stores: [TestStore],
+      stores: [TestStore, Test2Store],
     })
     const ctx = app.createContext()
-    ctx.getStore(TestStore)
 
-    const increaseOperation = operation((ctx, arg: { increase: number }) => {
-      ctx.dispatch(actions.increase, { increase: arg.increase })
+    const ops = operations({
+      increase(ctx, increase: number) {
+        ctx.dispatch(actions.increase, { increase })
+      },
+      decrease(ctx, decrease: number) {
+        ctx.dispatch(actions.decrease, { decrease })
+      },
     })
 
-    ctx.executeOperation(increaseOperation, { increase: 10 })
+    await ctx.executeOperation(ops.increase, 10)
+    expect(ctx.getStore(TestStore).state.count).toBe(10)
+    expect(ctx.getStore(Test2Store).state.count).toBe(10)
+
+    await ctx.executeOperation(ops.decrease, 10)
+    expect(ctx.getStore(TestStore).state.count).toBe(0)
+    expect(ctx.getStore(Test2Store).state.count).toBe(0)
   })
 })

@@ -3,7 +3,6 @@ import immer, { Draft } from 'immer'
 import { ActionIdentifier, ExtractPayloadType } from './Action'
 import Emitter from './Emitter'
 import { StoreContext } from './StoreContext'
-import { action } from '../typings'
 
 export interface StoreClass<T = {}> {
   storeName: string
@@ -60,42 +59,37 @@ export default class Store<T = any> extends Emitter<StoreEvents> {
   }
 }
 
-// type Reducer
-
-// export const store = <T>(storeName: string, reducer: ) => {
-//   return class extends Store<T> {
-//     public static storeName = storeName
-
-//     constructor(context: StoreContext) {
-//       super(context)
-
-//       defs.forEach((listener, idx) => {
-//         ;(this as any)[`__listener$${idx}`] = listener
-//       })
-//     }
-//   }
-// }
-
-const a = action<{ a: string }>()
-
-type State = { b: string }
-
-const store = <S>(storeName: string) => {
-
-  return class extends Store<S> {
+export const store = <S>(storeName: string, initialStateFactory: () => S) => {
+  const Sub = class extends Store<S> {
     public static storeName = storeName
-    public static listeners = []
-    public static listen<T extends ActionIdentifier<any>(ident: T, producer: (payload: ExtractPayloadType<T>, state: State) => void) {
 
+    public static listeners: [
+      ActionIdentifier<any>,
+      (payload: any, state: Draft<S>) => void
+    ][] = []
+
+    public static listen<T extends ActionIdentifier<any>>(
+      ident: T,
+      producer: (payload: ExtractPayloadType<T>, state: Draft<S>) => void,
+    ) {
+      Sub.listeners.push([ident, producer])
+      return this
     }
+
+    public state: S
 
     constructor(context: StoreContext) {
       super(context)
-      this
+
+      this.state = initialStateFactory()
+
+      Sub.listeners.forEach(([ident, producer], idx) => {
+        ;(this as any)[`__handler${idx}`] = listen(ident, payload => {
+          this.updateWith(d => producer(payload, d))
+        })
+      })
     }
   }
-}
 
-store<State>('TestStore')
-  .listen(a, (state) => {})
-  .listen(a, (state) => {})
+  return Sub
+}
