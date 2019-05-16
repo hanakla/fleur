@@ -57,7 +57,7 @@ export const CounterOps = operations({
 
 ```typescript
 // app.ts
-import Fleur from '@ragg/fleur'
+import Fleur, { withReduxDevTools } from '@ragg/fleur'
 import { CounterStore } from './store.ts'
 import { CounterOps } from './operations.ts'
 
