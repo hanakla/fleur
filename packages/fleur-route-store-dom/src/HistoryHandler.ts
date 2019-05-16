@@ -3,11 +3,16 @@ import {
   ContextProp,
   withComponentContext,
 } from '@ragg/fleur-react'
-import { createBrowserHistory, History, LocationListener } from 'history'
+import {
+  createBrowserHistory,
+  History,
+  LocationListener,
+  createMemoryHistory,
+} from 'history'
 import isEqual = require('lodash/isEqual')
 import * as React from 'react'
 import { navigateOperation } from './navigateOperation'
-import RouteStore from './RouteStore'
+import { RouteStore } from './RouteStore'
 import { MatchedRoute } from './types'
 
 interface ConnectedProps {
@@ -15,6 +20,8 @@ interface ConnectedProps {
 }
 
 type Props = ConnectedProps & ContextProp
+
+const canUseDOM = typeof window !== 'undefined'
 
 export const HistoryHandler = withComponentContext(
   connectToStores(
@@ -34,7 +41,9 @@ export const HistoryHandler = withComponentContext(
       }
 
       public componentDidMount() {
-        this.history = createBrowserHistory({})
+        this.history = canUseDOM
+          ? createBrowserHistory({})
+          : createMemoryHistory({})
         this.history.listen(this.handleChangeLocation)
         window.addEventListener('scroll', this.handleScroll)
       }
@@ -65,9 +74,12 @@ export const HistoryHandler = withComponentContext(
       }
 
       private applyRouteToLocation = (route: MatchedRoute) => {
+        console.log(route)
         if (route.type === 'POP') {
           const { state } = this.history.location
-          setTimeout(() => window.scrollTo(state.scrollX, state.scrollY))
+          if (state) {
+            setTimeout(() => window.scrollTo(state.scrollX, state.scrollY))
+          }
         } else if (route.type === 'REPLACE') {
           this.history.replace(route.url, {})
         } else {

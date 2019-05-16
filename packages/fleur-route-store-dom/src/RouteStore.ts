@@ -1,4 +1,4 @@
-import { listen, Store } from '@ragg/fleur'
+import { listen, Store, StoreContext, StoreClass } from '@ragg/fleur'
 import * as pathToRegexp from 'path-to-regexp'
 import * as qs from 'querystring'
 import * as url from 'url'
@@ -17,9 +17,19 @@ export interface State {
   isComplete: boolean
 }
 
-export default class RouteStore<R extends RouteDefinitions> extends Store<
-  State
-> {
+export interface RouteStoreClass<R extends RouteDefinitions> {
+  storeName: string
+
+  makePath(
+    routeName: keyof R,
+    params?: object,
+    query?: qs.ParsedUrlQueryInput,
+  ): string
+
+  new (context: StoreContext): RouteStore
+}
+
+export class RouteStore extends Store<State> {
   public static storeName = 'fleur-route-store-dom/RouteStore'
 
   protected state: State = {
@@ -79,18 +89,6 @@ export default class RouteStore<R extends RouteDefinitions> extends Store<
 
   public dehydrate(): State {
     return this.state
-  }
-
-  public makePath(
-    routeName: keyof R,
-    params: object = {},
-    query: qs.ParsedUrlQueryInput = {},
-  ): string {
-    const path = this.routes[routeName as string]
-    if (!path) throw new Error(`Matched route name not found: ${routeName}`)
-
-    const pathname = pathToRegexp.compile(path.path)(params)
-    return url.format({ pathname: pathname, query })
   }
 
   public getCurrentRoute(): MatchedRoute | null {

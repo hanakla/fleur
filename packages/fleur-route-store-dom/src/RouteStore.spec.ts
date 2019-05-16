@@ -1,18 +1,19 @@
-import RouteStore from './RouteStore'
-import { createStoreWithStaticRoutes } from './index'
+import { RouteStore, RouteStoreClass } from './RouteStore'
+import { createRouteStore } from './createRouteStore'
 
 describe('RouteStore', () => {
-  let store: RouteStore<any>
+  let Router: RouteStoreClass<any>
+  let store: RouteStore
 
   beforeEach(() => {
-    const StaticRouteStore = createStoreWithStaticRoutes({
+    Router = createRouteStore({
       articlesShow: {
         path: '/articles/:id',
         handler: null,
       },
     })
 
-    store = new StaticRouteStore()
+    store = new Router(null)
   })
 
   it('Should not route to partialy matched route', async () => {
@@ -21,12 +22,12 @@ describe('RouteStore', () => {
   })
 
   it('Should correct make path', () => {
-    const path = store.makePath('articlesShow', { id: 1 })
+    const path = Router.makePath('articlesShow', { id: 1 })
     expect(path).toBe('/articles/1')
   })
 
   it('Should correct make path with params', () => {
-    const path = store.makePath('articlesShow', { id: 1 }, { comment: 1 })
+    const path = Router.makePath('articlesShow', { id: 1 }, { comment: 1 })
     expect(path).toBe('/articles/1?comment=1')
   })
 

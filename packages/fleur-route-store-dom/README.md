@@ -10,7 +10,7 @@ import * as Loadable from 'react-loadable'
 import { withStaticRoutes, Route } from '@ragg/fleur-route-store-dom'
 import { fetchUserSession, fetchArticle } from './operations'
 
-export default withStaticRoutes({
+export const Router = createRouteStore({
     articleShow: {
         path: '/article/:id',
         action: (context, route: Route) => Promise.all([
@@ -26,77 +26,73 @@ export default withStaticRoutes({
 
 // App.ts
 import { connectToStores, withComponentContext, ContextProp } from '@ragg/fleur-react'
-import { HistoryHandler } from '@ragg/fleur-route-store-dom'
-import { RouteStore } from './RouteStore'
+import { useRoute } from '@ragg/fleur-route-store-dom'
+import { }
 
 type Props = {
     route: Route | null
 } & ContextProp
 
-export default withComponentContext(
-    connectToStores([ RouteStore ], (getStore) => ({
-        // get routed route
-        route: getStore(RouteStore).getCurrentRoute()
-    }))
-)(class App extends React.Component<Props> {
-    render() {
-        const routeStore = this.props.context.getStore(RouteStore)
+export const App = () => {
+  const {route, error} = useRoute()
 
-        const { route } = this.props
-        const Handler = route ? route.handler : null
+  return (
+    <html>
+      <head>
+        {/* heading... */}
+      </head>
+      <body>
+        <div>
+          {/* get .meta property from route.meta */}
+          {!route.meta.noHeader && <header />}
 
-        return (
-            <html>
-                <head>
-                    {/* heading... */}
-                </head>
-                <body>
-                    {/* Must to mount HistoryHandler component in application once */}
-                    <HistoryHandler />
-                    <div>
-                        {/* get .meta property from route.meta */}
-                        {!route.meta.noHeader && <header />}
+          {/* mount Handler component here */}
+          {route.handler && <route.Handler />}
+          {!route.handler && (<div>Not Found</div>)}
+          {error && (<div>500 Error</div>)}
 
-                        {/* mount Handler component here */}
-                        {handler && <Handler />}
-
-                        {/* URL Builder */}
-                        <a href={routeStore.makePath('articleShow', { id: 100 })}>
-                            Jump to Article
-                        </a>
-                    </div>
-                </body>
-            </html>
-        )
-    }
-})
+          {/* URL Builder */}
+          <a href={Router.makePath('articleShow', { id: 100 })}>
+            Jump to Article
+          </a>
+        </div>
+      </body>
+    </html>
+  )
+}
 
 // server.ts
 import Fleur from '@ragg/fleur'
-import { navigateOperation } from '@ragg/fleur-route-store-dom'
+import { navigateOperation, createRouterContext } from '@ragg/fleur-route-store-dom'
 import express from 'express'
-import RouteStore, from './RouteStore'
+import RouteStore from './RouteStore'
 import App from './App'
 
 const server = express()
 const app = new Fleur({ stores: [ RouteStore ] })
 
-server.use((req) => {
+server.use((req, res) => {
     const context = req.context = app.createContext();
+    const routerContext = createRouterContext()
 
     context.executeOperation(navigateOperation, {
         url: req.url,
         method: req.method
     })
-})
 
-server.use((req, res) => {
-    res.write('<!doctype html>')
-    res.write(
-        ReactDOM.renderToString(
-            createElementWithContext(req.context, App, {})
-        )
+    const content = ReactDOM.renderToString(
+        <FleurContext value={context}>
+            <RouterContext value={routerContext}>
+                <App />
+            </RouterContext>
+        </FleurContext>
     )
+
+    res.status = routerContext.status
+    context
+
+    res.write('<!doctype html>')
+    res.write(content)
 })
 
 ```

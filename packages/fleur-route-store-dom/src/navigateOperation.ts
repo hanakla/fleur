@@ -1,7 +1,7 @@
 import { operation, OperationContext } from '@ragg/fleur'
 import { Action } from 'history'
 import { navigateFailure, navigateStart, navigateSuccess } from './actions'
-import RouteStore from './RouteStore'
+import { RouteStore } from './RouteStore'
 
 export const navigateOperation = operation(
   async (
@@ -33,9 +33,12 @@ export const navigateOperation = operation(
     }
 
     try {
-      if (route.config.action) {
-        await Promise.resolve(route.config.action(context, route))
-      }
+      await Promise.all([
+        route.config.action
+          ? Promise.resolve(route.config.action(context, route))
+          : Promise.resolve(),
+        Promise.resolve(route.config.handler),
+      ])
 
       context.dispatch(navigateSuccess, { type, url })
     } catch (e) {
