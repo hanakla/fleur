@@ -38,7 +38,9 @@ export const navigateOp = operation(
           ? Promise.resolve(route.config.action(context, route))
           : Promise.resolve(),
         route.config.handler
-          ? Promise.resolve(route.config.handler())
+          ? Promise.resolve(route.config.handler()).then(mod =>
+              mod.default ? mod.default : mod,
+            )
           : Promise.resolve(),
       ])
 
