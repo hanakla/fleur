@@ -5,10 +5,12 @@ import { App } from './components/App'
 import { app } from './app'
 import { FleurContext } from '@ragg/fleur-react'
 import { RouterContext, navigateOp } from '@ragg/fleur-route-store-dom'
+import { withReduxDevTools } from '@ragg/fleur'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const state = (window as any).__rehydratedState
   const context = app.createContext()
+  withReduxDevTools(context)
   ;(window as any).context = context
 
   context.rehydrate(state)

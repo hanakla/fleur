@@ -11,7 +11,7 @@ import { TodoStore, TodoEntity } from '../domain/Todo/store'
 import { TodoFooter } from '../components/Footer'
 import { TodoItem } from '../components/TodoItem'
 import { ENTER_KEY, TodoFilterType } from '../domain/constants'
-import { addTodo, toggleAllTodo } from '../domain/Todo/operations'
+import { TodoOps } from '../domain/Todo/operations'
 import { AppStore } from '../domain/App/store'
 import { RouteStore } from '../domain/RouteStore'
 
@@ -28,9 +28,8 @@ export const Index = withComponentContext(
     todos: getStore(TodoStore).getTodos(),
     editing: getStore(AppStore).getEditingTodoId(),
     meta: getStore(RouteStore).getCurrentRoute().meta,
-    a: console.log(getStore(RouteStore).getCurrentRoute().meta),
   }))(
-    class IndexComponent extends React.Component<Props, State> {
+    class IndexComponent extends React.Component<Props> {
       private newFieldRef = React.createRef<HTMLInputElement>()
 
       private handleNewTodoKeyDown = (event: React.KeyboardEvent) => {
@@ -44,14 +43,13 @@ export const Index = withComponentContext(
         const val = input.value.trim()
 
         if (val) {
-          this.props.executeOperation(addTodo, { title: val })
+          this.props.executeOperation(TodoOps.addTodo, { title: val })
           input.value = ''
         }
       }
 
       get shownTodos(): TodoEntity[] {
         return this.props.todos.filter(todo => {
-          console.log(this.props.meta)
           switch (this.props.meta.nowShowing) {
             case TodoFilterType.active:
               return !todo.completed
@@ -116,10 +114,10 @@ export const Index = withComponentContext(
         )
       }
 
-      private handleToggleAll({
+      private handleToggleAll = ({
         currentTarget,
-      }: React.ChangeEvent<HTMLInputElement>) {
-        this.props.executeOperation(toggleAllTodo, {
+      }: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.executeOperation(TodoOps.toggleAllTodo, {
           completed: currentTarget.checked,
         })
       }

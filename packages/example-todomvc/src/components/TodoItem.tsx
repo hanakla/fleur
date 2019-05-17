@@ -8,11 +8,7 @@ import {
 import { ENTER_KEY, ESCAPE_KEY } from '../domain/constants'
 import { TodoEntity } from '../domain/Todo/store'
 import classNames from 'classnames'
-import {
-  updateTodoTitle,
-  destroyTodo,
-  toggleTodo,
-} from '../domain/Todo/operations'
+import { TodoOps } from '../domain/Todo/operations'
 import { setEditTodoId } from '../domain/App/operations'
 import { AppStore } from '../domain/App/store'
 
@@ -86,11 +82,11 @@ class TodoItemComponent extends React.Component<Props, State> {
   }
 
   private handleChangeCompletion = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.executeOperation(toggleTodo, { id: this.props.todo.id })
+    this.props.executeOperation(TodoOps.toggleTodo, { id: this.props.todo.id })
   }
 
   private handleClickDestroy = () => {
-    this.props.executeOperation(destroyTodo, { id: this.props.todo.id })
+    this.props.executeOperation(TodoOps.destroyTodo, { id: this.props.todo.id })
   }
 
   private handleSubmit(event: React.FormEvent) {
@@ -99,12 +95,12 @@ class TodoItemComponent extends React.Component<Props, State> {
     if (val) {
       this.setState({ editText: val })
 
-      this.props.executeOperation(updateTodoTitle, {
+      this.props.executeOperation(TodoOps.updateTodoTitle, {
         id: this.props.todo.id,
         title: this.props.todo.title,
       })
     } else {
-      this.props.executeOperation(destroyTodo, {
+      this.props.executeOperation(TodoOps.destroyTodo, {
         id: this.props.todo.id,
       })
     }

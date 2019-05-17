@@ -15,6 +15,11 @@ import { join } from 'path'
 const server = express()
 server.use('/public', express.static(join(process.cwd(), 'public')))
 
+server.get('/favicon.ico', (req, res) => {
+  res.status(404)
+  res.end()
+})
+
 server.use(async (req, res) => {
   const context = ((req as any).context = app.createContext())
   const routerContext = createRouterContext()
