@@ -13,14 +13,18 @@ const useIsomorphicEffect = canUseDOM ? useLayoutEffect : useEffect
 const bounce = (fn: () => void, bounceTime: number) => {
   let lastExecuteTime = 0
 
-  return () => {
+  const bouncer = () => {
     const now = Date.now()
 
     if (now - lastExecuteTime > bounceTime) {
       fn()
       lastExecuteTime = now
+    } else {
+      setTimeout(bouncer, bounceTime)
     }
   }
+
+  return bouncer
 }
 
 export const useStore = <Mapper extends StoreToPropMapper>(
