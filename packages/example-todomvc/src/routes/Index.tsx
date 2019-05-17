@@ -5,7 +5,6 @@ import {
   StoreGetter,
 } from '@ragg/fleur-react'
 import React from 'react'
-import { ComponentContext } from '@ragg/fleur'
 import {} from '@ragg/fleur-route-store-dom'
 
 import { TodoStore, TodoEntity } from '../domain/Todo/store'
@@ -14,6 +13,7 @@ import { TodoItem } from '../components/TodoItem'
 import { ENTER_KEY, TodoFilterType } from '../domain/constants'
 import { addTodo, toggleAllTodo } from '../domain/Todo/operations'
 import { AppStore } from '../domain/App/store'
+import { RouteStore_ } from '../domain/RouteStore'
 
 interface Props extends ContextProp {
   todos: TodoEntity[]
@@ -30,6 +30,7 @@ interface State {
 const mapStoresToProps = (getStore: StoreGetter) => ({
   todos: getStore(TodoStore).getTodos(),
   editing: getStore(AppStore).getEditingTodoId(),
+  meta: getStore(RouteStore_).getCurrentRoute(),
 })
 
 class IndexComponent extends React.Component<Props, State> {
@@ -46,7 +47,7 @@ class IndexComponent extends React.Component<Props, State> {
     const val = input.value.trim()
 
     if (val) {
-      this.props.context.executeOperation(addTodo, { title: val })
+      this.props.executeOperation(addTodo, { title: val })
       input.value = ''
     }
   }
@@ -120,7 +121,7 @@ class IndexComponent extends React.Component<Props, State> {
   private handleToggleAll({
     currentTarget,
   }: React.ChangeEvent<HTMLInputElement>) {
-    this.props.context.executeOperation(toggleAllTodo, {
+    this.props.executeOperation(toggleAllTodo, {
       completed: currentTarget.checked,
     })
   }

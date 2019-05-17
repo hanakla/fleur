@@ -1,16 +1,18 @@
 {
+  "name": "example-todomvc",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "webpack --mode development && ts-node ./src/server.tsx"
   },
   "dependencies": {
-    "@ragg/fleur": "0.0.12",
-    "@ragg/fleur-react": "0.0.9",
-    "@ragg/fleur-route-store-dom": "0.0.1-pre",
+    "@ragg/fleur": "*",
+    "@ragg/fleur-react": "*",
+    "@ragg/fleur-route-store-dom": "*",
     "classnames": "^2.1.5",
     "director": "^1.2.0",
-    "react": "16.6.3",
-    "react-dom": "16.6.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "todomvc-app-css": "^2.0.0",
     "todomvc-common": "^1.0.1"
   },

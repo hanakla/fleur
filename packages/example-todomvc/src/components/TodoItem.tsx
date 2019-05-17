@@ -86,11 +86,11 @@ class TodoItemComponent extends React.Component<Props, State> {
   }
 
   private handleChangeCompletion = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.context.executeOperation(toggleTodo, { id: this.props.todo.id })
+    this.props.executeOperation(toggleTodo, { id: this.props.todo.id })
   }
 
   private handleClickDestroy = () => {
-    this.props.context.executeOperation(destroyTodo, { id: this.props.todo.id })
+    this.props.executeOperation(destroyTodo, { id: this.props.todo.id })
   }
 
   private handleSubmit(event: React.FormEvent) {
@@ -99,19 +99,19 @@ class TodoItemComponent extends React.Component<Props, State> {
     if (val) {
       this.setState({ editText: val })
 
-      this.props.context.executeOperation(updateTodoTitle, {
+      this.props.executeOperation(updateTodoTitle, {
         id: this.props.todo.id,
         title: this.props.todo.title,
       })
     } else {
-      this.props.context.executeOperation(destroyTodo, {
+      this.props.executeOperation(destroyTodo, {
         id: this.props.todo.id,
       })
     }
   }
 
   private handleEdit() {
-    this.props.context.executeOperation(setEditTodoId, {
+    this.props.executeOperation(setEditTodoId, {
       id: this.props.todo.id,
     })
     this.setState({ editText: this.props.todo.title })
@@ -120,7 +120,7 @@ class TodoItemComponent extends React.Component<Props, State> {
   private handleKeyDown(event: React.KeyboardEvent) {
     if (event.keyCode === ESCAPE_KEY) {
       this.setState({ editText: this.props.todo.title })
-      this.props.context.executeOperation(setEditTodoId, { id: null })
+      this.props.executeOperation(setEditTodoId, { id: null })
     } else if (event.keyCode === ENTER_KEY) {
       this.handleSubmit(event)
     }

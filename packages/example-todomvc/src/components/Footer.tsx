@@ -16,7 +16,6 @@ class TodoFooterComponent extends React.Component<Props, {}> {
   public render() {
     const { nowShowing, completedCount, count } = this.props
 
-    console.log(nowShowing)
     return (
       <footer className="footer">
         <span className="todo-count">
@@ -67,7 +66,7 @@ class TodoFooterComponent extends React.Component<Props, {}> {
   }
 
   private handleClickClearCompleted = () => {
-    this.props.context.executeOperation(clearCompleted, {})
+    this.props.executeOperation(clearCompleted)
   }
 }
 
