@@ -15,7 +15,7 @@ export class StoreContext {
     if (typeof requestAnimationFrame === 'function') {
       // batched update in client side
       cancelAnimationFrame(this.animateId)
-      requestAnimationFrame(this.dispatchChange)
+      this.animateId = requestAnimationFrame(this.dispatchChange)
     } else {
       this.dispatchChange()
     }
