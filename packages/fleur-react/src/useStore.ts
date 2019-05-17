@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useLayoutEffect } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
 
 import { StoreClass } from '@ragg/fleur'
 import { useComponentContext } from './useComponentContext'
@@ -13,14 +13,18 @@ const useIsomorphicEffect = canUseDOM ? useLayoutEffect : useEffect
 const bounce = (fn: () => void, bounceTime: number) => {
   let lastExecuteTime = 0
 
-  return () => {
+  const bouncer = () => {
     const now = Date.now()
 
     if (now - lastExecuteTime > bounceTime) {
       fn()
       lastExecuteTime = now
+    } else {
+      setTimeout(bouncer, bounceTime)
     }
   }
+
+  return bouncer
 }
 
 export const useStore = <Mapper extends StoreToPropMapper>(
@@ -29,11 +33,9 @@ export const useStore = <Mapper extends StoreToPropMapper>(
 ): ReturnType<Mapper> => {
   const { getStore } = useComponentContext()
 
-  const [state, setState] = useState<ReturnType<Mapper>>(
-    mapStoresToProps(getStore),
-  )
+  const [, rerender] = useReducer(s => s + 1, 0)
 
-  const mapStoresToState = () => setState(mapStoresToProps(getStore))
+  const mapStoresToState = () => rerender({})
 
   const changeHandler = useCallback(
     // Synchronous mapping on SSR
@@ -53,5 +55,5 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     }
   }, [])
 
-  return state
+  return mapStoresToProps(getStore)
 }
