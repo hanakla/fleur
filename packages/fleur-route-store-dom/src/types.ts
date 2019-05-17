@@ -7,7 +7,7 @@ export interface Route {
     context: OperationContext,
     route: MatchedRoute,
   ) => Promise<any> | void
-  handler: any
+  handler(): Promise<any>
   meta?: any
 }
 
@@ -17,6 +17,8 @@ export interface MatchedRoute {
   url: string
   params: { [prop: string]: string }
   query: { [prop: string]: string | string[] | undefined }
+  meta: any
+  handler: any
   config: Route
 }
 

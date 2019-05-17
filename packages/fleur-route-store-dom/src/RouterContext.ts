@@ -1,20 +1,25 @@
-import * as React from 'react'
+import React, { useContext } from 'react'
 import { HistoryHandler } from './HistoryHandler'
 
-export type RouterContext = {
+type RouterContextValue = {
   status: number
 }
 
-type Props = {
-  value: RouterContext
-  children: React.ReactNode
-}
-
-const context = React.createContext<RouterContext>(null as any)
+const context = React.createContext<RouterContextValue>(null as any)
 
 export const createRouterContext = () => ({ status: 200 })
 
-export const RouterContext = ({ value, children }: Props) => {
+export const useRouterContext = () => {
+  return useContext(context)
+}
+
+export const RouterContext = ({
+  value,
+  children,
+}: {
+  value: RouterContextValue
+  children: React.ReactNode
+}) => {
   return React.createElement(
     React.Fragment,
     {},

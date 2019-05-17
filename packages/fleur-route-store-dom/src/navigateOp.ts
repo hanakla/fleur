@@ -3,7 +3,7 @@ import { Action } from 'history'
 import { navigateFailure, navigateStart, navigateSuccess } from './actions'
 import { RouteStore } from './RouteStore'
 
-export const navigateOperation = operation(
+export const navigateOp = operation(
   async (
     context: OperationContext,
     {
@@ -33,14 +33,16 @@ export const navigateOperation = operation(
     }
 
     try {
-      await Promise.all([
+      const [, handler] = await Promise.all([
         route.config.action
           ? Promise.resolve(route.config.action(context, route))
           : Promise.resolve(),
-        Promise.resolve(route.config.handler),
+        route.config.handler
+          ? Promise.resolve(route.config.handler())
+          : Promise.resolve(),
       ])
 
-      context.dispatch(navigateSuccess, { type, url })
+      context.dispatch(navigateSuccess, { type, url, handler })
     } catch (e) {
       context.dispatch(navigateFailure, {
         type,

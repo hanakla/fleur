@@ -1,7 +1,7 @@
 import { StoreContext } from '@ragg/fleur'
-import * as qs from 'querystring'
-import * as pathToRegexp from 'path-to-regexp'
-import * as url from 'url'
+import qs from 'querystring'
+import pathToRegexp from 'path-to-regexp'
+import url from 'url'
 
 import { RouteDefinitions } from './types'
 import { RouteStore, RouteStoreClass } from './RouteStore'

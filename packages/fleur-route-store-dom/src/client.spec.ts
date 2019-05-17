@@ -8,7 +8,7 @@ describe('client test', () => {
   const Router = createRouteStore({
     articles: {
       path: '/articles',
-      handler: 'ArticleHandler',
+      handler: async () => 'ArticleHandler',
       meta: {
         requireAuthorized: false,
       },
@@ -16,11 +16,11 @@ describe('client test', () => {
     },
     articlesShow: {
       path: '/articles/:id',
-      handler: 'ArticleShowHandler',
+      handler: async () => 'ArticleShowHandler',
       meta: {
         requireAuthorized: true,
       },
-      action: () => new Promise(r => setTimeout(r, 1000)),
+      action: () => new Promise(r => setTimeout(r)),
     },
   })
 
@@ -53,39 +53,22 @@ describe('client test', () => {
     await new Promise(r => setTimeout(r, 100))
 
     const route = context.getStore(Router).getCurrentRoute()
-    expect(route.config.handler).toBe('ArticleHandler')
+    expect(route.handler).toBe('ArticleHandler')
 
     history.pushState({}, '', '/articles/1')
     window.dispatchEvent(new Event('popstate'))
     await new Promise(r => setTimeout(r, 100))
 
     const nextRoute = context.getStore(Router).getCurrentRoute()
-    expect(nextRoute.config.handler).toBe('ArticleShowHandler')
+    expect(nextRoute.handler).toBe('ArticleShowHandler')
   })
 
-  // it('Should handle routing', () => {})
+  it('Should route to 404', async () => {
+    history.pushState({}, '', '/not_found')
+    window.dispatchEvent(new Event('popstate'))
+    await new Promise(r => setTimeout(r, 100))
 
-  // it('Should not route to partialy matched route', async () => {
-  //   await context.executeOperation(navigateOperation, {
-  //     url: '/articles/not/match',
-  //   })
-
-  //   const route = context.getStore(RouteStore).getCurrentRoute()
-  //   expect(route).toBe(null)
-  // })
-
-  // it('Should route to correct handler with ', async () => {
-  //   await context.executeOperation(navigateOperation, { url: '/articles/1' })
-
-  //   const route = context.getStore(RouteStore).getCurrentRoute()
-  //   expect(route.config.handler).toBe('ArticleShowHandler')
-  //   expect(route.params.id).toBe('1')
-  // })
-
-  // it('Should handle exception ', async () => {
-  //   await context.executeOperation(navigateOperation, { url: '/error' })
-
-  //   const error = context.getStore(RouteStore).getCurrentNavigateError()
-  //   expect(error).toMatchObject({ message: 'damn.', statusCode: 500 })
-  // })
+    const route = context.getStore(Router).getCurrentRoute()
+    expect(route).toBe(null)
+  })
 })

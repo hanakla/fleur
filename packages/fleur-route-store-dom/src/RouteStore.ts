@@ -1,14 +1,9 @@
-import { listen, Store, StoreContext, StoreClass } from '@ragg/fleur'
-import * as pathToRegexp from 'path-to-regexp'
-import * as qs from 'querystring'
-import * as url from 'url'
+import { listen, Store, StoreContext } from '@ragg/fleur'
+import pathToRegexp from 'path-to-regexp'
+import qs from 'querystring'
+import url from 'url'
 
-import {
-  navigateFailure,
-  navigateStart,
-  navigateSuccess,
-  NavigationPayload,
-} from './actions'
+import { navigateFailure, navigateStart, navigateSuccess } from './actions'
 import { MatchedRoute, RouteDefinitions } from './types'
 
 export interface State {
@@ -51,36 +46,30 @@ export class RouteStore extends Store<State> {
   // @ts-ignore
   private handleNavigationSuccess = listen(
     navigateSuccess,
-    ({ type, url }: NavigationPayload) => {
-      const currentRoute = this.state.currentRoute || { name: null }
+    ({ type, url, handler }) => {
       const nextRoute = this.matchRoute(url)
 
-      if (nextRoute && nextRoute.name === currentRoute.name) {
-        return
-      }
-
-      this.updateWith(draft => {
-        draft.currentRoute = nextRoute ? { ...nextRoute, type } : null
-        draft.error = null
-        draft.isComplete = true
+      this.updateWith(state => {
+        state.currentRoute = nextRoute ? { ...nextRoute, handler, type } : null
+        state.error = null
+        state.isComplete = true
       })
     },
   )
 
   // @ts-ignore
-  private handleNavigationFailure = listen(
-    navigateFailure,
-    ({ error }: NavigationPayload) => {
-      this.updateWith(draft => {
-        draft.error = error || null
-        draft.isComplete = true
-      })
-    },
-  )
+  private handleNavigationFailure = listen(navigateFailure, ({ error }) => {
+    this.updateWith(state => {
+      state.currentRoute = null
+      state.error = error || null
+      state.isComplete = true
+    })
+  })
 
   public rehydrate(state: State) {
     this.updateWith(draft => {
       Object.assign(draft, state)
+
       draft.currentRoute = state.currentRoute
         ? this.getRoute(state.currentRoute.url)
         : null
@@ -118,6 +107,7 @@ export class RouteStore extends Store<State> {
 
   private matchRoute(inputUrl: string): MatchedRoute | null {
     const indexOfHash = inputUrl.indexOf('#')
+
     const urlWithoutHash =
       indexOfHash !== -1 ? inputUrl.slice(0, indexOfHash) : inputUrl
     const parsed = url.parse(urlWithoutHash)
@@ -139,6 +129,8 @@ export class RouteStore extends Store<State> {
         url: urlWithoutHash,
         params,
         query: qs.parse(parsed.query!),
+        handler: null,
+        meta: { ...route.meta },
         config: route,
       }
     }

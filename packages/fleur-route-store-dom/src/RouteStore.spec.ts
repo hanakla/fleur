@@ -33,11 +33,14 @@ describe('RouteStore', () => {
 
   it('Should get route with hash / query', () => {
     const route = store.getRoute('/articles/1?a=1#anchor')
-    expect(route).toEqual({
+
+    expect(route).toMatchObject({
       name: 'articlesShow',
       url: '/articles/1?a=1',
       params: { id: '1' },
       query: { a: '1' },
+      handler: null,
+      meta: {},
       config: {
         path: '/articles/:id',
         handler: null,
@@ -47,11 +50,14 @@ describe('RouteStore', () => {
 
   it('Should get route without hash / query', () => {
     const route = store.getRoute('/articles/1')
-    expect(route).toEqual({
+
+    expect(route).toMatchObject({
       name: 'articlesShow',
       url: '/articles/1',
       params: { id: '1' },
       query: {},
+      handler: null,
+      meta: {},
       config: {
         path: '/articles/:id',
         handler: null,

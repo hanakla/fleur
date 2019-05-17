@@ -9,9 +9,9 @@ import {
   LocationListener,
   createMemoryHistory,
 } from 'history'
-import isEqual = require('lodash/isEqual')
+import deepEqual from 'fast-deep-equal'
 import * as React from 'react'
-import { navigateOperation } from './navigateOperation'
+import { navigateOp } from './navigateOp'
 import { RouteStore } from './RouteStore'
 import { MatchedRoute } from './types'
 
@@ -37,7 +37,7 @@ export const HistoryHandler = withComponentContext(
       public shouldComponentUpdate(nextProps: Props) {
         const { route } = this.props
 
-        return !route || !nextProps.route || !isEqual(route, nextProps.route)
+        return !route || !nextProps.route || !deepEqual(route, nextProps.route)
       }
 
       public componentDidMount() {
@@ -51,7 +51,7 @@ export const HistoryHandler = withComponentContext(
       public componentDidUpdate(prevProps: Props) {
         const { route } = this.props
 
-        if (route && !isEqual(prevProps.route, route)) {
+        if (route && !deepEqual(prevProps.route, route)) {
           this.applyRouteToLocation(route)
         }
       }
@@ -74,7 +74,6 @@ export const HistoryHandler = withComponentContext(
       }
 
       private applyRouteToLocation = (route: MatchedRoute) => {
-        console.log(route)
         if (route.type === 'POP') {
           const { state } = this.history.location
           if (state) {
@@ -91,7 +90,7 @@ export const HistoryHandler = withComponentContext(
         { pathname },
         action,
       ) => {
-        this.props.executeOperation(navigateOperation, {
+        this.props.executeOperation(navigateOp, {
           type: action,
           url: pathname,
         })

@@ -1,7 +1,7 @@
 import { ContextProp, withComponentContext } from '@ragg/fleur-react'
 import * as React from 'react'
 import { parse } from 'url'
-import { navigateOperation } from './navigateOperation'
+import { navigateOp } from './navigateOp'
 
 type Props = ContextProp & React.AnchorHTMLAttributes<HTMLAnchorElement>
 
@@ -28,7 +28,7 @@ export const Link = withComponentContext(
       if (!this.isRoutable()) return
 
       e.preventDefault()
-      this.props.executeOperation(navigateOperation, {
+      this.props.executeOperation(navigateOp, {
         url: parse(this.props.href!).pathname!,
       })
     }
