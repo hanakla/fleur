@@ -14,10 +14,10 @@ export const useRouterContext = () => {
 }
 
 export const RouterContext = ({
-  value,
+  value = createRouterContext(),
   children,
 }: {
-  value: RouterContextValue
+  value?: RouterContextValue
   children: React.ReactNode
 }) => {
   return React.createElement(
