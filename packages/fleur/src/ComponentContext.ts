@@ -9,10 +9,10 @@ export default class ComponentContext {
     operation: O,
     ...args: OperationArgs<O>
   ): void => {
-    this.executeOperation(operation, ...args)
+    this.context.executeOperation(operation, ...args)
   }
 
   public getStore = <T extends StoreClass>(StoreClass: T): InstanceType<T> => {
-    return this.getStore(StoreClass)
+    return this.context.getStore(StoreClass)
   }
 }
