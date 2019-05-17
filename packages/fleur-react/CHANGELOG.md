@@ -1,3 +1,7 @@
+### 0.0.19
+
+- #24 Fix state desynced in useStore
+
 ### 0.0.18
 
 - #21 Improve client side performance (Store changes bounced)
