@@ -1,6 +1,6 @@
 import { operation, OperationContext } from '@ragg/fleur'
 import { Action } from 'history'
-import { navigateFailure, navigateStart, navigateSuccess } from './actions'
+import { NavigationActions } from './actions'
 import { RouteStore } from './RouteStore'
 
 export const navigateOp = operation(
@@ -16,12 +16,12 @@ export const navigateOp = operation(
   ) => {
     const routeStore = context.getStore(RouteStore)
 
-    context.dispatch(navigateStart, { url, type })
+    context.dispatch(NavigationActions.navigateStart, { url, type })
 
     const route = routeStore.getRoute(url)
 
     if (!route) {
-      context.dispatch(navigateFailure, {
+      context.dispatch(NavigationActions.navigateFailure, {
         type,
         url,
         error: Object.assign(new Error(`URL ${url} not found in any routes`), {
@@ -44,9 +44,13 @@ export const navigateOp = operation(
           : Promise.resolve(),
       ])
 
-      context.dispatch(navigateSuccess, { type, url, handler })
+      context.dispatch(NavigationActions.navigateSuccess, {
+        type,
+        url,
+        handler,
+      })
     } catch (e) {
-      context.dispatch(navigateFailure, {
+      context.dispatch(NavigationActions.navigateFailure, {
         type,
         url,
         error: Object.assign(e, { statusCode: 500 }),

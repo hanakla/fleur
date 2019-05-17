@@ -3,7 +3,7 @@ import pathToRegexp from 'path-to-regexp'
 import qs from 'querystring'
 import url from 'url'
 
-import { navigateFailure, navigateStart, navigateSuccess } from './actions'
+import { NavigationActions } from './actions'
 import { MatchedRoute, RouteDefinitions } from './types'
 
 export interface State {
@@ -36,7 +36,7 @@ export class RouteStore extends Store<State> {
   protected routes: RouteDefinitions
 
   // @ts-ignore
-  private handleNavigateStart = listen(navigateStart, () => {
+  private handleNavigateStart = listen(NavigationActions.navigateStart, () => {
     this.updateWith(draft => {
       draft.error = null
       draft.isComplete = false
@@ -45,7 +45,7 @@ export class RouteStore extends Store<State> {
 
   // @ts-ignore
   private handleNavigationSuccess = listen(
-    navigateSuccess,
+    NavigationActions.navigateSuccess,
     ({ type, url, handler }) => {
       const nextRoute = this.matchRoute(url)
 
@@ -58,13 +58,16 @@ export class RouteStore extends Store<State> {
   )
 
   // @ts-ignore
-  private handleNavigationFailure = listen(navigateFailure, ({ error }) => {
-    this.updateWith(state => {
-      state.currentRoute = null
-      state.error = error || null
-      state.isComplete = true
-    })
-  })
+  private handleNavigationFailure = listen(
+    NavigationActions.navigateFailure,
+    ({ error }) => {
+      this.updateWith(state => {
+        state.currentRoute = null
+        state.error = error || null
+        state.isComplete = true
+      })
+    },
+  )
 
   public rehydrate() {}
 
