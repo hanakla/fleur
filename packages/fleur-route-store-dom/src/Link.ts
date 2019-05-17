@@ -21,7 +21,7 @@ export const Link = forwardRef(
     const handleClick = useCallback(
       (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (props.onClick) props.onClick(e)
-        if (e.isDefaultPrevented) return
+        if (e.isDefaultPrevented()) return
         if (!isRoutable(props.href)) return
 
         e.preventDefault()

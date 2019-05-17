@@ -66,18 +66,10 @@ export class RouteStore extends Store<State> {
     })
   })
 
-  public rehydrate(state: State) {
-    this.updateWith(draft => {
-      Object.assign(draft, state)
+  public rehydrate() {}
 
-      draft.currentRoute = state.currentRoute
-        ? this.getRoute(state.currentRoute.url)
-        : null
-    })
-  }
-
-  public dehydrate(): State {
-    return this.state
+  public dehydrate() {
+    return {}
   }
 
   public getCurrentRoute(): MatchedRoute | null {

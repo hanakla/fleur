@@ -1,7 +1,7 @@
 import { createRouteStore } from '@ragg/fleur-route-store-dom'
 import { TodoFilterType } from './constants'
 
-const RouteStore = createRouteStore({
+export const RouteStore = createRouteStore({
   index: {
     path: '/',
     handler: () => import('../routes/Index').then(mod => mod.Index),
@@ -24,5 +24,3 @@ const RouteStore = createRouteStore({
     },
   },
 })
-
-export { RouteStore as RouteStore_ }

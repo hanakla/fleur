@@ -19,10 +19,11 @@ const connectToStores = <Props, MappedProps = {}>(
   Component: React.ComponentType<ComponentProps>,
 ): ConnectedComponent<ComponentProps, MappedProps> => {
   return React.forwardRef((props: any, ref) => {
-    const mappedProps = useStore(stores, (getStore: StoreGetter) =>
+    const mappedProps = useStore(stores, getStore =>
       mapStoresToProps(getStore, props),
     )
 
+    console.log(mappedProps)
     return React.createElement(Component, { ref, ...props, ...mappedProps })
   })
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ReactDOMServer from 'react-dom/server'
 import { App } from './components/App'
 import { app } from './app'
 import { FleurContext } from '@ragg/fleur-react'
