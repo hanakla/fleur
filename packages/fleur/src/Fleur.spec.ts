@@ -15,11 +15,11 @@ describe('Fleur', () => {
       public state: { count: number } = { count: 0 }
 
       private handleIncrease = listen(actions.increase, p => {
-        this.state.count += p.increase
+        this.updateWith(state => (state.count += p.increase))
       })
 
       private handleDecrease = listen(actions.decrease, p => {
-        this.state.count -= p.decrease
+        this.updateWith(state => (state.count -= p.decrease))
       })
     }
 
