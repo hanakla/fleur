@@ -35,9 +35,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
 
   const [, rerender] = useReducer(s => s + 1, 0)
 
-  const mapStoresToState = () => {
-    rerender({})
-  }
+  const mapStoresToState = () => rerender({})
 
   const changeHandler = useCallback(
     // Synchronous mapping on SSR
