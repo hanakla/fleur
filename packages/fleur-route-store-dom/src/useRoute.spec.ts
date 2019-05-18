@@ -14,7 +14,7 @@ import { createRouteStore } from './createRouteStore'
 describe('useRoute', () => {
   const Router = createRouteStore({
     test: {
-      path: '/test',
+      path: '/test/:id',
       handler: async () => 'test',
     },
   })
@@ -42,7 +42,7 @@ describe('useRoute', () => {
       wrapper: wrapperFactory(appContext, routeContext),
     })
 
-    history.pushState({}, '', '/test')
+    history.pushState({}, '', '/test/10?sort=asc#anchor')
     window.dispatchEvent(new Event('popstate'))
     jest.runAllTicks()
     await new Promise(r => requestAnimationFrame(r))
@@ -58,8 +58,12 @@ describe('useRoute', () => {
                     "handler": "test",
                     "meta": Object {},
                     "name": "test",
-                    "params": Object {},
-                    "query": Object {},
+                    "params": Object {
+                      id: "asc",
+                    },
+                    "query": Object {
+                      "sort": "asc",
+                    },
                     "type": "POP",
                     "url": "/test",
                   },

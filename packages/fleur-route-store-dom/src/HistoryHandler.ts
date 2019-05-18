@@ -87,12 +87,12 @@ export const HistoryHandler = withComponentContext(
       }
 
       private handleChangeLocation: LocationListener = (
-        { pathname },
+        { pathname, search, hash },
         action,
       ) => {
         this.props.executeOperation(navigateOp, {
           type: action,
-          url: pathname,
+          url: pathname + search + hash,
         })
       }
 
