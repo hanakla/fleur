@@ -1,5 +1,5 @@
 export { createRouteStore } from './createRouteStore'
-export { useRoute } from './useRouter'
+export { useRoute } from './useRoute'
 export { RouteDefinitions } from './types'
 export { RouterContext, createRouterContext } from './RouterContext'
 export { navigateOp } from './navigateOp'
