@@ -7,6 +7,7 @@ export const useRoute = () => {
 
   const { route, error } = useStore([RouteStore], getStore => {
     const route = getStore(RouteStore).getCurrentRoute()
+    console.log(route)
     return {
       route,
       params: route ? route.params : {},

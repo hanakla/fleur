@@ -76,6 +76,7 @@ export class RouteStore extends Store<State> {
   }
 
   public getCurrentRoute(): MatchedRoute | null {
+    console.log(this.state)
     return this.state.currentRoute
   }
 

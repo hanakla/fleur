@@ -55,6 +55,8 @@ export const navigateOp = operation(
         url,
         error: Object.assign(e, { statusCode: 500 }),
       })
+
+      throw e
     }
   },
 )

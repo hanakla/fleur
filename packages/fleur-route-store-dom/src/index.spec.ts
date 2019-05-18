@@ -63,7 +63,9 @@ describe('test', () => {
   })
 
   it('Should handle exception ', async () => {
-    await context.executeOperation(navigateOp, { url: '/error' })
+    try {
+      await context.executeOperation(navigateOp, { url: '/error' })
+    } catch (e) {}
 
     const error = context.getStore(RouteStore).getCurrentNavigateError()
     expect(error).toMatchObject({ message: 'damn.', statusCode: 500 })

@@ -34,7 +34,7 @@ describe('useRoute', () => {
     )
   }
 
-  it('Should correctry worked', async () => {
+  it.only('Should correctry worked', async () => {
     const appContext = app.createContext()
     const routeContext = createRouterContext()
 
@@ -43,9 +43,10 @@ describe('useRoute', () => {
     })
 
     history.pushState({}, '', '/test/10?sort=asc#anchor')
-    window.dispatchEvent(new Event('popstate'))
+    // window.dispatchEvent(new Event('popstate'))
     jest.runAllTicks()
     await new Promise(r => requestAnimationFrame(r))
+    console.log('popstate', result.current!)
 
     expect(result.current).toMatchInlineSnapshot(`
                 Object {
