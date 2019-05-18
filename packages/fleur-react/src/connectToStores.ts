@@ -23,7 +23,6 @@ const connectToStores = <Props, MappedProps = {}>(
       mapStoresToProps(getStore, props),
     )
 
-    console.log(mappedProps)
     return React.createElement(Component, { ref, ...props, ...mappedProps })
   })
 }
