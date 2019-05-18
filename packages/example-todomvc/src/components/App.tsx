@@ -1,8 +1,8 @@
 import React from 'react'
-import { useRouter } from '@ragg/fleur-route-store-dom'
+import { useRoute } from '@ragg/fleur-route-store-dom'
 
 export const App = () => {
-  const { route } = useRouter()
+  const { route } = useRoute()
 
   return <div>{route && route.handler && <route.handler />}</div>
 }

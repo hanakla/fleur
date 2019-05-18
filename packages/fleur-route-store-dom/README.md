@@ -29,7 +29,7 @@ import { Link } from '@ragg/fluer-route-store-dom'
 import { NotFound } from './components/NotFound.ts'
 
 export const User = () => {
-  const { routerContext } = useRouter()
+  const { routerContext } = useRoute()
 
   const { user } = useStore([SomeStore], getStore => ({
     user: getStore(SomeStore).data,
@@ -56,7 +56,7 @@ import { useRoute } from '@ragg/fleur-route-store-dom'
 import { Router } from './Router.ts'
 
 export const App = () => {
-  const { route, error, routerContext } = useRouter()
+  const { route, error, routerContext } = useRoute()
 
   return (
     <html>

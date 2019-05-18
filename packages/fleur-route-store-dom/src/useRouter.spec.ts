@@ -1,9 +1,9 @@
 import React from 'react'
 import { FleurContext } from '@ragg/fleur-react'
-import { renderHook, act } from 'react-hooks-testing-library'
+import { renderHook } from 'react-hooks-testing-library'
 import Fleur, { AppContext } from '@ragg/fleur'
 
-import { useRouter } from './useRouter'
+import { useRoute } from './useRoute'
 import {
   RouterContextValue,
   RouterContext,
@@ -11,7 +11,7 @@ import {
 } from './RouterContext'
 import { createRouteStore } from './createRouteStore'
 
-describe('useRouter', () => {
+describe('useRoute', () => {
   const Router = createRouteStore({
     test: {
       path: '/test',
@@ -38,7 +38,7 @@ describe('useRouter', () => {
     const appContext = app.createContext()
     const routeContext = createRouterContext()
 
-    const { result, rerender } = renderHook(() => useRouter(), {
+    const { result, rerender } = renderHook(() => useRoute(), {
       wrapper: wrapperFactory(appContext, routeContext),
     })
 
