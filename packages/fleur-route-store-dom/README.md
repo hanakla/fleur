@@ -29,10 +29,10 @@ import { Link } from '@ragg/fluer-route-store-dom'
 import { NotFound } from './components/NotFound.ts'
 
 export const User = () => {
-  const { routerContext } = useRoute()
+  const { routerContext, params } = useRoute()
 
   const { user } = useStore([SomeStore], getStore => ({
-    user: getStore(SomeStore).data,
+    user: getStore(SomeStore).getUser(params.id),
   }))
 
   // Handling API side not found in render time
