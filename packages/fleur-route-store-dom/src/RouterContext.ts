@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { HistoryHandler } from './HistoryHandler'
 
-type RouterContextValue = {
+export type RouterContextValue = {
   status: number
 }
 
@@ -18,7 +18,7 @@ export const RouterContext = ({
   children,
 }: {
   value?: RouterContextValue
-  children: React.ReactNode
+  children?: React.ReactNode
 }) => {
   return React.createElement(
     React.Fragment,
