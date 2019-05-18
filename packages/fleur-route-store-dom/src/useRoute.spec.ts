@@ -43,38 +43,36 @@ describe('useRoute', () => {
     })
 
     history.pushState({}, '', '/test/10?sort=asc#anchor')
-    // window.dispatchEvent(new Event('popstate'))
-    jest.runAllTicks()
+    window.dispatchEvent(new Event('popstate'))
     await new Promise(r => requestAnimationFrame(r))
-    console.log('popstate', result.current!)
+    rerender()
 
     expect(result.current).toMatchInlineSnapshot(`
-                Object {
-                  "error": null,
-                  "route": Object {
-                    "config": Object {
-                      "handler": [Function],
-                      "path": "/test",
-                    },
-                    "handler": "test",
-                    "meta": Object {},
-                    "name": "test",
-                    "params": Object {
-                      id: "asc",
-                    },
-                    "query": Object {
-                      "sort": "asc",
-                    },
-                    "type": "POP",
-                    "url": "/test",
-                  },
-                  "routerContext": null,
-                }
-        `)
+      Object {
+        "error": null,
+        "route": Object {
+          "config": Object {
+            "handler": [Function],
+            "path": "/test/:id",
+          },
+          "handler": "test",
+          "meta": Object {},
+          "name": "test",
+          "params": Object {
+            "id": "10",
+          },
+          "query": Object {
+            "sort": "asc",
+          },
+          "type": "POP",
+          "url": "/test/10?sort=asc",
+        },
+        "routerContext": null,
+      }
+    `)
 
     history.pushState({}, '', '/not_found')
     window.dispatchEvent(new Event('popstate'))
-    jest.runAllTicks()
     await new Promise(r => requestAnimationFrame(r))
 
     expect(result.current).toMatchInlineSnapshot(`
