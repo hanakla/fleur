@@ -1,6 +1,6 @@
 ### 1.0.0
 
-- #?? Major release
+- #29 Major release
   - Internal refactoring
   - #26 Bind OperationContext instance to this methods.
 
