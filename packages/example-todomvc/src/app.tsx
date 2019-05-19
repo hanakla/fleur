@@ -1,8 +1,8 @@
 import Fleur from '@ragg/fleur'
 import { AppStore } from './domain/App/store'
 import { TodoStore } from './domain/Todo/store'
-import { RouteStore } from './domain/RouteStore'
+import Router from './domain/RouteStore'
 
 export const app = new Fleur({
-  stores: [AppStore, TodoStore, RouteStore],
+  stores: [AppStore, TodoStore, Router],
 })

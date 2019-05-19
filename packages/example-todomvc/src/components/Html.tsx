@@ -11,8 +11,8 @@ export const Html = ({
     <head>
       <meta charSet="utf-8" />
       <title>React • TodoMVC</title>
-      <link rel="stylesheet" href="node_modules/todomvc-common/base.css" />
-      <link rel="stylesheet" href="node_modules/todomvc-app-css/index.css" />
+      <link rel="stylesheet" href="public/base.css" />
+      <link rel="stylesheet" href="public/index.css" />
       <script dangerouslySetInnerHTML={{ __html: state }} />
     </head>
     <body>
@@ -29,10 +29,7 @@ export const Html = ({
           Part of <a href="http://todomvc.com">TodoMVC</a>
         </p>
       </footer>
-      <script
-        type="text/javascript"
-        src="node_modules/todomvc-common/base.js"
-      />
+      <script type="text/javascript" src="public/base.js" />
 
       <script type="text/javascript" src="public/client.js" />
     </body>

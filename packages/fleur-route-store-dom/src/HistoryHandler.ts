@@ -1,62 +1,74 @@
-import {
-  connectToStores,
-  ContextProp,
-  withComponentContext,
-} from '@ragg/fleur-react'
-import { createBrowserHistory, History, LocationListener } from 'history'
-import isEqual = require('lodash/isEqual')
-import * as React from 'react'
-import { navigateOperation } from './navigateOperation'
-import RouteStore from './RouteStore'
-import { MatchedRoute } from './types'
+import { useStore, useComponentContext } from '@ragg/fleur-react'
+import { LocationListener } from 'history'
+import { useLayoutEffect, useEffect, useCallback } from 'react'
+import { navigateOp } from './operations'
+import { RouteStore } from './RouteStore'
+import { canUseDOM } from './utils'
+import { useRouterContext } from './RouterContext'
 
-interface ConnectedProps {
-  route: MatchedRoute | null
-}
+const useIsomorphicEffect = canUseDOM() ? useLayoutEffect : useEffect
 
-type Props = ConnectedProps & ContextProp
+export const HistoryHandler = () => {
+  const { history } = useRouterContext()
+  const { executeOperation } = useComponentContext()
 
-export const HistoryHandler = withComponentContext(
-  connectToStores(
-    [RouteStore],
-    (getStore): ConnectedProps => ({
-      route: getStore(RouteStore).getCurrentRoute(),
-    }),
-  )(
-    class HistoryHandler extends React.Component<Props> {
-      private history: History
-      private scrollTimerId: number
+  const { route, progressRoute } = useStore([RouteStore], getStore => ({
+    route: getStore(RouteStore).currentRoute,
+    progressRoute: getStore(RouteStore).progressRoute,
+  }))
 
-      public shouldComponentUpdate(nextProps: Props) {
-        const { route } = this.props
+  const handleChangeLocation: LocationListener = useCallback(
+    (({ pathname, search, hash, state }, action) => {
+      if (state && state.fluerHandled) return
 
-        return !route || !nextProps.route || !isEqual(route, nextProps.route)
-      }
+      executeOperation(navigateOp, {
+        type: action,
+        url: pathname + search + hash,
+      })
+    }) as LocationListener,
+    [],
+  )
 
-      public componentDidMount() {
-        this.history = createBrowserHistory({})
-        this.history.listen(this.handleChangeLocation)
-        window.addEventListener('scroll', this.handleScroll)
-      }
+  // Listen location change
+  useIsomorphicEffect(() => {
+    const unlisten = history.listen(handleChangeLocation)
+    return () => unlisten()
+  }, [])
 
-      public componentDidUpdate(prevProps: Props) {
-        const { route } = this.props
+  // Apply current store route to location
+  useEffect(
+    () => {
+      const route = progressRoute
 
-        if (route && !isEqual(prevProps.route, route)) {
-          this.applyRouteToLocation(route)
+      if (!route) return
+
+      if (route.type === 'POP') {
+        const { state } = history.location
+        if (state) {
+          setTimeout(() => window.scrollTo(state.scrollX, state.scrollY))
         }
+      } else if (route.type === 'REPLACE') {
+        history.replace(route.url, { fluerHandled: true })
+      } else {
+        history.push(route.url, { fluerHandled: true })
       }
+    },
+    [progressRoute],
+  )
 
-      private handleScroll = () => {
-        if (this.scrollTimerId) {
-          clearTimeout(this.scrollTimerId)
+  // Save scroll position
+  useEffect(
+    () => {
+      let scrollTimerId: number
+
+      const handleScroll = () => {
+        if (scrollTimerId) {
+          clearTimeout(scrollTimerId)
         }
 
-        this.scrollTimerId = (setTimeout(() => {
-          const { route } = this.props
-
+        scrollTimerId = (setTimeout(() => {
           if (route) {
-            this.history.replace(route.url, {
+            history.replace(route.url, {
               scrollX: window.scrollX || window.pageXOffset,
               scrollY: window.scrollY || window.pageYOffset,
             })
@@ -64,30 +76,15 @@ export const HistoryHandler = withComponentContext(
         }, 150) as any) as number
       }
 
-      private applyRouteToLocation = (route: MatchedRoute) => {
-        if (route.type === 'POP') {
-          const { state } = this.history.location
-          setTimeout(() => window.scrollTo(state.scrollX, state.scrollY))
-        } else if (route.type === 'REPLACE') {
-          this.history.replace(route.url, {})
-        } else {
-          this.history.push(route.url)
-        }
-      }
+      window.addEventListener('scroll', handleScroll, { passive: true })
 
-      private handleChangeLocation: LocationListener = (
-        { pathname },
-        action,
-      ) => {
-        this.props.executeOperation(navigateOperation, {
-          type: action,
-          url: pathname,
-        })
-      }
-
-      public render() {
-        return null
+      return () => {
+        window.removeEventListener('scroll', handleScroll)
+        clearTimeout(scrollTimerId)
       }
     },
-  ),
-)
+    [route],
+  )
+
+  return null
+}

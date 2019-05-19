@@ -6,13 +6,9 @@ import {
   StoreGetter,
 } from '@ragg/fleur-react'
 import { ENTER_KEY, ESCAPE_KEY } from '../domain/constants'
-import { TodoEntity } from '../domain/Todo/store'
+import { TodoEntity } from '../domain/Todo/types'
 import classNames from 'classnames'
-import {
-  updateTodoTitle,
-  destroyTodo,
-  toggleTodo,
-} from '../domain/Todo/operations'
+import { TodoOps } from '../domain/Todo/operations'
 import { setEditTodoId } from '../domain/App/operations'
 import { AppStore } from '../domain/App/store'
 
@@ -86,11 +82,11 @@ class TodoItemComponent extends React.Component<Props, State> {
   }
 
   private handleChangeCompletion = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.context.executeOperation(toggleTodo, { id: this.props.todo.id })
+    this.props.executeOperation(TodoOps.toggleTodo, { id: this.props.todo.id })
   }
 
   private handleClickDestroy = () => {
-    this.props.context.executeOperation(destroyTodo, { id: this.props.todo.id })
+    this.props.executeOperation(TodoOps.destroyTodo, { id: this.props.todo.id })
   }
 
   private handleSubmit(event: React.FormEvent) {
@@ -99,19 +95,19 @@ class TodoItemComponent extends React.Component<Props, State> {
     if (val) {
       this.setState({ editText: val })
 
-      this.props.context.executeOperation(updateTodoTitle, {
+      this.props.executeOperation(TodoOps.updateTodoTitle, {
         id: this.props.todo.id,
         title: this.props.todo.title,
       })
     } else {
-      this.props.context.executeOperation(destroyTodo, {
+      this.props.executeOperation(TodoOps.destroyTodo, {
         id: this.props.todo.id,
       })
     }
   }
 
   private handleEdit() {
-    this.props.context.executeOperation(setEditTodoId, {
+    this.props.executeOperation(setEditTodoId, {
       id: this.props.todo.id,
     })
     this.setState({ editText: this.props.todo.title })
@@ -120,7 +116,7 @@ class TodoItemComponent extends React.Component<Props, State> {
   private handleKeyDown(event: React.KeyboardEvent) {
     if (event.keyCode === ESCAPE_KEY) {
       this.setState({ editText: this.props.todo.title })
-      this.props.context.executeOperation(setEditTodoId, { id: null })
+      this.props.executeOperation(setEditTodoId, { id: null })
     } else if (event.keyCode === ENTER_KEY) {
       this.handleSubmit(event)
     }
