@@ -31,10 +31,6 @@ describe('Sever side rendering', () => {
       }
     }
 
-    // const Component = connectToStores([TestStore], getStore => ({
-    //   count: getStore(TestStore).getCount(),
-    // }))((props: { count: number }) => <div>{`Your count ${props.count}`}</div>)
-
     const Component = () => {
       const { count } = useStore([TestStore], getStore => ({
         count: getStore(TestStore).getCount(),
