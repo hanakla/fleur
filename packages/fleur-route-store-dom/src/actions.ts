@@ -1,13 +1,19 @@
-import { action } from '@ragg/fleur'
+import { action, actions } from '@ragg/fleur'
 import { Action } from 'history'
 
-export interface NavigationPayload {
+interface NavigationPayload {
   url: string
   type?: Action
   error?: Error
 }
 
+interface NavigationSuccessPayload extends NavigationPayload {
+  handler: any
+}
+
 // Action payloads
-export const navigateStart = action<NavigationPayload>()
-export const navigateSuccess = action<NavigationPayload>()
-export const navigateFailure = action<NavigationPayload>()
+export const NavigationActions = actions('fleur-route-store-dom/Navigation', {
+  navigateStart: action<NavigationPayload>(),
+  navigateSuccess: action<NavigationSuccessPayload>(),
+  navigateFailure: action<NavigationPayload>(),
+})

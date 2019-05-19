@@ -3,7 +3,7 @@ import { pluralize } from '../utils/utils'
 import classNames from 'classnames'
 import React from 'react'
 import { withComponentContext, ContextProp } from '@ragg/fleur-react'
-import { clearCompleted } from '../domain/Todo/operations'
+import { TodoOps } from '../domain/Todo/operations'
 import { Link } from '@ragg/fleur-route-store-dom'
 
 interface Props extends ContextProp {
@@ -16,7 +16,6 @@ class TodoFooterComponent extends React.Component<Props, {}> {
   public render() {
     const { nowShowing, completedCount, count } = this.props
 
-    console.log(nowShowing)
     return (
       <footer className="footer">
         <span className="todo-count">
@@ -67,7 +66,7 @@ class TodoFooterComponent extends React.Component<Props, {}> {
   }
 
   private handleClickClearCompleted = () => {
-    this.props.context.executeOperation(clearCompleted, {})
+    this.props.executeOperation(TodoOps.clearCompleted)
   }
 }
 

@@ -1,11 +1,11 @@
 import Fleur, { AppContext } from '@ragg/fleur'
-import { navigateOperation, createStoreWithStaticRoutes } from './index'
+import { navigateOp, createRouteStore } from './index'
 
 describe('test', () => {
-  const RouteStore = createStoreWithStaticRoutes({
+  const RouteStore = createRouteStore({
     articles: {
       path: '/articles',
-      handler: 'ArticleHandler',
+      handler: async () => 'ArticleHandler',
       meta: {
         requireAuthorized: false,
       },
@@ -13,7 +13,7 @@ describe('test', () => {
     },
     articlesShow: {
       path: '/articles/:id',
-      handler: 'ArticleShowHandler',
+      handler: async () => 'ArticleShowHandler',
       meta: {
         requireAuthorized: true,
       },
@@ -21,7 +21,7 @@ describe('test', () => {
     },
     error: {
       path: '/error',
-      handler: 'Error',
+      handler: async () => 'Error',
       action: () => {
         throw new Error('damn.')
       },
@@ -39,33 +39,35 @@ describe('test', () => {
   })
 
   it('Should route to correct handler', async () => {
-    await context.executeOperation(navigateOperation, { url: '/articles' })
+    await context.executeOperation(navigateOp, { url: '/articles' })
 
-    const route = context.getStore(RouteStore).getCurrentRoute()
-    expect(route.config.handler).toBe('ArticleHandler')
+    const route = context.getStore(RouteStore).currentRoute
+    expect(route.handler).toBe('ArticleHandler')
   })
 
   it('Should not route to partialy matched route', async () => {
-    await context.executeOperation(navigateOperation, {
+    await context.executeOperation(navigateOp, {
       url: '/articles/not/match',
     })
 
-    const route = context.getStore(RouteStore).getCurrentRoute()
+    const route = context.getStore(RouteStore).currentRoute
     expect(route).toBe(null)
   })
 
   it('Should route to correct handler with ', async () => {
-    await context.executeOperation(navigateOperation, { url: '/articles/1' })
+    await context.executeOperation(navigateOp, { url: '/articles/1' })
 
-    const route = context.getStore(RouteStore).getCurrentRoute()
-    expect(route.config.handler).toBe('ArticleShowHandler')
+    const route = context.getStore(RouteStore).currentRoute
+    expect(route.handler).toBe('ArticleShowHandler')
     expect(route.params.id).toBe('1')
   })
 
   it('Should handle exception ', async () => {
-    await context.executeOperation(navigateOperation, { url: '/error' })
+    try {
+      await context.executeOperation(navigateOp, { url: '/error' })
+    } catch (e) {}
 
-    const error = context.getStore(RouteStore).getCurrentNavigateError()
+    const error = context.getStore(RouteStore).currentNavigateError
     expect(error).toMatchObject({ message: 'damn.', statusCode: 500 })
   })
 })

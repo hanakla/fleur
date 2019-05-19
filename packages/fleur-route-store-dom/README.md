@@ -1,102 +1,153 @@
 # fleur-route-store-dom [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-route-store-dom.svg)](https://www.npmjs.com/package/@ragg/fleur-route-store-dom) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
-fluxible-route inspired router for [fleur](https://www.npmjs.com/package/@ragg/fleur)
+fluxible-router inspired router for [fleur](https://www.npmjs.com/package/@ragg/fleur)
 
-## Usage
+## Features
+
+- API prefetching supported
+- Completely able to using in Server Side Rendering
+- Lazy loading supported without extra code transformer
+- URL builder
+
+## Usage overview
+
+See more detail in [todomvc example](https://github.com/ra-gg/fleur/tree/master/packages/example-todomvc)
 
 ```tsx
-// RouteStore.ts
-import * as Loadable from 'react-loadable'
-import { withStaticRoutes, Route } from '@ragg/fleur-route-store-dom'
-import { fetchUserSession, fetchArticle } from './operations'
+//
+// Router.ts
+//
+import { createRouteStore } from '@ragg/fleur-route-store-dom'
 
-export default withStaticRoutes({
-    articleShow: {
-        path: '/article/:id',
-        action: (context, route: Route) => Promise.all([
-            context.executeOperation(fetchUserSession, {}),
-            context.executeOperation(fetchArticle, { id: route.param.id })
-        ])
-        handler: Loadable({ loader: () => import('./ArticleContainer') }),
-        meta: {
-            noHeader: true,
-        },
-    }
+export const Router = createRouteStore({
+  userShow: {
+    path: '/user/:id',
+    action: ({ executeOperation }, route) =>
+      Promise.all([
+        executeOperation(fetchUser, { id: route.param.id }),
+      ]),
+    handler: () => import('./routes/User'),
+    meta: {
+      noHeader: true,
+    },
+  },
 })
 
-// App.ts
-import { connectToStores, withComponentContext, ContextProp } from '@ragg/fleur-react'
-import { HistoryHandler } from '@ragg/fleur-route-store-dom'
-import { RouteStore } from './RouteStore'
+//
+// routes/UserShow.tsx
+//
+import { Link } from '@ragg/fluer-route-store-dom'
+import { Router } from '../Router.ts'
 
-type Props = {
-    route: Route | null
-} & ContextProp
+// if you want to use route in class component,
+// see packages/example-todomvc/src/routes/Index.tsx
+export const UserShow = () => {
+  const { routerContext, params } = useRoute()
 
-export default withComponentContext(
-    connectToStores([ RouteStore ], (getStore) => ({
-        // get routed route
-        route: getStore(RouteStore).getCurrentRoute()
-    }))
-)(class App extends React.Component<Props> {
-    render() {
-        const routeStore = this.props.context.getStore(RouteStore)
+  const { user } = useStore([UserStore], getStore => ({
+    user: getStore(UserStore).getUser(params.id),
+  }))
 
-        const { route } = this.props
-        const Handler = route ? route.handler : null
+  // Handling API side not found in render time
+  if (!user) {
+    routerContext.status = 404
+    return <NotFound />
+  }
 
-        return (
-            <html>
-                <head>
-                    {/* heading... */}
-                </head>
-                <body>
-                    {/* Must to mount HistoryHandler component in application once */}
-                    <HistoryHandler />
-                    <div>
-                        {/* get .meta property from route.meta */}
-                        {!route.meta.noHeader && <header />}
+  return (
+    <div>
+      {/* Link component and URL builder */}
+      <Link href={Router.makePath('userShow', { id: params.id })}>
+        {user.name}
+      </Link>
+    </div>
+  )
+}
 
-                        {/* mount Handler component here */}
-                        {handler && <Handler />}
+// 
+// components/AppRoot.tsx
+// 
+export const AppRoot = () => {
+  const { route, error, routerContext } = useRoute()
 
-                        {/* URL Builder */}
-                        <a href={routeStore.makePath('articleShow', { id: 100 })}>
-                            Jump to Article
-                        </a>
-                    </div>
-                </body>
-            </html>
-        )
-    }
-})
+  return (
+    <div>
+      {/* Handle not found*/}
+      {!route && <div>Not Found</div>}
 
-// server.ts
+      {error && <div>500 Error</div>}
+
+      {/* get .meta property from route.meta */}
+      {route && !route.meta.noHeader && <header />}
+
+      {/* mount Handler component here */}
+      {route && route.handler && <route.Handler />}
+    </div>
+  )
+}
+
+//
+// server.tsx
+//
 import Fleur from '@ragg/fleur'
-import { navigateOperation } from '@ragg/fleur-route-store-dom'
+import { navigateOp, createRouterContext } from '@ragg/fleur-route-store-dom'
 import express from 'express'
-import RouteStore, from './RouteStore'
-import App from './App'
+import { Router } from './Router'
+import { AppRoot } from './components/AppRoot'
 
 const server = express()
-const app = new Fleur({ stores: [ RouteStore ] })
+const app = new Fleur({ stores: [RouteStore] })
 
-server.use((req) => {
-    const context = req.context = app.createContext();
+server.use(async (req, res) => {
+  const context = app.createContext()
+  const routerContext = createRouterContext()
 
-    context.executeOperation(navigateOperation, {
-        url: req.url,
-        method: req.method
-    })
+  // Route to handler. 
+  // It's executes API fetch and lazy component loading
+  await context.executeOperation(navigateOp, {
+    url: req.url,
+  })
+
+  const content = ReactDOMServer.renderToString(
+    <FleurContext value={context}>
+      <RouterContext value={routerContext}>
+        <AppRoot />
+      </RouterContext>
+    </FleurContext>,
+  )
+
+  const rehydrated = JSON.stringify(context.dehydrate())
+
+  res.status(routerContext.status)
+  res
+    .write('<!doctype html>')
+    .write(<Html state={rehydrated} content={content} />)
+    .end()
 })
 
-server.use((req, res) => {
-    res.write('<!doctype html>')
-    res.write(
-        ReactDOM.renderToString(
-            createElementWithContext(req.context, App, {})
-        )
-    )
-})
+//
+// client.tsx
+//
+import { AppRoot } from './components/AppRoot'
+import { FleurContext } from '@ragg/fleur-react'
+import { RouterProvider, restoreNavigateOp } from '@ragg/fleur-route-store-dom'
 
+document.addEventListener('DOMContentLoaded', async () => {
+  const state = JSON.parse(document.querySelector('#state').innerHTML)
+  const context = app.createContext()
+
+  context.rehydrate(state)
+
+  // **IMPORTANT** It's required before rendering for fetching import()ed components!
+  await context.executeOperation(restoreNavigateOp)
+
+  ReactDOM.hydrate(
+    <FleurContext value={context}>
+      <RouterProvider>
+        <App />
+      </RouterProvider>
+    </FleurContext>,
+    document.querySelector('#react-root'),
+  )
+})
 ```

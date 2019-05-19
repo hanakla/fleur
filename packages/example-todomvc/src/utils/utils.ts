@@ -26,16 +26,3 @@ export const store = (namespace: string, data?: any) => {
   var store = localStorage.getItem(namespace)
   return (store && JSON.parse(store)) || []
 }
-
-export const extend = (...objs: any[]): any => {
-  var newObj = {}
-  for (var i = 0; i < objs.length; i++) {
-    var obj = objs[i]
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        newObj[key] = obj[key]
-      }
-    }
-  }
-  return newObj
-}
