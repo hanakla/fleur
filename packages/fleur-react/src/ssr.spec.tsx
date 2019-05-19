@@ -6,8 +6,6 @@ import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
 import * as request from 'request-promise'
 
-import { ContextProp, createElementWithContext } from '.'
-import connectToStores from './connectToStores'
 import { useStore } from './useStore'
 import { FleurContext } from './ComponentContextProvider'
 
