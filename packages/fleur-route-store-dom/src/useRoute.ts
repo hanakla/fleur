@@ -15,7 +15,7 @@ export const useRoute = () => {
       route,
       params: route ? route.params : {},
       query: route ? route.query : {},
-      error: getStore(RouteStore).navigateError,
+      error: getStore(RouteStore).currentNavigateError,
     }
   })
 

@@ -86,7 +86,7 @@ export class RouteStore extends Store<State> {
     return this.state.currentRoute
   }
 
-  public get navigateError(): Error | null {
+  public get currentNavigateError(): Error | null {
     return this.state.error
   }
 

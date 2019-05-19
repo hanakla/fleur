@@ -41,7 +41,7 @@ describe('test', () => {
   it('Should route to correct handler', async () => {
     await context.executeOperation(navigateOp, { url: '/articles' })
 
-    const route = context.getStore(RouteStore).getCurrentRoute()
+    const route = context.getStore(RouteStore).currentRoute
     expect(route.handler).toBe('ArticleHandler')
   })
 
@@ -50,14 +50,14 @@ describe('test', () => {
       url: '/articles/not/match',
     })
 
-    const route = context.getStore(RouteStore).getCurrentRoute()
+    const route = context.getStore(RouteStore).currentRoute
     expect(route).toBe(null)
   })
 
   it('Should route to correct handler with ', async () => {
     await context.executeOperation(navigateOp, { url: '/articles/1' })
 
-    const route = context.getStore(RouteStore).getCurrentRoute()
+    const route = context.getStore(RouteStore).currentRoute
     expect(route.handler).toBe('ArticleShowHandler')
     expect(route.params.id).toBe('1')
   })
@@ -67,7 +67,7 @@ describe('test', () => {
       await context.executeOperation(navigateOp, { url: '/error' })
     } catch (e) {}
 
-    const error = context.getStore(RouteStore).getCurrentNavigateError()
+    const error = context.getStore(RouteStore).currentNavigateError
     expect(error).toMatchObject({ message: 'damn.', statusCode: 500 })
   })
 })
