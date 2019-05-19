@@ -5,9 +5,9 @@ import Fleur, { AppContext } from '@ragg/fleur'
 
 import { useRoute } from './useRoute'
 import {
-  RouterContextValue,
   RouterContext,
   createRouterContext,
+  RouterProvider,
 } from './RouterContext'
 import { createRouteStore } from './createRouteStore'
 
@@ -25,12 +25,12 @@ describe('useRoute', () => {
 
   const wrapperFactory = (
     context: AppContext,
-    routerContext: RouterContextValue,
+    routerContext: RouterContext,
   ) => ({ children }: { children: React.ReactNode }) => {
     return React.createElement(
       FleurContext,
       { value: context },
-      React.createElement(RouterContext, { value: routerContext }, children),
+      React.createElement(RouterProvider, { value: routerContext }, children),
     )
   }
 
