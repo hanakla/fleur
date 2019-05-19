@@ -107,6 +107,7 @@ export const navigateOp = operation(
         error: Object.assign(e, { statusCode: 500 }),
       })
 
+      // Rethrow for debugging and error logging
       throw e
     }
   },
