@@ -1,3 +1,9 @@
+### 1.0.0
+
+- #?? Major release
+  - Internal refactoring
+  - #26 Bind OperationContext instance to this methods.
+
 ### 0.0.17
 
 - #21 Improve performance on dispatch action
