@@ -6,8 +6,6 @@ import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
 import * as request from 'request-promise'
 
-import { ContextProp, createElementWithContext } from '.'
-import connectToStores from './connectToStores'
 import { useStore } from './useStore'
 import { FleurContext } from './ComponentContextProvider'
 
@@ -32,10 +30,6 @@ describe('Sever side rendering', () => {
         return this.state.count
       }
     }
-
-    // const Component = connectToStores([TestStore], getStore => ({
-    //   count: getStore(TestStore).getCount(),
-    // }))((props: { count: number }) => <div>{`Your count ${props.count}`}</div>)
 
     const Component = () => {
       const { count } = useStore([TestStore], getStore => ({
