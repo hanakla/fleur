@@ -24,7 +24,7 @@ interface Props extends ContextProp {
   }
 }
 
-export const Index = withComponentContext(
+export default withComponentContext(
   connectToStores([TodoStore], getStore => {
     const { currentRoute } = getStore(Router)
 

@@ -5,7 +5,7 @@ import { TodoOps } from './Todo/operations'
 export default createRouteStore({
   index: {
     path: '/',
-    handler: () => import('../routes/Index').then(mod => mod.Index),
+    handler: () => import('../routes/Index'),
     action: ({ executeOperation }) =>
       Promise.all([executeOperation(TodoOps.fetchTodos)]),
     meta: {
@@ -14,7 +14,7 @@ export default createRouteStore({
   },
   active: {
     path: '/active',
-    handler: () => import('../routes/Index').then(mod => mod.Index),
+    handler: () => import('../routes/Index'),
     action: ({ executeOperation }) =>
       Promise.all([executeOperation(TodoOps.fetchTodos)]),
     meta: {
@@ -23,7 +23,7 @@ export default createRouteStore({
   },
   completed: {
     path: '/completed',
-    handler: () => import('../routes/Index').then(mod => mod.Index),
+    handler: () => import('../routes/Index'),
     action: ({ executeOperation }) =>
       Promise.all([executeOperation(TodoOps.fetchTodos)]),
     meta: {
