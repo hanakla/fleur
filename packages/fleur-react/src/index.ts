@@ -1,9 +1,6 @@
 export { createElementWithContext } from './createElementWithContext'
-export {
-  default as withComponentContext,
-  ContextProp,
-} from './withComponentContext'
+export { withFleurContext, ContextProp } from './withFleurContext'
 export { default as connectToStores, StoreGetter } from './connectToStores'
-export { useComponentContext } from './useComponentContext'
+export { useFleurContext } from './useFleurContext'
 export { useStore } from './useStore'
 export { FleurContext } from './ComponentContextProvider'

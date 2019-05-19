@@ -5,7 +5,7 @@ import * as React from 'react'
 import { createElementWithContext } from './createElementWithContext'
 import withComponentContext, { ContextProp } from './withComponentContext'
 
-describe('withComponentContext', () => {
+describe('withFleurContext', () => {
   it('Is received context in props', async () => {
     const app = new Fleur()
     const context = app.createContext()

@@ -2,7 +2,7 @@ import { ComponentContext } from '@ragg/fleur'
 import * as React from 'react'
 
 import { WithRef } from './WithRef'
-import { useComponentContext } from './useComponentContext'
+import { useFleurContext } from './useFleurContext'
 
 export interface ContextProp {
   getStore: ComponentContext['getStore']
@@ -14,11 +14,11 @@ type ExcludeContextProp<P extends ContextProp> = Pick<
   Exclude<keyof P, keyof ContextProp>
 >
 
-const withComponentContext = <Props extends ContextProp>(
+export const withFleurContext = <Props extends ContextProp>(
   Component: React.ComponentType<Props>,
 ): React.ComponentType<WithRef<ExcludeContextProp<Props>>> => {
   return React.forwardRef((props: any, ref) => {
-    const { getStore, executeOperation } = useComponentContext()
+    const { getStore, executeOperation } = useFleurContext()
 
     return React.createElement(Component, {
       ref,
@@ -28,5 +28,3 @@ const withComponentContext = <Props extends ContextProp>(
     })
   })
 }
-
-export { withComponentContext as default }

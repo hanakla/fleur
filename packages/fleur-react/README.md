@@ -10,11 +10,11 @@ Hooks style:
 ```tsx
 // ./components/AppRoot.tsx
 import React, { useCallback } from 'react'
-import { useComponentContext, useStore } from '@ragg/fleur-react'
+import { useFleurContext, useStore } from '@ragg/fleur-react'
 import { increaseOp } from './operations'
 
 export const AppRoot = props => {
-  const context = useComponentContext()
+  const context = useFleurContext()
 
   const { count } = useStore([CountStore], getStore => ({
     count: getStore(CountStore).getCount(),
