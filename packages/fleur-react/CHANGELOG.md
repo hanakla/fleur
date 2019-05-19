@@ -1,6 +1,6 @@
 ### 1.0.0
 
-- #?? Rename `useComponentContext` / `withComponentContext` to `useFleurContext` / `withFleurContext`
+- #29 Rename `useComponentContext` / `withComponentContext` to `useFleurContext` / `withFleurContext`
 
 ### 0.0.19
 
