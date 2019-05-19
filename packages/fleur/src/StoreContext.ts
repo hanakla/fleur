@@ -1,4 +1,4 @@
-import Store from './Store'
+import { Store } from './Store'
 
 export class StoreContext {
   private updateQueue = new Set<Store>()

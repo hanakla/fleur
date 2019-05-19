@@ -1,4 +1,4 @@
-import OperationContext from './OperationContext'
+import { OperationContext } from './OperationContext'
 
 export interface Operation {
   (_: OperationContext, ...args: any[]): Promise<void> | void

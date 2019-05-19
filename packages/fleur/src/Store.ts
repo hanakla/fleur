@@ -22,7 +22,7 @@ export interface StoreEvents {
   onChange: void
 }
 
-export default class Store<T = any> extends Emitter<StoreEvents> {
+export class Store<T = any> extends Emitter<StoreEvents> {
   public static storeName: string = ''
 
   protected state: T

@@ -1,19 +1,19 @@
 import * as invariant from 'invariant'
 
 import { ActionIdentifier, ExtractPayloadType } from './Action'
-import ComponentContext from './ComponentContext'
+import { ComponentContext } from './ComponentContext'
 import Dispatcher from './Dispatcher'
-import Fleur from './Fleur'
-import OperationContext from './OperationContext'
+import { Fleur } from './Fleur'
+import { OperationContext } from './OperationContext'
 import { Operation, OperationArgs } from './Operations'
-import Store, { StoreClass } from './Store'
+import { Store, StoreClass } from './Store'
 import { StoreContext } from './StoreContext'
 
 export interface HydrateState {
   stores: { [storeName: string]: object }
 }
 
-export default class AppContext<
+export class AppContext<
   Actions extends ActionIdentifier<any> = ActionIdentifier<any>
 > {
   public readonly dispatcher: Dispatcher

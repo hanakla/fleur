@@ -1,4 +1,4 @@
-import AppContext from './AppContext'
+import { AppContext } from './AppContext'
 
 interface Option {
   enableTimeTravel?: boolean

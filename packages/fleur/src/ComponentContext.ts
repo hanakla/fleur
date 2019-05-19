@@ -1,8 +1,8 @@
-import AppContext from './AppContext'
+import { AppContext } from './AppContext'
 import { Operation, OperationArgs } from './Operations'
 import { StoreClass } from './Store'
 
-export default class ComponentContext {
+export class ComponentContext {
   constructor(private context: AppContext) {}
 
   public executeOperation = <O extends Operation>(
