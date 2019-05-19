@@ -60,7 +60,7 @@ describe('connectToStores', () => {
 
     expect(root.findByType(Receiver).props).toEqual({ count: 10 })
 
-    await context.executeOperation(op, {})
+    await context.executeOperation(op)
     await new Promise(r => requestAnimationFrame(r))
 
     expect(root.findByType(Receiver).props).toEqual({ count: 20 })
