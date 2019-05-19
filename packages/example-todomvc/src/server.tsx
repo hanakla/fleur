@@ -1,7 +1,7 @@
 import express from 'express'
 import { FleurContext } from '@ragg/fleur-react'
 import React from 'react'
-import ReactDOM from 'react-dom/server'
+import ReactDOMServer from 'react-dom/server'
 import {
   navigateOp,
   RouterProvider,
@@ -38,7 +38,7 @@ server.use(async (req, res) => {
   const routerContext = createRouterContext()
   await context.executeOperation(navigateOp, { url: req.path })
 
-  const content = ReactDOM.renderToString(
+  const content = ReactDOMServer.renderToString(
     <FleurContext value={context}>
       <RouterProvider value={routerContext}>
         <App />
@@ -52,9 +52,9 @@ server.use(async (req, res) => {
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8')
   res.write('<!doctype html>')
-  ReactDOM.renderToNodeStream(<Html children={content} state={state} />).pipe(
-    res,
-  )
+  ReactDOMServer.renderToNodeStream(
+    <Html children={content} state={state} />,
+  ).pipe(res)
 })
 
 console.log('Running server in :3000')
