@@ -1,7 +1,14 @@
 import { operations } from '@ragg/fleur'
 import { TodoActions } from './actions'
+import { getTodos } from './api'
 
 export const TodoOps = operations({
+  async fetchTodos(context) {
+    const todos = await getTodos()
+    console.log('Fetch todos')
+    context.dispatch(TodoActions.restoreTodos, todos)
+  },
+
   addTodo(context, payload: { title: string }) {
     context.dispatch(TodoActions.addTodo, payload)
   },

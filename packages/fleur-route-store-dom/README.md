@@ -28,6 +28,9 @@ export const Router = createRouteStore({
 import { Link } from '@ragg/fluer-route-store-dom'
 import { NotFound } from './components/NotFound.ts'
 
+
+// if you want to use route in class component,
+// see packages/example-todomvc/src/routes/Index.tsx
 export const User = () => {
   const { routerContext, params } = useRoute()
 

@@ -9,6 +9,7 @@
     "@ragg/fleur": "*",
     "@ragg/fleur-react": "*",
     "@ragg/fleur-route-store-dom": "*",
+    "axios": "0.18.0",
     "classnames": "^2.1.5",
     "director": "^1.2.0",
     "react": "^16.8.6",

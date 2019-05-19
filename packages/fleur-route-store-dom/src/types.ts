@@ -18,6 +18,7 @@ export interface MatchedRoute {
   params: { [prop: string]: string }
   query: { [prop: string]: string | string[] | undefined }
   meta: any
+  /** handler is null in RouteStore.{getRoute(), progressRoute} */
   handler: any
   config: Route
 }

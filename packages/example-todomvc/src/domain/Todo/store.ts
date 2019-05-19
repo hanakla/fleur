@@ -1,12 +1,7 @@
 import { Store, listen } from '@ragg/fleur'
 import { TodoActions } from './actions'
 import { uuid } from '../../utils/utils'
-
-export interface TodoEntity {
-  id: string
-  title: string
-  completed: boolean
-}
+import { TodoEntity } from './types'
 
 interface State {
   todos: TodoEntity[]
@@ -15,6 +10,10 @@ interface State {
 export class TodoStore extends Store<State> {
   static storeName = 'TodoStore'
   public state = { todos: [] }
+
+  private handleRestoreTodos = listen(TodoActions.restoreTodos, todos => {
+    this.updateWith(s => (s.todos = todos))
+  })
 
   private handleAddTodo = listen(TodoActions.addTodo, ({ title }) => {
     this.updateWith(s => s.todos.push({ id: uuid(), title, completed: false }))

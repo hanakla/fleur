@@ -6,7 +6,7 @@ import {
   StoreGetter,
 } from '@ragg/fleur-react'
 import { ENTER_KEY, ESCAPE_KEY } from '../domain/constants'
-import { TodoEntity } from '../domain/Todo/store'
+import { TodoEntity } from '../domain/Todo/types'
 import classNames from 'classnames'
 import { TodoOps } from '../domain/Todo/operations'
 import { setEditTodoId } from '../domain/App/operations'

@@ -1,10 +1,13 @@
 import { createRouteStore } from '@ragg/fleur-route-store-dom'
 import { TodoFilterType } from './constants'
+import { TodoOps } from './Todo/operations'
 
-export const RouteStore = createRouteStore({
+export default createRouteStore({
   index: {
     path: '/',
     handler: () => import('../routes/Index').then(mod => mod.Index),
+    action: ({ executeOperation }) =>
+      Promise.all([executeOperation(TodoOps.fetchTodos)]),
     meta: {
       nowShowing: TodoFilterType.all,
     },
@@ -12,6 +15,8 @@ export const RouteStore = createRouteStore({
   active: {
     path: '/active',
     handler: () => import('../routes/Index').then(mod => mod.Index),
+    action: ({ executeOperation }) =>
+      Promise.all([executeOperation(TodoOps.fetchTodos)]),
     meta: {
       nowShowing: TodoFilterType.active,
     },
@@ -19,6 +24,8 @@ export const RouteStore = createRouteStore({
   completed: {
     path: '/completed',
     handler: () => import('../routes/Index').then(mod => mod.Index),
+    action: ({ executeOperation }) =>
+      Promise.all([executeOperation(TodoOps.fetchTodos)]),
     meta: {
       nowShowing: TodoFilterType.completed,
     },

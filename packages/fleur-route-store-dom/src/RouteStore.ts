@@ -1,4 +1,4 @@
-import { listen, Store, StoreContext } from '@ragg/fleur'
+import { listen, Store } from '@ragg/fleur'
 import pathToRegexp from 'path-to-regexp'
 import qs from 'querystring'
 import url from 'url'
@@ -7,27 +7,17 @@ import { NavigationActions } from './actions'
 import { MatchedRoute, RouteDefinitions } from './types'
 
 export interface State {
+  progressRoute: MatchedRoute | null
   currentRoute: MatchedRoute | null
   error: Error | null
   isComplete: boolean
-}
-
-export interface RouteStoreClass<R extends RouteDefinitions> {
-  storeName: string
-
-  makePath(
-    routeName: keyof R,
-    params?: object,
-    query?: qs.ParsedUrlQueryInput,
-  ): string
-
-  new (context: StoreContext): RouteStore
 }
 
 export class RouteStore extends Store<State> {
   public static storeName = 'fleur-route-store-dom/RouteStore'
 
   protected state: State = {
+    progressRoute: null,
     currentRoute: null,
     error: null,
     isComplete: false,
@@ -36,12 +26,20 @@ export class RouteStore extends Store<State> {
   protected routes: RouteDefinitions
 
   // @ts-ignore
-  private handleNavigateStart = listen(NavigationActions.navigateStart, () => {
-    this.updateWith(draft => {
-      draft.error = null
-      draft.isComplete = false
-    })
-  })
+  private handleNavigationStart = listen(
+    NavigationActions.navigateStart,
+    ({ url, type }) => {
+      const progressNavigate = this.matchRoute(url)
+
+      this.updateWith(draft => {
+        draft.progressRoute = progressNavigate
+          ? { ...progressNavigate, handler: null, type }
+          : null
+        draft.error = null
+        draft.isComplete = false
+      })
+    },
+  )
 
   // @ts-ignore
   private handleNavigationSuccess = listen(
@@ -50,6 +48,7 @@ export class RouteStore extends Store<State> {
       const nextRoute = this.matchRoute(url)
 
       this.updateWith(state => {
+        state.progressRoute = null
         state.currentRoute = nextRoute ? { ...nextRoute, handler, type } : null
         state.error = null
         state.isComplete = true
@@ -62,6 +61,7 @@ export class RouteStore extends Store<State> {
     NavigationActions.navigateFailure,
     ({ error }) => {
       this.updateWith(state => {
+        state.progressRoute = null
         state.currentRoute = null
         state.error = error || null
         state.isComplete = true
@@ -72,30 +72,37 @@ export class RouteStore extends Store<State> {
   public rehydrate() {}
 
   public dehydrate() {
+    // No dehydrate the state.
+    // On SSR, `handler` property is not serializable to JSON
+    // It raises broken Client-side state.
     return {}
   }
 
-  public getCurrentRoute(): MatchedRoute | null {
+  public get progressRoute(): MatchedRoute | null {
+    return this.state.progressRoute
+  }
+
+  public get currentRoute(): MatchedRoute | null {
     return this.state.currentRoute
   }
 
-  public getCurrentNavigateError(): Error | null {
+  public get navigateError(): Error | null {
     return this.state.error
   }
 
-  public isNavigationComplete(): boolean {
+  public get isNavigateComplete(): boolean {
     return this.state.isComplete
+  }
+
+  public get allRoutes() {
+    return this.routes
   }
 
   public getRoute(url: string): MatchedRoute | null {
     return this.matchRoute(url)
   }
 
-  public getRoutes() {
-    return this.routes
-  }
-
-  public isActive(href: string) {
+  public isCurrentRoute(href: string) {
     const { currentRoute } = this.state
     return !!(currentRoute && currentRoute.url === href)
   }

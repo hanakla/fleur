@@ -2,7 +2,8 @@ import Fleur, { AppContext } from '@ragg/fleur'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { FleurContext } from '@ragg/fleur-react'
-import { createRouteStore, RouterContext, createRouterContext } from './index'
+import { createRouteStore, RouterProvider, createRouterContext } from './index'
+import { RouterContext } from './RouterContext'
 
 describe('client test', () => {
   const Router = createRouteStore({
@@ -41,7 +42,7 @@ describe('client test', () => {
       React.createElement(
         FleurContext,
         { value: context },
-        React.createElement(RouterContext, {}, 'route'),
+        React.createElement(RouterProvider, {}, 'route'),
       ),
       div,
     )
@@ -52,14 +53,14 @@ describe('client test', () => {
     window.dispatchEvent(new Event('popstate'))
     await new Promise(r => setTimeout(r, 100))
 
-    const route = context.getStore(Router).getCurrentRoute()
+    const { currentRoute: route } = context.getStore(Router)
     expect(route.handler).toBe('ArticleHandler')
 
     history.pushState({}, '', '/articles/1')
     window.dispatchEvent(new Event('popstate'))
     await new Promise(r => setTimeout(r, 100))
 
-    const nextRoute = context.getStore(Router).getCurrentRoute()
+    const { currentRoute: nextRoute } = context.getStore(Router)
     expect(nextRoute.handler).toBe('ArticleShowHandler')
   })
 
@@ -68,7 +69,7 @@ describe('client test', () => {
     window.dispatchEvent(new Event('popstate'))
     await new Promise(r => setTimeout(r, 100))
 
-    const route = context.getStore(Router).getCurrentRoute()
-    expect(route).toBe(null)
+    const { currentRoute } = context.getStore(Router)
+    expect(currentRoute).toBe(null)
   })
 })

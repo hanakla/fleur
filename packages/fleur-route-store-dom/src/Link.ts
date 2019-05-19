@@ -1,7 +1,7 @@
 import { useComponentContext } from '@ragg/fleur-react'
 import React, { useCallback, forwardRef } from 'react'
 import { parse } from 'url'
-import { navigateOp } from './navigateOp'
+import { navigateOp } from './operations'
 
 const isRoutable = (href: string | undefined) => {
   const parsed = parse(href || '')
@@ -25,11 +25,18 @@ export const Link = forwardRef(
         if (!isRoutable(props.href)) return
 
         e.preventDefault()
+        e.stopPropagation()
+
+        const parsed = parse(props.href!)
+
         executeOperation(navigateOp, {
-          url: parse(props.href!).pathname!,
+          url:
+            (parsed.pathname || '') +
+            (parsed.query || '') +
+            (parsed.hash || ''),
         })
       },
-      [],
+      [props.onClick, props.href],
     )
 
     return React.createElement('a', {

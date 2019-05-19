@@ -7,13 +7,14 @@ import {
 import React from 'react'
 import {} from '@ragg/fleur-route-store-dom'
 
-import { TodoStore, TodoEntity } from '../domain/Todo/store'
+import { TodoStore } from '../domain/Todo/store'
 import { TodoFooter } from '../components/Footer'
 import { TodoItem } from '../components/TodoItem'
 import { ENTER_KEY, TodoFilterType } from '../domain/constants'
 import { TodoOps } from '../domain/Todo/operations'
 import { AppStore } from '../domain/App/store'
-import { RouteStore } from '../domain/RouteStore'
+import Router from '../domain/RouteStore'
+import { TodoEntity } from '../domain/Todo/types'
 
 interface Props extends ContextProp {
   todos: TodoEntity[]
@@ -24,11 +25,15 @@ interface Props extends ContextProp {
 }
 
 export const Index = withComponentContext(
-  connectToStores([TodoStore], getStore => ({
-    todos: getStore(TodoStore).getTodos(),
-    editing: getStore(AppStore).getEditingTodoId(),
-    meta: getStore(RouteStore).getCurrentRoute().meta,
-  }))(
+  connectToStores([TodoStore], getStore => {
+    const { currentRoute } = getStore(Router)
+
+    return {
+      todos: getStore(TodoStore).getTodos(),
+      editing: getStore(AppStore).getEditingTodoId(),
+      meta: currentRoute ? currentRoute.meta : {},
+    }
+  })(
     class IndexComponent extends React.Component<Props> {
       private newFieldRef = React.createRef<HTMLInputElement>()
 

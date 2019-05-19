@@ -4,7 +4,19 @@ import pathToRegexp from 'path-to-regexp'
 import url from 'url'
 
 import { RouteDefinitions } from './types'
-import { RouteStore, RouteStoreClass } from './RouteStore'
+import { RouteStore } from './RouteStore'
+
+export interface RouteStoreClass<R extends RouteDefinitions> {
+  storeName: string
+
+  makePath(
+    routeName: keyof R,
+    params?: object,
+    query?: qs.ParsedUrlQueryInput,
+  ): string
+
+  new (context: StoreContext): RouteStore
+}
 
 export const createRouteStore = <R extends RouteDefinitions>(
   routes: R,

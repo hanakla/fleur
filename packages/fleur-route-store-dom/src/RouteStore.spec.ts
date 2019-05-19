@@ -1,5 +1,5 @@
-import { RouteStore, RouteStoreClass } from './RouteStore'
-import { createRouteStore } from './createRouteStore'
+import { RouteStore } from './RouteStore'
+import { createRouteStore, RouteStoreClass } from './createRouteStore'
 
 describe('RouteStore', () => {
   let Router: RouteStoreClass<any>
