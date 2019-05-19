@@ -47,27 +47,24 @@ describe('useRoute', () => {
     await new Promise(r => requestAnimationFrame(r))
     rerender()
 
-    expect(result.current).toMatchInlineSnapshot(`
+    expect(result.current.error).toBe(null)
+    expect(result.current.route).toMatchInlineSnapshot(`
       Object {
-        "error": null,
-        "route": Object {
-          "config": Object {
-            "handler": [Function],
-            "path": "/test/:id",
-          },
-          "handler": "test",
-          "meta": Object {},
-          "name": "test",
-          "params": Object {
-            "id": "10",
-          },
-          "query": Object {
-            "sort": "asc",
-          },
-          "type": "POP",
-          "url": "/test/10?sort=asc",
+        "config": Object {
+          "handler": [Function],
+          "path": "/test/:id",
         },
-        "routerContext": null,
+        "handler": "test",
+        "meta": Object {},
+        "name": "test",
+        "params": Object {
+          "id": "10",
+        },
+        "query": Object {
+          "sort": "asc",
+        },
+        "type": "POP",
+        "url": "/test/10?sort=asc",
       }
     `)
 
@@ -75,12 +72,11 @@ describe('useRoute', () => {
     window.dispatchEvent(new Event('popstate'))
     await new Promise(r => requestAnimationFrame(r))
 
-    expect(result.current).toMatchInlineSnapshot(`
-      Object {
-        "error": [Error: URL /not_found not found in any routes],
-        "route": null,
-        "routerContext": null,
-      }
-    `)
+    expect(result.current.route).toBe(null)
+    console.log(result.current.error)
+    expect(result.current.error).toMatchObject({
+      message: 'URL /not_found not found in any routes',
+      statusCode: 404,
+    })
   })
 })
