@@ -1,4 +1,4 @@
-import { actions, action } from '@ragg/fleur'
+import { actions, action } from '@fleur/fleur'
 import { TodoEntity } from './types'
 
 export const TodoActions = actions('Todo', {

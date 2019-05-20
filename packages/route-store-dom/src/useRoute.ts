@@ -1,4 +1,4 @@
-import { useStore } from '@ragg/fleur-react'
+import { useStore } from '@fleur/fleur-react'
 import { RouteStore } from './RouteStore'
 import { useRouterContext } from './RouterContext'
 import invariant from 'invariant'

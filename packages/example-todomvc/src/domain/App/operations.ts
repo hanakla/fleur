@@ -1,4 +1,4 @@
-import { operation } from '@ragg/fleur'
+import { operation } from '@fleur/fleur'
 import { AppAction } from './actions'
 
 export const setEditTodoId = operation(

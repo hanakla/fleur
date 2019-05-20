@@ -1,5 +1,5 @@
 import { mockStore } from './mockStore'
-import { Store } from '@ragg/fleur'
+import { Store } from '@fleur/fleur'
 
 describe('mockStoreContext', () => {
   it('Should create Store entry correctly', () => {
@@ -7,6 +7,9 @@ describe('mockStoreContext', () => {
       static storeName = 'SomeStore'
       public state = { state: '' }
     }
+
+    const mockSomeStore = (state: State) =>
+      mockStore(SomeStore, { state: 'defaultMockState', ...state })
 
     const actual = mockStore(SomeStore, { state: 'mock' })
     expect(actual).toMatchSnapshot()

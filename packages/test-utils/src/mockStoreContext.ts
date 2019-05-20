@@ -1,4 +1,4 @@
-import { StoreContext } from '@ragg/fleur'
+import { StoreContext } from '@fleur/fleur'
 
 export const mockStoreContext = (): StoreContext => {
   const context = new StoreContext()

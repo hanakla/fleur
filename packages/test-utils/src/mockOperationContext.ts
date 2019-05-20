@@ -1,6 +1,6 @@
-import { Store, StoreClass } from '@ragg/fleur'
+import { Store, StoreClass } from '@fleur/fleur'
 import { Operation, OperationArgs } from '@ragg/fleur/typings/Operations'
-import { ActionIdentifier } from '@ragg/fleur'
+import { ActionIdentifier } from '@fleur/fleur'
 import { MockStore } from './mockStore'
 
 export class MockOperationContext {

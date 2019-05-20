@@ -1,5 +1,5 @@
 {
-  "name": "@ragg/fleur-react",
+  "name": "@fleur/fleur-react",
   "version": "0.0.19",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-react",
   "main": "lib/index.js",

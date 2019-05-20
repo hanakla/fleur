@@ -36,7 +36,7 @@
 
 - Suport Redux Devtools Extension
   ```typescript
-  import Fleur, { withReduxDevTools } from '@ragg/fleur'
+  import Fleur, { withReduxDevTools } from '@fleur/fleur'
   const app = new Fleur({ ... })
   const context = withReduxDevTools(app.createContext())
   ```

@@ -1,4 +1,4 @@
-import { ComponentContext, StoreClass } from '@ragg/fleur'
+import { ComponentContext, StoreClass } from '@fleur/fleur'
 import * as React from 'react'
 
 import { useStore } from './useStore'

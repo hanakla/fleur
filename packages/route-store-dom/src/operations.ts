@@ -1,4 +1,4 @@
-import { operation } from '@ragg/fleur'
+import { operation } from '@fleur/fleur'
 import { Action } from 'history'
 import invariant from 'invariant'
 import { NavigationActions } from './actions'

@@ -1,4 +1,4 @@
-import { OperationContext } from '@ragg/fleur'
+import { OperationContext } from '@fleur/fleur'
 import { Action } from 'history'
 
 export interface Route {

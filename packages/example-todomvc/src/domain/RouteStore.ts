@@ -1,4 +1,4 @@
-import { createRouteStore } from '@ragg/fleur-route-store-dom'
+import { createRouteStore } from '@fleur/route-store-dom'
 import { TodoFilterType } from './constants'
 import { TodoOps } from './Todo/operations'
 

@@ -1,4 +1,4 @@
-import { useStore, useComponentContext } from '@ragg/fleur-react'
+import { useStore, useComponentContext } from '@fleur/fleur-react'
 import { LocationListener } from 'history'
 import { useLayoutEffect, useEffect, useCallback } from 'react'
 import { navigateOp } from './operations'

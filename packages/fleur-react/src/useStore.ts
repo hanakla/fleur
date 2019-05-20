@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
 
-import { StoreClass } from '@ragg/fleur'
+import { StoreClass } from '@fleur/fleur'
 import { useFleurContext } from './useFleurContext'
 import { StoreGetter } from './connectToStores'
 

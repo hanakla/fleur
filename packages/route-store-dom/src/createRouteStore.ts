@@ -1,4 +1,4 @@
-import { StoreContext } from '@ragg/fleur'
+import { StoreContext } from '@fleur/fleur'
 import qs from 'querystring'
 import pathToRegexp from 'path-to-regexp'
 import url from 'url'

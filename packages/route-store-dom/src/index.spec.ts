@@ -1,4 +1,4 @@
-import Fleur, { AppContext } from '@ragg/fleur'
+import Fleur, { AppContext } from '@fleur/fleur'
 import { navigateOp, createRouteStore } from './index'
 
 describe('test', () => {

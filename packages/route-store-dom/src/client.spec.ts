@@ -1,7 +1,7 @@
-import Fleur, { AppContext } from '@ragg/fleur'
+import Fleur, { AppContext } from '@fleur/fleur'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { FleurContext } from '@ragg/fleur-react'
+import { FleurContext } from '@fleur/fleur-react'
 import { createRouteStore, RouterProvider, createRouterContext } from './index'
 import { RouterContext } from './RouterContext'
 

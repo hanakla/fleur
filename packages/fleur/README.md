@@ -9,7 +9,7 @@ Runs on Node / Web.
 
 ```typescript
 // actions.ts (Action typings)
-import { action } from '@ragg/fleur'
+import { action } from '@fleur/fleur'
 
 export const CounterActions = actions('Counter', {
     increase: action<{ amount: number }>(),
@@ -19,7 +19,7 @@ export const CounterActions = actions('Counter', {
 
 ```typescript
 // store.ts (Store)
-import { listen, Store } from '@ragg/fleur'
+import { listen, Store } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
 export class CounterStore extends Store {
@@ -42,7 +42,7 @@ export class CounterStore extends Store {
 
 ```typescript
 // operations.ts (Action Creator)
-import { operations } from '@ragg/fleur'
+import { operations } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
 export const CounterOps = operations({
@@ -57,7 +57,7 @@ export const CounterOps = operations({
 
 ```typescript
 // app.ts
-import Fleur, { withReduxDevTools } from '@ragg/fleur'
+import Fleur, { withReduxDevTools } from '@fleur/fleur'
 import { CounterStore } from './store.ts'
 import { CounterOps } from './operations.ts'
 

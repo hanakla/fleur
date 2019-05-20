@@ -17,15 +17,13 @@ See more detail in [todomvc example](https://github.com/ra-gg/fleur/tree/master/
 //
 // Router.ts
 //
-import { createRouteStore } from '@ragg/fleur-route-store-dom'
+import { createRouteStore } from '@fleur/route-store-dom'
 
 export const Router = createRouteStore({
   userShow: {
     path: '/user/:id',
     action: ({ executeOperation }, route) =>
-      Promise.all([
-        executeOperation(fetchUser, { id: route.param.id }),
-      ]),
+      Promise.all([executeOperation(fetchUser, { id: route.param.id })]),
     handler: () => import('./routes/User'),
     meta: {
       noHeader: true,
@@ -64,9 +62,9 @@ export const UserShow = () => {
   )
 }
 
-// 
+//
 // components/AppRoot.tsx
-// 
+//
 export const AppRoot = () => {
   const { route, error, routerContext } = useRoute()
 
@@ -89,8 +87,8 @@ export const AppRoot = () => {
 //
 // server.tsx
 //
-import Fleur from '@ragg/fleur'
-import { navigateOp, createRouterContext } from '@ragg/fleur-route-store-dom'
+import Fleur from '@fleur/fleur'
+import { navigateOp, createRouterContext } from '@fleur/route-store-dom'
 import express from 'express'
 import { Router } from './Router'
 import { AppRoot } from './components/AppRoot'
@@ -102,7 +100,7 @@ server.use(async (req, res) => {
   const context = app.createContext()
   const routerContext = createRouterContext()
 
-  // Route to handler. 
+  // Route to handler.
   // It's executes API fetch and lazy component loading
   await context.executeOperation(navigateOp, {
     url: req.url,
@@ -129,8 +127,8 @@ server.use(async (req, res) => {
 // client.tsx
 //
 import { AppRoot } from './components/AppRoot'
-import { FleurContext } from '@ragg/fleur-react'
-import { RouterProvider, restoreNavigateOp } from '@ragg/fleur-route-store-dom'
+import { FleurContext } from '@fleur/fleur-react'
+import { RouterProvider, restoreNavigateOp } from '@fleur/route-store-dom'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const state = JSON.parse(document.querySelector('#state').innerHTML)

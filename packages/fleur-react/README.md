@@ -10,7 +10,7 @@ Hooks style:
 ```tsx
 // ./components/AppRoot.tsx
 import React, { useCallback } from 'react'
-import { useFleurContext, useStore } from '@ragg/fleur-react'
+import { useFleurContext, useStore } from '@fleur/fleur-react'
 import { increaseOp } from './operations'
 
 export const AppRoot = props => {
@@ -39,7 +39,7 @@ import {
   createElementWithContext,
   connectToStores,
   withComponentContext,
-} from '@ragg/fleur-react'
+} from '@fleur/fleur-react'
 import { increaseOp } from './operations'
 import CountStore from './stores/CountStore'
 
@@ -63,8 +63,8 @@ export default withComponentContext(
 ```
 
 ```tsx
-import Fleur, { Store, listen, operation, action } from '@ragg/fleur'
-import { createElementWithContext, FleurContext } from '@ragg/fleur-react'
+import Fleur, { Store, listen, operation, action } from '@fleur/fleur'
+import { createElementWithContext, FleurContext } from '@fleur/fleur-react'
 import AppRoot from './components/AppRoot'
 import CountStore from './stores/CountStore'
 

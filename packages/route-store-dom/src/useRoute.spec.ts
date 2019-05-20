@@ -1,7 +1,7 @@
 import React from 'react'
-import { FleurContext } from '@ragg/fleur-react'
+import { FleurContext } from '@fleur/fleur-react'
 import { renderHook } from 'react-hooks-testing-library'
-import Fleur, { AppContext } from '@ragg/fleur'
+import Fleur, { AppContext } from '@fleur/fleur'
 
 import { useRoute } from './useRoute'
 import {

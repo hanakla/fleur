@@ -1,4 +1,4 @@
-import { ComponentContext } from '@ragg/fleur'
+import { ComponentContext } from '@fleur/fleur'
 import * as React from 'react'
 
 import { WithRef } from './WithRef'

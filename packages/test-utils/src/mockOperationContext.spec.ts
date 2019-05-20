@@ -1,4 +1,4 @@
-import { Store, operation, action, listen } from '@ragg/fleur'
+import { Store, operation, action, listen } from '@fleur/fleur'
 import { mockOperationContext } from './mockOperationContext'
 import { mockStore } from './mockStore'
 

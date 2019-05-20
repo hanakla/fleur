@@ -1,4 +1,4 @@
-import { operations } from '@ragg/fleur'
+import { operations } from '@fleur/fleur'
 import { TodoActions } from './actions'
 import { getTodos } from './api'
 

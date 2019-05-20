@@ -1,4 +1,4 @@
-import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
+import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
 
 import connectToStores from './connectToStores'
 import { createElementWithContext } from './createElementWithContext'

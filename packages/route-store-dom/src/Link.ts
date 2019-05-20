@@ -1,4 +1,4 @@
-import { useComponentContext } from '@ragg/fleur-react'
+import { useComponentContext } from '@fleur/fleur-react'
 import React, { useCallback, forwardRef } from 'react'
 import { parse } from 'url'
 import { navigateOp } from './operations'

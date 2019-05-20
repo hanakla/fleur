@@ -1,4 +1,4 @@
-import { StoreClass, Store } from '@ragg/fleur'
+import { StoreClass, Store } from '@fleur/fleur'
 import { mockStoreContext } from './mockStoreContext'
 
 type ExtractStateType<T extends Store> = T extends Store<infer S> ? S : never

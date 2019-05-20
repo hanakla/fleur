@@ -279,6 +279,28 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
+"@ragg/fleur-react@*":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@ragg/fleur-react/-/fleur-react-0.0.19.tgz#6017004ae625c475c9c11338838373dde87bc180"
+  integrity sha512-0fRROS+Izt4JMX2xDlC31xGIe4iL6JxiKqCvsU3P2mHGP9o0Xh1v+UnKH17ChLhlEa8HmI9ybScwD2a6jYl0IA==
+
+"@ragg/fleur-route-store-dom@*":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ragg/fleur-route-store-dom/-/fleur-route-store-dom-0.0.3.tgz#c373e3b7fc66f74da81f09ac28125cc2bac590bd"
+  integrity sha512-lAY+m3ANvLa260zjUj4R5KQSSHIMnY7lO1sFtaGZYqzFfALPQEbWgtAOiunvzOo9qB99bbdS3WiYMAnXLCQ41Q==
+  dependencies:
+    history "^4.7.2"
+    lodash "^4.17.11"
+    path-to-regexp "^2.4.0"
+
+"@ragg/fleur@*":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@ragg/fleur/-/fleur-0.0.17.tgz#e3d392213a8cc620763904a34b3105ea542fe360"
+  integrity sha512-QIgMZBecS3mQfK58fjFrxCAbOOhKO5rQfHzrx1af5Fe1KJVUxrFEd/oZQWySUaCGljz78Q6k65+A5Rx7hZw01A==
+  dependencies:
+    immer "^1.8.0"
+    invariant "^2.2.4"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -2388,7 +2410,7 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-history@^4.9.0:
+history@^4.7.2, history@^4.9.0:
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/history/-/history-4.9.0.tgz#84587c2068039ead8af769e9d6a6860a14fa1bca"
   dependencies:

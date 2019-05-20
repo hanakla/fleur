@@ -1,4 +1,4 @@
-import Fleur from '@ragg/fleur'
+import Fleur from '@fleur/fleur'
 import { create } from 'react-test-renderer'
 import * as React from 'react'
 

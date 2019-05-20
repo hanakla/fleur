@@ -1,4 +1,4 @@
-import { AppContext } from '@ragg/fleur'
+import { AppContext } from '@fleur/fleur'
 import * as React from 'react'
 
 import { FleurContext } from './ComponentContextProvider'

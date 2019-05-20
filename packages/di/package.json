@@ -1,6 +1,7 @@
 {
-  "name": "@ragg/fluer-test",
-  "version": "0.1.2",
+  "name": "@fleur/di",
+  "version": "1.0.2",
+  "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-di",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "author": "Ragg<ragg.devpr@gmail.com>",
@@ -9,12 +10,10 @@
     "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib",
     "test": "jest --verbose"
   },
-  "peerDependencies": {
-    "@ragg/fleur": ">= 0.0.14"
-  },
   "devDependencies": {
     "jest": "24.8.0",
     "ts-jest": "23.10.4",
     "typescript": "3.4.5"
-  }
+  },
+  "sideEffects": false
 }

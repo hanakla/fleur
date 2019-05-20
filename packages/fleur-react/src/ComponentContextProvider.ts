@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ComponentContext, AppContext } from '@ragg/fleur'
+import { ComponentContext, AppContext } from '@fleur/fleur'
 import { unstable_batchedUpdates } from 'react-dom'
 
 // `null as any` - ignore out of context case

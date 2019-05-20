@@ -1,4 +1,4 @@
-import { listen, Store } from '@ragg/fleur'
+import { listen, Store } from '@fleur/fleur'
 import pathToRegexp from 'path-to-regexp'
 import qs from 'querystring'
 import url from 'url'

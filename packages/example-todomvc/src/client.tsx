@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { App } from './components/App'
 import { app } from './app'
-import { FleurContext } from '@ragg/fleur-react'
-import { RouterProvider, restoreNavigateOp } from '@ragg/fleur-route-store-dom'
-import { withReduxDevTools } from '@ragg/fleur'
+import { FleurContext } from '@fleur/fleur-react'
+import { RouterProvider, restoreNavigateOp } from '@fleur/route-store-dom'
+import { withReduxDevTools } from '@fleur/fleur'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const state = (window as any).__rehydratedState

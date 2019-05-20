@@ -4,7 +4,7 @@ import Fleur, {
   operation,
   Store,
   AppContext,
-} from '@ragg/fleur'
+} from '@fleur/fleur'
 import * as React from 'react'
 import { renderHook, act } from 'react-hooks-testing-library'
 
