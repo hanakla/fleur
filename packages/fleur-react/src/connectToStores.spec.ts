@@ -1,6 +1,6 @@
 import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
 
-import connectToStores from './connectToStores'
+import { connectToStores } from './connectToStores'
 import { createElementWithContext } from './createElementWithContext'
 import { create } from 'react-test-renderer'
 

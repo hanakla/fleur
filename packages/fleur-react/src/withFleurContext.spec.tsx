@@ -3,7 +3,7 @@ import { create } from 'react-test-renderer'
 import * as React from 'react'
 
 import { createElementWithContext } from './createElementWithContext'
-import withComponentContext, { ContextProp } from './withComponentContext'
+import { withFleurContext, ContextProp } from './withFleurContext'
 
 describe('withFleurContext', () => {
   it('Is received context in props', async () => {
