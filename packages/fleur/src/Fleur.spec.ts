@@ -1,7 +1,7 @@
 import { action } from './Action'
-import Fleur from './Fleur'
+import { Fleur } from './Fleur'
 import { operation } from './Operations'
-import Store, { listen } from './Store'
+import { Store, listen } from './Store'
 
 describe('Fleur', () => {
   it('flows', () => {

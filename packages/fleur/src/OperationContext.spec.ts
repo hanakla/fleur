@@ -1,5 +1,5 @@
-import Fleur from './Fleur'
-import OperationContext from './OperationContext'
+import { Fleur } from './Fleur'
+import { OperationContext } from './OperationContext'
 import { operation } from './Operations'
 
 describe('OperationContext', () => {
