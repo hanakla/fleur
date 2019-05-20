@@ -1,6 +1,6 @@
-# fleur-route-store-dom [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-route-store-dom.svg)](https://www.npmjs.com/package/@ragg/fleur-route-store-dom) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# fleur-route-store-dom [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-route-store-dom.svg)](https://www.npmjs.com/package/@fleur/fleur-route-store-dom) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
-fluxible-router inspired router for [fleur](https://www.npmjs.com/package/@ragg/fleur)
+fluxible-router inspired router for [fleur](https://www.npmjs.com/package/@fleur/fleur)
 
 ## Features
 
@@ -34,7 +34,7 @@ export const Router = createRouteStore({
 //
 // routes/UserShow.tsx
 //
-import { Link } from '@ragg/fluer-route-store-dom'
+import { Link } from '@fleur/route-store-dom'
 import { Router } from '../Router.ts'
 
 // if you want to use route in class component,

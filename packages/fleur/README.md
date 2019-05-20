@@ -1,9 +1,9 @@
-# 🌼 Fleur 🌼 [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur.svg)](https://www.npmjs.com/package/@ragg/fleur) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# 🌼 Fleur 🌼 [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur.svg)](https://www.npmjs.com/package/@fleur/fleur) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
 An Fully-typed Flux framework inspired by Fluxible.
 Runs on Node / Web.
 
-(No dependence to React. see [this](https://www.npmjs.com/package/@ragg/fleur-react) if you want to use with React.)
+(No dependence to React. see [this](https://www.npmjs.com/package/@fleur/fleur-react) if you want to use with React.)
 
 ## Example
 
@@ -79,4 +79,4 @@ const app = new Fleur({
 
 ## How to use with React?
 
-See [`@ragg/fleur-react`](https://www.npmjs.com/package/@ragg/fleur-react).
+See [`@fleur/fleur-react`](https://www.npmjs.com/package/@fleur/fleur-react).

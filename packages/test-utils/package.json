@@ -10,7 +10,7 @@
     "test": "jest --verbose"
   },
   "peerDependencies": {
-    "@ragg/fleur": ">= 0.0.14"
+    "@fleur/fleur": ">= 0.0.14"
   },
   "devDependencies": {
     "jest": "24.8.0",
