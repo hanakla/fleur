@@ -18,7 +18,7 @@ script:
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
-  - cd - && cd packages/fleur-di
+  - cd - && cd packages/di
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
@@ -26,11 +26,11 @@ script:
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
-  - cd - && cd packages/fleur-route-store-dom
+  - cd - && cd packages/route-store-dom
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
-  - cd - && cd packages/fleur-test
+  - cd - && cd packages/test-utils
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
