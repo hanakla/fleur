@@ -10,8 +10,8 @@ describe('withFleurContext', () => {
     const app = new Fleur()
     const context = app.createContext()
 
-    const Receiver = () => <div />
-    const Wrapped = withComponentContext(Receiver)
+    const Receiver = (arg: { prop: string } & ContextProp) => <div />
+    const Wrapped = withFleurContext(Receiver)
 
     const { root, unmount } = create(
       createElementWithContext(context, Wrapped, { prop: 'prop string' }),
