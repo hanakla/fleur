@@ -13,9 +13,7 @@ export interface HydrateState {
   stores: { [storeName: string]: object }
 }
 
-export class AppContext<
-  Actions extends ActionIdentifier<any> = ActionIdentifier<any>
-> {
+export class AppContext {
   public readonly dispatcher: Dispatcher
   public readonly operationContext: OperationContext
   public readonly componentContext: ComponentContext
@@ -85,9 +83,9 @@ export class AppContext<
     await Promise.resolve(operation(this.operationContext, ...args))
   }
 
-  public dispatch<A extends Actions>(
-    actionIdentifier: A,
-    payload: ExtractPayloadType<A>,
+  public dispatch<AI extends ActionIdentifier<any>>(
+    actionIdentifier: AI,
+    payload: ExtractPayloadType<AI>,
   ) {
     this.dispatcher.dispatch(actionIdentifier, payload)
   }
