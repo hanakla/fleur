@@ -1,4 +1,4 @@
-import { useStore, useComponentContext } from '@fleur/fleur-react'
+import { useStore, useFleurContext } from '@fleur/fleur-react'
 import { LocationListener } from 'history'
 import { useLayoutEffect, useEffect, useCallback } from 'react'
 import { navigateOp } from './operations'
@@ -10,7 +10,7 @@ const useIsomorphicEffect = canUseDOM() ? useLayoutEffect : useEffect
 
 export const HistoryHandler = () => {
   const { history } = useRouterContext()
-  const { executeOperation } = useComponentContext()
+  const { executeOperation } = useFleurContext()
 
   const { route, progressRoute } = useStore([RouteStore], getStore => ({
     route: getStore(RouteStore).currentRoute,

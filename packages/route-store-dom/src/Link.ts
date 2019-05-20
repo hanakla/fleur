@@ -1,4 +1,4 @@
-import { useComponentContext } from '@fleur/fleur-react'
+import { useFleurContext } from '@fleur/fleur-react'
 import React, { useCallback, forwardRef } from 'react'
 import { parse } from 'url'
 import { navigateOp } from './operations'
@@ -16,7 +16,7 @@ const isRoutable = (href: string | undefined) => {
 
 export const Link = forwardRef(
   (props: React.AnchorHTMLAttributes<HTMLAnchorElement>, ref) => {
-    const { executeOperation } = useComponentContext()
+    const { executeOperation } = useFleurContext()
 
     const handleClick = useCallback(
       (e: React.MouseEvent<HTMLAnchorElement>) => {
