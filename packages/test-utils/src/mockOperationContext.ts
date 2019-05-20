@@ -1,5 +1,5 @@
 import { Store, StoreClass } from '@fleur/fleur'
-import { Operation, OperationArgs } from '@ragg/fleur/typings/Operations'
+import { Operation, OperationArgs } from '@fleur/fleur/typings/Operations'
 import { ActionIdentifier } from '@fleur/fleur'
 import { MockStore } from './mockStore'
 
