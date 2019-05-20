@@ -12,10 +12,10 @@ type DevToolsAction = {
   state: string
 }
 
-export const withReduxDevTools = <T extends AppContext<any>>(
-  context: T,
+export const withReduxDevTools = (
+  context: AppContext,
   { enableTimeTravel = true }: Option = {},
-): T => {
+): AppContext => {
   if (!(window as any).__REDUX_DEVTOOLS_EXTENSION__) return context
 
   const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect()
