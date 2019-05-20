@@ -73,7 +73,6 @@ describe('useRoute', () => {
     await new Promise(r => requestAnimationFrame(r))
 
     expect(result.current.route).toBe(null)
-    console.log(result.current.error)
     expect(result.current.error).toMatchObject({
       message: 'URL /not_found not found in any routes',
       statusCode: 404,
