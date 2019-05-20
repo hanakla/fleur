@@ -7,6 +7,8 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@fleur/fleur": "*",
+    "@fleur/fleur-react": "*",
     "@types/react-dom": "16.8.4",
     "@types/react-redux": "7.0.9",
     "@types/redux": "3.6.0",
