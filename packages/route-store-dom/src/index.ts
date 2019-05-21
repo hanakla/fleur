@@ -9,3 +9,4 @@ export {
 export { navigateOp, restoreNavigateOp } from './operations'
 export { MatchedRoute } from './types'
 export { Link } from './Link'
+export { withRoute } from './withRoute'

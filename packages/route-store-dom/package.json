@@ -1,6 +1,6 @@
 {
   "name": "@fleur/route-store-dom",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Router for fleur",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur-route-store-dom",
   "main": "lib/index.js",
@@ -24,8 +24,10 @@
   "devDependencies": {
     "@types/history": "4.7.2",
     "@types/invariant": "2.2.29",
+    "@types/react-test-renderer": "16.8.1",
     "jest": "24.8.0",
     "react-hooks-testing-library": "0.5.0",
+    "react-test-renderer": "16.8.6",
     "ts-jest": "23.1.4",
     "typescript": "3.4.5"
   },
