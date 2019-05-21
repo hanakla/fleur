@@ -34,16 +34,3 @@ export const keepAliveOperation = <O extends Operator>(operator: Operator) => {
 
   return operation
 }
-
-// const websockOperator = keepAliveOperation(async ctx => {
-//   const con = await io('aaaa')
-
-//   con.onmessage = payload => {
-//     ctx.dispatch(someAction, {})
-//   }
-
-//   return () => con.disconnect()
-// })
-
-// context.executeOperation(websockOperator)
-// context.executeOperation(websockOperator.dispose)

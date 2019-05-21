@@ -13,7 +13,10 @@ describe('keepAliveOperation', () => {
 
     const disposer = jest.fn()
     const spy = jest.fn((context: OperationContext, userId: number) => {
+      // Setup here, like socket.connect
       setTimeout(() => context.dispatch(ident, 'payload'), 100)
+
+      // Return disposer, likes () => socket.disconnect()
       return disposer
     })
 
