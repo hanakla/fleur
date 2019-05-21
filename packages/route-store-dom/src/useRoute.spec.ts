@@ -49,22 +49,27 @@ describe('useRoute', () => {
 
     expect(result.current.error).toBe(null)
     expect(result.current.route).toMatchInlineSnapshot(`
+          Object {
+            "config": Object {
+              "handler": [Function],
+              "path": "/test/:id",
+            },
+            "handler": "test",
+            "meta": Object {},
+            "name": "test",
+            "params": Object {
+              "id": "10",
+            },
+            "query": Object {
+              "sort": "asc",
+            },
+            "type": "POP",
+            "url": "/test/10?sort=asc",
+          }
+      `)
+    expect(result.current.routerContext).toMatchInlineSnapshot(`
       Object {
-        "config": Object {
-          "handler": [Function],
-          "path": "/test/:id",
-        },
-        "handler": "test",
-        "meta": Object {},
-        "name": "test",
-        "params": Object {
-          "id": "10",
-        },
-        "query": Object {
-          "sort": "asc",
-        },
-        "type": "POP",
-        "url": "/test/10?sort=asc",
+        "status": 200,
       }
     `)
 
@@ -77,5 +82,10 @@ describe('useRoute', () => {
       message: 'URL /not_found not found in any routes',
       statusCode: 404,
     })
+    expect(result.current.routerContext).toMatchInlineSnapshot(`
+      Object {
+        "status": 200,
+      }
+    `)
   })
 })

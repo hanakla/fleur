@@ -19,5 +19,5 @@ export const useRoute = () => {
     }
   })
 
-  return { route, error, routerContext }
+  return { route, error, routerContext: routerContext.routerContext }
 }
