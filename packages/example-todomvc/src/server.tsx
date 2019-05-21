@@ -12,9 +12,11 @@ import { app } from './app'
 import { Html } from './components/Html'
 import { join } from 'path'
 import { TodoEntity } from './domain/Todo/types'
+import RouteStore from './domain/RouteStore'
 
 const server = express()
 server.use('/public', express.static(join(process.cwd(), 'public')))
+server.use('/dist', express.static(join(process.cwd(), 'dist')))
 
 server.get('/favicon.ico', (req, res) => {
   res.status(404)
@@ -37,6 +39,11 @@ server.use(async (req, res) => {
   const context = ((req as any).context = app.createContext())
   const routerContext = createRouterContext()
   await context.executeOperation(navigateOp, { url: req.path })
+
+  if (context.getStore(RouteStore).currentRoute == null) {
+    res.status(404).end()
+    return
+  }
 
   const content = ReactDOMServer.renderToString(
     <FleurContext value={context}>

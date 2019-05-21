@@ -30,4 +30,8 @@ export default createRouteStore({
       nowShowing: TodoFilterType.completed,
     },
   },
+  test: {
+    path: '/test',
+    handler: () => import('../routes/Test').then(mod => mod.Test),
+  },
 })

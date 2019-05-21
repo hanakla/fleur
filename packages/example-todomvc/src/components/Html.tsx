@@ -30,8 +30,7 @@ export const Html = ({
         </p>
       </footer>
       <script type="text/javascript" src="public/base.js" />
-
-      <script type="text/javascript" src="public/client.js" />
+      <script type="text/javascript" src="dist/client.js" />
     </body>
   </html>
 )

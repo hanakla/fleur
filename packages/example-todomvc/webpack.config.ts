@@ -7,7 +7,8 @@ export default {
     client: './client.tsx',
   },
   output: {
-    path: join(__dirname, 'public'),
+    path: join(__dirname, 'dist'),
+    publicPath: '/dist/',
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
@@ -19,6 +20,9 @@ export default {
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
+          compilerOptions: {
+            module: 'esnext',
+          },
         },
       },
     ],
