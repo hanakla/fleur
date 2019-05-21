@@ -28,7 +28,7 @@ export class Store<T = any> extends Emitter<StoreEvents> {
   protected state: T
   protected requestId: number | null = null
 
-  constructor(private context: StoreContext) {
+  constructor(protected context: StoreContext) {
     super()
   }
 
@@ -60,7 +60,7 @@ export const reducerStore = <S>(
   const Sub = class extends Store<S> {
     public static storeName = storeName
 
-    public static listeners: [
+    private static listeners: [
       ActionIdentifier<any>,
       (draft: Draft<S>, payload: any) => void
     ][] = []
@@ -75,7 +75,7 @@ export const reducerStore = <S>(
 
     public state: S
 
-    constructor(context: StoreContext) {
+    constructor(protected context: StoreContext) {
       super(context)
 
       this.state = initialStateFactory()
@@ -91,5 +91,5 @@ export const reducerStore = <S>(
     }
   }
 
-  return Sub
+  return Sub as StoreClass<S>
 }
