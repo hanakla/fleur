@@ -38,19 +38,19 @@ import React from 'react'
 import {
   createElementWithContext,
   connectToStores,
-  withComponentContext,
+  withFleurContext,
 } from '@fleur/fleur-react'
 import { increaseOp } from './operations'
 import CountStore from './stores/CountStore'
 
-export default withComponentContext(
+export default withFleurContext(
   // pick Props from Store with `connectToStores()`
   connectToStores([CountStore], getStore => ({
     count: getStore(CountStore).getCount(),
   }))(
     class AppRoot extends React.PureComponent {
       private handleCountClick = () => {
-        // ** `this.props.{executeOperation, getStore}` provide by `withComponentContext()`
+        // ** `this.props.{executeOperation, getStore}` provide by `withFleurContext()`
         this.props.executeOperation(increaseOp)
       }
 

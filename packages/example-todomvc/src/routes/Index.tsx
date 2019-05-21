@@ -1,8 +1,7 @@
 import {
-  withComponentContext,
+  withFleurContext,
   connectToStores,
   ContextProp,
-  StoreGetter,
 } from '@fleur/fleur-react'
 import React from 'react'
 import {} from '@fleur/route-store-dom'
@@ -24,7 +23,7 @@ interface Props extends ContextProp {
   }
 }
 
-export default withComponentContext(
+export default withFleurContext(
   connectToStores([TodoStore], getStore => {
     const { currentRoute } = getStore(Router)
 

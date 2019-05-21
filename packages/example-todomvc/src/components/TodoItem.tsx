@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  withComponentContext,
+  withFleurContext,
   ContextProp,
   connectToStores,
   StoreGetter,
@@ -128,6 +128,6 @@ class TodoItemComponent extends React.Component<Props, State> {
   }
 }
 
-export const TodoItem = withComponentContext(
+export const TodoItem = withFleurContext(
   connectToStores([AppStore], mapStoresToProps)(TodoItemComponent),
 )
