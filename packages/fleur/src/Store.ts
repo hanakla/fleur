@@ -53,6 +53,13 @@ export class Store<T = any> extends Emitter<StoreEvents> {
   }
 }
 
+interface ReducerStoreClass<S> extends StoreClass<S> {
+  listen<T extends ActionIdentifier<any>>(
+    ident: T,
+    producer: (draft: Draft<S>, payload: ExtractPayloadType<T>) => void,
+  ): this
+}
+
 export const reducerStore = <S>(
   storeName: string,
   initialStateFactory: () => S,
@@ -73,8 +80,6 @@ export const reducerStore = <S>(
       return this
     }
 
-    public state: S
-
     constructor(protected context: StoreContext) {
       super(context)
 
@@ -91,5 +96,5 @@ export const reducerStore = <S>(
     }
   }
 
-  return Sub as StoreClass<S>
+  return Sub as ReducerStoreClass<S>
 }
