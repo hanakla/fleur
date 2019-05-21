@@ -5,6 +5,14 @@ Runs on Node / Web.
 
 (No dependence to React. see [this](https://www.npmjs.com/package/@fleur/fleur-react) if you want to use with React.)
 
+## Feature
+
+- Fully typed. Friendly to type inference.
+- Comfortable to write code
+- Default async operations(Action Creators) support
+- immer.js builtin Store
+- Support Redux DevTools
+
 ## Example
 
 ```typescript
