@@ -11,6 +11,7 @@
     "prepublishOnly": "rm -rf ./{lib,typings} \n tsc --emitDeclarationOnly --declaration --outDir ./typings \n tsc --outDir lib"
   },
   "peerDependencies": {
+    "@fleur/fleur": ">= 1.0.0",
     "react": ">= 16.8.x",
     "react-dom": ">= 16.8.x"
   },

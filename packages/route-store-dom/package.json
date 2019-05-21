@@ -12,8 +12,8 @@
     "prepublishOnly": "rm -rf typings && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib"
   },
   "peerDependencies": {
-    "fleur/fleur": ">= 0.0.14",
-    "fleur/fleur-react": ">= 0.0.14"
+    "@fleur/fleur": ">= 1.0.0",
+    "@fleur/fleur-react": ">= 1.0.0"
   },
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
