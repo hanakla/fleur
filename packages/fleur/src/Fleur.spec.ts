@@ -1,10 +1,10 @@
 import { action } from './Action'
 import { Fleur } from './Fleur'
-import { operation } from './Operations'
-import { Store, listen } from './Store'
+import { operations } from './Operations'
+import { Store, listen, reducerStore } from './Store'
 
 describe('Fleur', () => {
-  it('flows', () => {
+  it('flows', async () => {
     const actions = {
       increase: action<{ increase: number }>('increase'),
       decrease: action<{ decrease: number }>('decrease'),
@@ -23,16 +23,37 @@ describe('Fleur', () => {
       })
     }
 
+    const Test2Store = reducerStore('Test2Store', () => ({ count: 0 }))
+      .listen(
+        actions.increase,
+        (draft, payload) => (draft.count += payload.increase),
+      )
+      .listen(
+        actions.decrease,
+        (draft, payload) => (draft.count -= payload.decrease),
+      )
+
     const app = new Fleur({
-      stores: [TestStore],
+      stores: [TestStore, Test2Store],
     })
     const ctx = app.createContext()
     ctx.getStore(TestStore)
 
-    const increaseOperation = operation((ctx, arg: { increase: number }) => {
-      ctx.dispatch(actions.increase, { increase: arg.increase })
+    const ops = operations({
+      increase({ dispatch }, increase: number) {
+        dispatch(actions.increase, { increase })
+      },
+      decrease({ dispatch }, decrease: number) {
+        dispatch(actions.decrease, { decrease })
+      },
     })
 
-    ctx.executeOperation(increaseOperation, { increase: 10 })
+    await ctx.executeOperation(ops.increase, 10)
+    expect(ctx.getStore(TestStore).state.count).toBe(10)
+    expect(ctx.getStore(Test2Store).state.count).toBe(10)
+
+    await ctx.executeOperation(ops.decrease, 20)
+    expect(ctx.getStore(TestStore).state.count).toBe(-10)
+    expect(ctx.getStore(Test2Store).state.count).toBe(-10)
   })
 })

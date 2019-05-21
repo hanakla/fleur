@@ -1,3 +1,7 @@
+### 1.1.0
+
+- #31 Add `reducerStore`
+
 ### 1.0.0
 
 - #29 Major release
