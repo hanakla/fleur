@@ -1,24 +1,29 @@
 import * as invariant from 'invariant'
-import { Operation } from './Operations'
+import { Operation, OperationArgs } from './Operations'
 import { OperationContext } from './OperationContext'
 
 type Disposer = (() => void) | void
 
-interface KeepAliveOperation {
-  (context: OperationContext): Promise<void>
+interface KeepAliveOperation<T extends any[]> {
+  (context: OperationContext, ...args: T): Promise<void>
   dispose: Operation
 }
 
-export const keepAliveOperation = (
-  operator: (context: OperationContext) => Promise<Disposer> | Disposer,
-): KeepAliveOperation => {
+interface Operator {
+  (context: OperationContext, ...args: any[]): Promise<Disposer> | Disposer
+}
+
+export const keepAliveOperation = <O extends Operator>(operator: Operator) => {
   let disposer: (() => void) | void
   let alived = false
 
-  const operation: KeepAliveOperation = async (context: OperationContext) => {
+  const operation: KeepAliveOperation<OperationArgs<O>> = async (
+    context: OperationContext,
+    ...args: OperationArgs<O>
+  ) => {
     invariant(alived === false, 'Keep alive operation already started.')
 
-    disposer = await operator(context)
+    disposer = await operator(context, ...args)
     alived = true
   }
 
