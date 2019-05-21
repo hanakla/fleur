@@ -25,7 +25,7 @@ export interface StoreEvents {
 export class Store<T = any> extends Emitter<StoreEvents> {
   public static storeName: string = ''
 
-  protected state: T
+  public state: T
   protected requestId: number | null = null
 
   constructor(protected context: StoreContext) {
