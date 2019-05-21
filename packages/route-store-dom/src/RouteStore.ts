@@ -16,7 +16,7 @@ export interface State {
 export class RouteStore extends Store<State> {
   public static storeName = 'fleur-route-store-dom/RouteStore'
 
-  protected state: State = {
+  public state: State = {
     progressRoute: null,
     currentRoute: null,
     error: null,
