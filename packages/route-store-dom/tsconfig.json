@@ -16,5 +16,5 @@
     "lib": ["dom", "es2015", "es2016", "es2017"],
     "outDir": "dist"
   },
-  "exclude": ["src/**/*.spec.ts", "test_lib/"]
+  "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx", "test_lib/"]
 }
