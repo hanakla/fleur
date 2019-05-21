@@ -1,7 +1,7 @@
-# 🌼 fleur-react ⚛️ [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-react.svg)](https://www.npmjs.com/package/@ragg/fleur-react) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# 🌼 fleur-react ⚛️ [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-react.svg)](https://www.npmjs.com/package/@fleur/fleur-react) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
-`@ragg/fleur` connector for React.
-(See [`@ragg/fleur`](https://www.npmjs.com/package/@ragg/fleur) for basic usage.)
+`@fleur/fleur` connector for React.
+(See [`@fleur/fleur`](https://www.npmjs.com/package/@fleur/fleur) for basic usage.)
 
 ## Example
 
