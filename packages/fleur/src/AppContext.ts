@@ -1,21 +1,19 @@
 import * as invariant from 'invariant'
 
 import { ActionIdentifier, ExtractPayloadType } from './Action'
-import ComponentContext from './ComponentContext'
+import { ComponentContext } from './ComponentContext'
 import Dispatcher from './Dispatcher'
-import Fleur from './Fleur'
-import OperationContext from './OperationContext'
+import { Fleur } from './Fleur'
+import { OperationContext } from './OperationContext'
 import { Operation, OperationArgs } from './Operations'
-import Store, { StoreClass } from './Store'
+import { Store, StoreClass } from './Store'
 import { StoreContext } from './StoreContext'
 
 export interface HydrateState {
   stores: { [storeName: string]: object }
 }
 
-export default class AppContext<
-  Actions extends ActionIdentifier<any> = ActionIdentifier<any>
-> {
+export class AppContext {
   public readonly dispatcher: Dispatcher
   public readonly operationContext: OperationContext
   public readonly componentContext: ComponentContext
@@ -85,9 +83,9 @@ export default class AppContext<
     await Promise.resolve(operation(this.operationContext, ...args))
   }
 
-  public dispatch<A extends Actions>(
-    actionIdentifier: A,
-    payload: ExtractPayloadType<A>,
+  public dispatch<AI extends ActionIdentifier<any>>(
+    actionIdentifier: AI,
+    payload: ExtractPayloadType<AI>,
   ) {
     this.dispatcher.dispatch(actionIdentifier, payload)
   }

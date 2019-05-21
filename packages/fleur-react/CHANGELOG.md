@@ -1,3 +1,7 @@
+### 1.0.0
+
+- #29 Rename `useComponentContext` / `withComponentContext` to `useFleurContext` / `withFleurContext`
+
 ### 0.0.19
 
 - #24 Fix state desynced in useStore

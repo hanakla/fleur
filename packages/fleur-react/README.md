@@ -1,7 +1,7 @@
-# 🌼 fleur-react ⚛️ [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-react.svg)](https://www.npmjs.com/package/@ragg/fleur-react) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# 🌼 fleur-react ⚛️ [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-react.svg)](https://www.npmjs.com/package/@fleur/fleur-react) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
-`@ragg/fleur` connector for React.
-(See [`@ragg/fleur`](https://www.npmjs.com/package/@ragg/fleur) for basic usage.)
+`@fleur/fleur` connector for React.
+(See [`@fleur/fleur`](https://www.npmjs.com/package/@fleur/fleur) for basic usage.)
 
 ## Example
 
@@ -10,11 +10,11 @@ Hooks style:
 ```tsx
 // ./components/AppRoot.tsx
 import React, { useCallback } from 'react'
-import { useComponentContext, useStore } from '@ragg/fleur-react'
+import { useFleurContext, useStore } from '@fleur/fleur-react'
 import { increaseOp } from './operations'
 
 export const AppRoot = props => {
-  const context = useComponentContext()
+  const context = useFleurContext()
 
   const { count } = useStore([CountStore], getStore => ({
     count: getStore(CountStore).getCount(),
@@ -39,7 +39,7 @@ import {
   createElementWithContext,
   connectToStores,
   withComponentContext,
-} from '@ragg/fleur-react'
+} from '@fleur/fleur-react'
 import { increaseOp } from './operations'
 import CountStore from './stores/CountStore'
 
@@ -63,8 +63,8 @@ export default withComponentContext(
 ```
 
 ```tsx
-import Fleur, { Store, listen, operation, action } from '@ragg/fleur'
-import { createElementWithContext, FleurContext } from '@ragg/fleur-react'
+import Fleur, { Store, listen, operation, action } from '@fleur/fleur'
+import { createElementWithContext, FleurContext } from '@fleur/fleur-react'
 import AppRoot from './components/AppRoot'
 import CountStore from './stores/CountStore'
 

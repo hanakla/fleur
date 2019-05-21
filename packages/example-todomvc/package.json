@@ -6,9 +6,9 @@
     "start": "webpack --mode development && ts-node ./src/server.tsx"
   },
   "dependencies": {
-    "@ragg/fleur": "*",
-    "@ragg/fleur-react": "*",
-    "@ragg/fleur-route-store-dom": "*",
+    "@fleur/fleur": "*",
+    "@fleur/fleur-react": "*",
+    "@fleur/route-store-dom": "*",
     "axios": "0.18.0",
     "classnames": "^2.1.5",
     "director": "^1.2.0",

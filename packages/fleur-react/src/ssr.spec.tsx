@@ -1,4 +1,4 @@
-import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
+import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
 import * as cheerio from 'cheerio'
 import * as express from 'express'
 import { Server } from 'http'

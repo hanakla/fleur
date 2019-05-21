@@ -3,9 +3,9 @@ import {
   connectToStores,
   ContextProp,
   StoreGetter,
-} from '@ragg/fleur-react'
+} from '@fleur/fleur-react'
 import React from 'react'
-import {} from '@ragg/fleur-route-store-dom'
+import {} from '@fleur/route-store-dom'
 
 import { TodoStore } from '../domain/Todo/store'
 import { TodoFooter } from '../components/Footer'

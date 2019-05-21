@@ -1,0 +1,20 @@
+{
+  "name": "@fleur/test-utils",
+  "version": "0.1.2",
+  "main": "lib/index.js",
+  "types": "typings/index.d.ts",
+  "author": "Ragg<ragg.devpr@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib",
+    "test": "jest --verbose"
+  },
+  "peerDependencies": {
+    "@fleur/fleur": ">= 0.0.14"
+  },
+  "devDependencies": {
+    "jest": "24.8.0",
+    "ts-jest": "23.10.4",
+    "typescript": "3.4.5"
+  }
+}

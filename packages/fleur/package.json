@@ -1,6 +1,6 @@
 {
-  "name": "@ragg/fleur",
-  "version": "0.0.17",
+  "name": "@fleur/fleur",
+  "version": "1.0.0",
   "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
@@ -11,11 +11,8 @@
     "test": "jest --verbose"
   },
   "devDependencies": {
-    "@types/eventemitter3": "^2.0.2",
-    "@types/flux-standard-action": "1.1.0",
     "@types/invariant": "2.2.29",
     "cache-loader": "1.2.2",
-    "eventemitter3": "3.1.0",
     "jest": "24.8.0",
     "ts-jest": "23.10.4",
     "typescript": "3.4.5"

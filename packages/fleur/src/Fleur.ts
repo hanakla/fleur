@@ -1,13 +1,13 @@
 import * as invariant from 'invariant'
 
-import AppContext from './AppContext'
+import { AppContext } from './AppContext'
 import { StoreClass } from './Store'
 
 export interface FleurOption {
   stores?: StoreClass[]
 }
 
-export default class Fleur {
+export class Fleur {
   public stores: Map<string, StoreClass> = new Map()
 
   constructor(options: FleurOption = {}) {

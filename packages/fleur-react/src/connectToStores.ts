@@ -1,4 +1,4 @@
-import { ComponentContext, StoreClass } from '@ragg/fleur'
+import { ComponentContext, StoreClass } from '@fleur/fleur'
 import * as React from 'react'
 
 import { useStore } from './useStore'
@@ -12,7 +12,7 @@ type ConnectedComponent<Props, MappedProps> = React.ComponentType<
   WithRef<Pick<Props, Exclude<keyof Props, keyof MappedProps>>>
 >
 
-const connectToStores = <Props, MappedProps = {}>(
+export const connectToStores = <Props, MappedProps = {}>(
   stores: StoreClass[],
   mapStoresToProps: StoreToPropMapper<Props, MappedProps>,
 ) => <ComponentProps extends object>(
@@ -26,5 +26,3 @@ const connectToStores = <Props, MappedProps = {}>(
     return React.createElement(Component, { ref, ...props, ...mappedProps })
   })
 }
-
-export { connectToStores as default }

@@ -1,3 +1,9 @@
+### 1.0.0
+
+- #29 Major release
+  - Internal refactoring
+  - #26 Bind OperationContext instance to this methods.
+
 ### 0.0.17
 
 - #21 Improve performance on dispatch action
@@ -30,7 +36,7 @@
 
 - Suport Redux Devtools Extension
   ```typescript
-  import Fleur, { withReduxDevTools } from '@ragg/fleur'
+  import Fleur, { withReduxDevTools } from '@fleur/fleur'
   const app = new Fleur({ ... })
   const context = withReduxDevTools(app.createContext())
   ```

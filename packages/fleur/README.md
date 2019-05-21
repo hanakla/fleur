@@ -1,15 +1,23 @@
-# 🌼 Fleur 🌼 [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur.svg)](https://www.npmjs.com/package/@ragg/fleur) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# 🌼 Fleur 🌼 [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur.svg)](https://www.npmjs.com/package/@fleur/fleur) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
 An Fully-typed Flux framework inspired by Fluxible.
 Runs on Node / Web.
 
-(No dependence to React. see [this](https://www.npmjs.com/package/@ragg/fleur-react) if you want to use with React.)
+(No dependence to React. see [this](https://www.npmjs.com/package/@fleur/fleur-react) if you want to use with React.)
+
+## Feature
+
+- Fully typed. Friendly to type inference.
+- Comfortable to write code
+- Default async operations(Action Creators) support
+- immer.js builtin Store
+- Support Redux DevTools
 
 ## Example
 
 ```typescript
 // actions.ts (Action typings)
-import { action } from '@ragg/fleur'
+import { action } from '@fleur/fleur'
 
 export const CounterActions = actions('Counter', {
     increase: action<{ amount: number }>(),
@@ -19,7 +27,7 @@ export const CounterActions = actions('Counter', {
 
 ```typescript
 // store.ts (Store)
-import { listen, Store } from '@ragg/fleur'
+import { listen, Store } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
 export class CounterStore extends Store {
@@ -42,7 +50,7 @@ export class CounterStore extends Store {
 
 ```typescript
 // operations.ts (Action Creator)
-import { operations } from '@ragg/fleur'
+import { operations } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
 export const CounterOps = operations({
@@ -57,7 +65,7 @@ export const CounterOps = operations({
 
 ```typescript
 // app.ts
-import Fleur, { withReduxDevTools } from '@ragg/fleur'
+import Fleur, { withReduxDevTools } from '@fleur/fleur'
 import { CounterStore } from './store.ts'
 import { CounterOps } from './operations.ts'
 
@@ -79,4 +87,4 @@ const app = new Fleur({
 
 ## How to use with React?
 
-See [`@ragg/fleur-react`](https://www.npmjs.com/package/@ragg/fleur-react).
+See [`@fleur/fleur-react`](https://www.npmjs.com/package/@fleur/fleur-react).

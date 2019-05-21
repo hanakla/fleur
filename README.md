@@ -3,13 +3,21 @@
 An Fully-typed Flux framework inspired by Fluxible.
 Runs on Node / Web.
 
-(No dependence to React. see [this](https://www.npmjs.com/package/@ragg/fleur-react) if you want to use with React.)
+(No dependence to React. see [this](https://www.npmjs.com/package/fleur/fleur-react) if you want to use with React.)
 
-## packages
+## Feature
 
-- [@ragg/fleur](./packages/fleur) - Basic flux-flow framework
-- [@ragg/fleur-di](./packages/fleur-di) - Library independency DI function
-- [@ragg/fleur-react](./packages/fleur-react) - Fleur react connector
-- [@ragg/fleur-route-store-dom](./packages/fleur-route-store-dom) - Fleur DOM router
-- [@ragg/fleur-test](./packages/fleur-test) - Fleur Test helpers
-- [fleur-benchmarks](./packages/fleur-benchmarks) - Benchmarks. (fleur vs Fluxible)
+- Comfortable to write code
+  - Fully typed. Friendly to type inference.
+- **Completely** Server-side rendering support
+- Support React Hooks in `@fleur/fleur-react`
+- Dynamic import (`import()`) support in `@fleur/route-store-dom` w/o any code transformer
+
+## Packages
+
+- [@fleur/fleur](./packages/fleur) - Basic flux-flow framework
+- [@fleur/di](./packages/di) - Library independency DI function
+- [@fleur/fleur-react](./packages/fleur-react) - Fleur react connector
+- [@fleur/route-store-dom](./packages/route-store-dom) - Fleur DOM router
+- [@fleur/test-utils](./packages/test-utils) - Fleur Test helpers
+- [@fleur-benchmarks](./packages/fleur-benchmarks) - Benchmarks. (fleur vs Fluxible)

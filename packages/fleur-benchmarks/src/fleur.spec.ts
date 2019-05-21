@@ -1,7 +1,7 @@
-import Fleur, { action, listen, operation, Store } from '@ragg/fleur'
+import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { createElementWithContext, useStore } from '@ragg/fleur-react'
+import { createElementWithContext, useStore } from '@fleur/fleur-react'
 
 jest.setTimeout(10000)
 

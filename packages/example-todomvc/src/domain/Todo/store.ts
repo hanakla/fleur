@@ -1,4 +1,4 @@
-import { Store, listen } from '@ragg/fleur'
+import { Store, listen } from '@fleur/fleur'
 import { TodoActions } from './actions'
 import { uuid } from '../../utils/utils'
 import { TodoEntity } from './types'

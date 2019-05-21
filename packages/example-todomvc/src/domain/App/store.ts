@@ -1,4 +1,4 @@
-import { Store, listen } from '@ragg/fleur'
+import { Store, listen } from '@fleur/fleur'
 import { AppAction } from './actions'
 
 interface State {

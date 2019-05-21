@@ -1,9 +1,10 @@
 import { ActionIdentifier } from './Action'
-import AppContext from './AppContext'
+import { AppContext } from './AppContext'
 import { Operation, OperationArgs } from './Operations'
 import { StoreClass } from './Store'
+import { ExtractPayloadType } from './Action'
 
-class OperationContext {
+export class OperationContext {
   constructor(private context: AppContext) {}
 
   public executeOperation = async <O extends Operation>(
@@ -19,10 +20,8 @@ class OperationContext {
 
   public dispatch = <AI extends ActionIdentifier<any>>(
     type: AI,
-    payload: ReturnType<AI>,
+    payload: ExtractPayloadType<AI>,
   ): void => {
     this.context.dispatch(type, payload)
   }
 }
-
-export { OperationContext as default }

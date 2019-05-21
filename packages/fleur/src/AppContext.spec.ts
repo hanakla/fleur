@@ -1,6 +1,5 @@
-import AppContext from './AppContext'
-import Fleur from './Fleur'
-import Store from './Store'
+import { Fleur } from './Fleur'
+import { Store } from './Store'
 
 describe('AppContext', () => {
   describe('dehydrate', () => {

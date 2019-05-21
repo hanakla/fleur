@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
 
-import { StoreClass } from '@ragg/fleur'
-import { useComponentContext } from './useComponentContext'
+import { StoreClass } from '@fleur/fleur'
+import { useFleurContext } from './useFleurContext'
 import { StoreGetter } from './connectToStores'
 
 type StoreToPropMapper = (getStore: StoreGetter) => any
@@ -31,7 +31,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   stores: StoreClass[],
   mapStoresToProps: Mapper,
 ): ReturnType<Mapper> => {
-  const { getStore } = useComponentContext()
+  const { getStore } = useFleurContext()
 
   const [, rerender] = useReducer(s => s + 1, 0)
 

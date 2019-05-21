@@ -2,9 +2,9 @@ import { TodoFilterType } from '../domain/constants'
 import { pluralize } from '../utils/utils'
 import classNames from 'classnames'
 import React from 'react'
-import { withComponentContext, ContextProp } from '@ragg/fleur-react'
+import { withComponentContext, ContextProp } from '@fleur/fleur-react'
 import { TodoOps } from '../domain/Todo/operations'
-import { Link } from '@ragg/fleur-route-store-dom'
+import { Link } from '@fleur/route-store-dom'
 
 interface Props extends ContextProp {
   completedCount: number
