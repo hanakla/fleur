@@ -1,6 +1,6 @@
 export { ActionIdentifier } from './Action'
 export { Fleur as default } from './Fleur' // Aliasing for editor intellisense
-export { Store, StoreClass, listen } from './Store'
+export { Store, reducerStore, StoreClass, listen } from './Store'
 export { StoreContext } from './StoreContext'
 export { OperationContext } from './OperationContext'
 export { action, actions, ActionsOf } from './Action'
