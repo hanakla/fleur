@@ -9,7 +9,7 @@ Runs on Node / Web.
 
 - Fully typed. Friendly to type inference.
 - Comfortable to write code
-- Default async operations(Action Creators) support
+- Default async operations (side effector) support
 - immer.js builtin Store
 - Support Redux DevTools
 
