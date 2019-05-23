@@ -16,7 +16,7 @@
 
 ### 0.0.16
 
-- # 19 FleurContext injects `unstable_batchedUpdates` into StoreContext on mounted
+- #19 FleurContext injects `unstable_batchedUpdates` into StoreContext on mounted
 
 ### 0.0.15
 
