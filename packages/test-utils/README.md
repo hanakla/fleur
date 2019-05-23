@@ -1,4 +1,4 @@
-# 🌼 fleur-test 🌼 [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-test.svg)](https://www.npmjs.com/package/@fleur/fleur-test) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# 🌼 fleur-test 🌼 [![npm version](https://badge.fury.io/js/%40fleur%2Ftest-utils.svg)](https://www.npmjs.com/package/@fleur/test-utils) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
 Test utils for fleurs
 

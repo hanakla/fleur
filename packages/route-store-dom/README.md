@@ -1,4 +1,4 @@
-# fleur-route-store-dom [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-route-store-dom.svg)](https://www.npmjs.com/package/@fleur/fleur-route-store-dom) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# fleur-route-store-dom [![npm version](https://badge.fury.io/js/%40fleur%2Froute-store-dom.svg)](https://www.npmjs.com/package/@fleur/fleur-route-store-dom) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
 fluxible-router inspired router for [fleur](https://www.npmjs.com/package/@fleur/fleur)
 

@@ -1,4 +1,4 @@
-# 🌼 fleur-di 💉 [![npm version](https://badge.fury.io/js/%40ragg%2Ffleur-di.svg)](https://www.npmjs.com/package/@fleur/di) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
+# 🌼 fleur-di 💉 [![npm version](https://badge.fury.io/js/%40fleur%di.svg)](https://www.npmjs.com/package/@fleur/di) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur)
 
 Simply DI container without any dependency for TypeScript
 
