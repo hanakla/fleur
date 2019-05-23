@@ -20,4 +20,4 @@ Runs on Node / Web.
 - [@fleur/fleur-react](./packages/fleur-react) - Fleur react connector
 - [@fleur/route-store-dom](./packages/route-store-dom) - Fleur DOM router
 - [@fleur/test-utils](./packages/test-utils) - Fleur Test helpers
-- [@fleur-benchmarks](./packages/fleur-benchmarks) - Benchmarks. (fleur vs Fluxible)
+- [@fleur-benchmarks](./packages/fleur-benchmarks) - Benchmarks. (Fleur vs Fluxible vs react-redux)
