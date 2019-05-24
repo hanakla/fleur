@@ -5,6 +5,8 @@ Runs on Node / Web.
 
 (No dependence to React. See [this](https://www.npmjs.com/package/@fleur/fleur-react) if you want to use with React.)
 
+Social hashtag: #fleurjs
+
 ## Feature
 
 - Comfortable to write code
