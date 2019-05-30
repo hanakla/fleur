@@ -56,4 +56,23 @@ describe('Fleur', () => {
     expect(ctx.getStore(TestStore).state.count).toBe(-10)
     expect(ctx.getStore(Test2Store).state.count).toBe(-10)
   })
+
+  it('react-redux style stores', async () => {
+    const increaseAction = action()
+    const TestStore = reducerStore('testStore', () => ({ count: 0 })).listen(
+      increaseAction,
+      draft => (draft.count += 1),
+    )
+
+    const app = new Fleur({
+      stores: {
+        test: TestStore,
+      },
+    })
+
+    const context = app.createContext()
+    await context.dispatch(increaseAction, {})
+    console.log(app.stores)
+    expect(context.getState().test).toBe({ count: 1 })
+  })
 })

@@ -5,7 +5,7 @@ import Emitter from './Emitter'
 import { StoreContext } from './StoreContext'
 
 export interface StoreClass<T = {}> {
-  storeName: string
+  storeName?: string
   new (context: StoreContext): Store<T>
 }
 

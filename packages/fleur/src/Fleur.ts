@@ -4,28 +4,35 @@ import { AppContext } from './AppContext'
 import { StoreClass } from './Store'
 
 export interface FleurOption {
-  stores?: StoreClass[]
+  stores?: StoreClass[] | { [storeName: string]: StoreClass }
 }
 
 export class Fleur {
   public stores: Map<string, StoreClass> = new Map()
 
   constructor(options: FleurOption = {}) {
-    if (options.stores) {
+    if (Array.isArray(options.stores)) {
       options.stores.forEach(StoreClass => this.registerStore(StoreClass))
+    } else if (options.stores) {
+      Object.entries(options.stores).forEach(([storeName, StoreClass]) =>
+        this.registerStore(StoreClass, storeName),
+      )
     }
   }
 
-  public registerStore(Store: StoreClass<any>): void {
+  public registerStore(Store: StoreClass<any>, storeName?: string): void {
     if (typeof Store.storeName !== 'string' || Store.storeName === '') {
-      console.error('Store.storeName must be specified.', Store)
-      throw new Error('Store.storeName must be specified.')
+      if (!storeName) {
+        console.error('Store.storeName must be specified.', Store)
+        throw new Error('Store.storeName must be specified.')
+      }
     }
 
-    const storeRegistered = this.stores.has(Store.storeName)
+    const usingStoreName = (storeName || Store.storeName)!
+    const storeRegistered = this.stores.has(usingStoreName)
     invariant(!storeRegistered, `Store ${Store.storeName} already registered.`)
 
-    this.stores.set(Store.storeName, Store)
+    this.stores.set(usingStoreName, Store)
   }
 
   public createContext(): AppContext {

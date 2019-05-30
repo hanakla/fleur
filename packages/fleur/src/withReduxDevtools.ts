@@ -34,7 +34,7 @@ export const withReduxDevTools = (
 
     const stores = JSON.parse(state)
     context.rehydrate({ stores })
-    context.stores.forEach(store => store.emitChange())
+    Object.entries(context.stores).forEach(([, store]) => store.emitChange())
   })
 
   const dispatch = context.dispatch.bind(context)

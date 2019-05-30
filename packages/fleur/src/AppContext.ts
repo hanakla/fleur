@@ -18,7 +18,9 @@ export class AppContext {
   public readonly operationContext: OperationContext
   public readonly componentContext: ComponentContext
   public readonly storeContext: StoreContext
-  public readonly stores: Map<string, Store<any>> = new Map()
+  public readonly stores: { [storeName: string]: Store<any> } = Object.create(
+    null,
+  )
   public readonly actionCallbackMap: Map<
     StoreClass,
     Map<ActionIdentifier<any>, ((payload: any) => void)[]>
@@ -29,15 +31,15 @@ export class AppContext {
     this.operationContext = new OperationContext(this)
     this.componentContext = new ComponentContext(this)
     this.storeContext = new StoreContext()
-    this.app.stores.forEach(StoreClass => {
-      this.initializeStore(StoreClass)
+    this.app.stores.forEach((_, storeName) => {
+      this.initializeStore(storeName)
     })
   }
 
   public dehydrate(): HydrateState {
     const state: HydrateState = { stores: {} }
 
-    this.stores.forEach((store, storeName) => {
+    Object.entries(this.stores).forEach(([storeName, store]) => {
       state.stores[storeName] = store.dehydrate()
     })
 
@@ -45,17 +47,12 @@ export class AppContext {
   }
 
   public rehydrate(state: HydrateState) {
-    this.app.stores.forEach(StoreClass => {
-      if (!state.stores[StoreClass.storeName]) return
-
-      if (!this.stores.has(StoreClass.storeName)) {
-        this.initializeStore(StoreClass)
+    for (const [storeName, hydrateState] of Object.entries(state.stores)) {
+      const store = this.getStore(storeName)
+      if (store) {
+        store.rehydrate(hydrateState)
       }
-
-      this.stores
-        .get(StoreClass.storeName)!
-        .rehydrate(state.stores[StoreClass.storeName])
-    })
+    }
   }
 
   public getStore(storeName: string): Store
@@ -66,14 +63,26 @@ export class AppContext {
     const storeName =
       typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
 
+    invariant(
+      storeName != null,
+      'Store.storeName must be required in Fleur-style getStore',
+    )
+
     if (process.env.NODE_ENV !== 'production') {
-      const storeRegistered = this.app.stores.has(storeName)
+      const storeRegistered = this.app.stores.has(storeName!)
       invariant(storeRegistered, `Store ${storeName} is must be registered`)
     }
 
-    return (
-      (this.stores.get(storeName) as any) || this.initializeStore(storeName)
-    )
+    return (this.stores[storeName!] as any) || this.initializeStore(storeName!)
+  }
+
+  public getState<T extends { [storeName: string]: any }>() {
+    const states = {}
+    for (const [key, store] of Object.entries(this.stores)) {
+      states[key] = store.state
+    }
+
+    return states
   }
 
   public async executeOperation<O extends Operation>(
@@ -90,7 +99,12 @@ export class AppContext {
     this.dispatcher.dispatch(actionIdentifier, payload)
   }
 
-  private initializeStore(storName: string): Store
+  public subscribeState(listener: () => void) {
+    this.storeContext.on('change', listener)
+    return () => this.storeContext.off('change', listener)
+  }
+
+  private initializeStore(storeName: string): Store
   private initializeStore<T extends StoreClass<any>>(
     StoreClass: T,
   ): InstanceType<T>
@@ -99,17 +113,17 @@ export class AppContext {
       typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
 
     if (process.env.NODE_ENV !== 'production') {
-      const storeRegistered = this.app.stores.has(storeName)
+      const storeRegistered = this.app.stores.has(storeName!)
       invariant(storeRegistered, `Store ${storeName} is must be registered`)
     }
 
-    const StoreConstructor = this.app.stores.get(storeName)!
+    const StoreConstructor = this.app.stores.get(storeName!)!
     const store = new StoreConstructor(this.storeContext)
     const actionCallbackMap = new Map<
       ActionIdentifier<any>,
       ((payload: any) => void)[]
     >()
-    this.stores.set(storeName, store)
+    this.stores[storeName!] = store
 
     Object.keys(store)
       .filter(

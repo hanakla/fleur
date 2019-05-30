@@ -1,6 +1,11 @@
 import { Store } from './Store'
+import Emitter from './Emitter'
 
-export class StoreContext {
+interface Events {
+  change: void
+}
+
+export class StoreContext extends Emitter<Events> {
   private updateQueue = new Set<Store>()
   private animateId: number = -1
   private batch = (cb: () => void) => cb()
@@ -26,6 +31,7 @@ export class StoreContext {
 
     this.batch(() => {
       this.updateQueue.forEach(store => store.emit('onChange', void 0))
+      this.emit('change', void 0)
       this.updateQueue.clear()
     })
   }

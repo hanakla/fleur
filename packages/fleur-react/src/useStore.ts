@@ -3,29 +3,9 @@ import { useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
 import { StoreClass } from '@fleur/fleur'
 import { useFleurContext } from './useFleurContext'
 import { StoreGetter } from './connectToStores'
+import { canUseDOM, useIsomorphicEffect, bounce } from './utils'
 
 type StoreToPropMapper = (getStore: StoreGetter) => any
-
-const canUseDOM = typeof window !== 'undefined'
-
-const useIsomorphicEffect = canUseDOM ? useLayoutEffect : useEffect
-
-const bounce = (fn: () => void, bounceTime: number) => {
-  let lastExecuteTime = 0
-
-  const bouncer = () => {
-    const now = Date.now()
-
-    if (now - lastExecuteTime > bounceTime) {
-      fn()
-      lastExecuteTime = now
-    } else {
-      setTimeout(bouncer, bounceTime)
-    }
-  }
-
-  return bouncer
-}
 
 export const useStore = <Mapper extends StoreToPropMapper>(
   stores: StoreClass[],

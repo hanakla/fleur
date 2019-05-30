@@ -15,4 +15,12 @@ export class ComponentContext {
   public getStore = <T extends StoreClass>(StoreClass: T): InstanceType<T> => {
     return this.context.getStore(StoreClass)
   }
+
+  public subscribeState = (listener: () => void) => {
+    return this.context.subscribeState(listener)
+  }
+
+  public getState = () => {
+    return this.context.getState()
+  }
 }
