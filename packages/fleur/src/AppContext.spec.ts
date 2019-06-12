@@ -74,4 +74,18 @@ describe('AppContext', () => {
       expect(context.getStore('SomeStore')).toBeInstanceOf(SomeStore)
     })
   })
+
+  describe('getState', () => {
+    class SomeStore extends Store {
+      public static storeName = 'SomeStore'
+      public state = { count: 1 }
+    }
+
+    const app = new Fleur({ stores: { some: SomeStore } })
+    const context = app.createContext()
+
+    it('', () => {
+      context.getState()
+    })
+  })
 })

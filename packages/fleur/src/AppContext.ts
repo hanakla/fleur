@@ -18,6 +18,7 @@ export class AppContext {
   public readonly operationContext: OperationContext
   public readonly componentContext: ComponentContext
   public readonly storeContext: StoreContext
+  public readonly stateProxy: { [storeName: string]: any }
   public readonly stores: { [storeName: string]: Store<any> } = Object.create(
     null,
   )
@@ -31,6 +32,20 @@ export class AppContext {
     this.operationContext = new OperationContext(this)
     this.componentContext = new ComponentContext(this)
     this.storeContext = new StoreContext()
+    this.stateProxy = new Proxy(
+      {},
+      {
+        has: (_: any, key: string) => !!this.stores[key],
+        get: (_: any, name: string) => {
+          return this.app.stores.has(name)
+            ? this.getStore(name).state
+            : undefined
+        },
+        set: () => {
+          throw new Error('Can not set any value in root state.')
+        },
+      },
+    )
     this.app.stores.forEach((_, storeName) => {
       this.initializeStore(storeName)
     })
@@ -76,13 +91,8 @@ export class AppContext {
     return (this.stores[storeName!] as any) || this.initializeStore(storeName!)
   }
 
-  public getState<T extends { [storeName: string]: any }>() {
-    const states = {}
-    for (const [key, store] of Object.entries(this.stores)) {
-      states[key] = store.state
-    }
-
-    return states
+  public getState() {
+    return this.stateProxy
   }
 
   public async executeOperation<O extends Operation>(

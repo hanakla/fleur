@@ -1,8 +1,16 @@
-import Fleur from '@fleur/fleur'
+import Fleur, { RootStateType } from '@fleur/fleur'
 import { AppStore } from './domain/App/store'
 import { TodoStore } from './domain/Todo/store'
 import Router from './domain/RouteStore'
 
 export const app = new Fleur({
-  stores: [AppStore, TodoStore, Router],
+  stores: {
+    app: AppStore,
+    todo: TodoStore,
+    router: Router,
+  },
 })
+
+export type RootState = RootStateType<{
+  todo: TodoStore
+}>
