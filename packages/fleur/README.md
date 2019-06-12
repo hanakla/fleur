@@ -17,7 +17,7 @@ Runs on Node / Web.
 
 ```typescript
 // actions.ts (Action typings)
-import { action } from '@fleur/fleur'
+import { actions, action } from '@fleur/fleur'
 
 export const CounterActions = actions('Counter', {
     increase: action<{ amount: number }>(),
@@ -30,8 +30,12 @@ export const CounterActions = actions('Counter', {
 import { listen, Store } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
-export class CounterStore extends Store {
-  public state: { count: number } = { count: 0 }
+interface State {
+  count: number 
+}
+
+export class CounterStore extends Store<State> {
+  public state: State = { count: 0 }
 
   private handleIncrease = listen(CounterActions.increase, payload => {
     // `this.updateWith` is immutable changing `this.state` with `immer.js`
