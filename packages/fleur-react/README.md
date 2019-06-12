@@ -63,8 +63,8 @@ export default withFleurContext(
 ```
 
 ```tsx
-import Fleur, { Store, listen, operation, action } from '@fleur/fleur'
-import { createElementWithContext, FleurContext } from '@fleur/fleur-react'
+import Fleur from '@fleur/fleur'
+import { FleurContext } from '@fleur/fleur-react'
 import AppRoot from './components/AppRoot'
 import CountStore from './stores/CountStore'
 
