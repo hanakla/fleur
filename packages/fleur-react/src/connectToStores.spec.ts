@@ -15,13 +15,7 @@ describe('connectToStores', () => {
 
   // Store
   const TestStore = class extends Store<{ count: number }> {
-    public static storeName = 'TestStore'
-
     public state = { count: 10 }
-
-    get count() {
-      return this.state.count
-    }
 
     private increase = listen(ident, payload => {
       this.updateWith(d => (d.count += payload.increase))
@@ -30,12 +24,12 @@ describe('connectToStores', () => {
 
   // Component
   const Receiver = (props: { count: number; anotherProp: string }) => null
-  const Connected = connectToStores([TestStore], getStore => ({
-    count: getStore(TestStore).count,
+  const Connected = connectToStores(state => ({
+    count: state.TestStore.count,
   }))(Receiver)
 
   // App
-  const app = new Fleur({ stores: [TestStore] })
+  const app = new Fleur({ stores: { TestStore } })
 
   it('Should passed non connected props', () => {
     const context = app.createContext()

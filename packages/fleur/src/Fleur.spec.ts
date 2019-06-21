@@ -11,7 +11,6 @@ describe('Fleur', () => {
     }
 
     class TestStore extends Store {
-      public static storeName = 'TestStore'
       public state: { count: number } = { count: 0 }
 
       private handleIncrease = listen(actions.increase, p => {
@@ -34,7 +33,7 @@ describe('Fleur', () => {
       )
 
     const app = new Fleur({
-      stores: [TestStore, Test2Store],
+      stores: { TestStore, Test2Store },
     })
     const ctx = app.createContext()
     ctx.getStore(TestStore)

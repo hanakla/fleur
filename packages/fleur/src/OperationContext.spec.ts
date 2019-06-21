@@ -6,7 +6,7 @@ describe('OperationContext', () => {
   let context: OperationContext
 
   beforeEach(() => {
-    const app = new Fleur()
+    const app = new Fleur({ stores: {} })
     context = app.createContext().operationContext
   })
 

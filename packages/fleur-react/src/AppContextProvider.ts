@@ -1,11 +1,9 @@
 import * as React from 'react'
-import { ComponentContext, AppContext } from '@fleur/fleur'
+import { AppContext } from '@fleur/fleur'
 import { unstable_batchedUpdates } from 'react-dom'
 
 // `null as any` - ignore out of context case
-const ComponentContextProvider = React.createContext<ComponentContext>(
-  null as any,
-)
+const AppContextProvider = React.createContext<AppContext>(null as any)
 
 const FleurContext = ({
   value,
@@ -18,11 +16,7 @@ const FleurContext = ({
     value.storeContext.injectBatch(unstable_batchedUpdates as () => void)
   }, [])
 
-  return React.createElement(
-    ComponentContextProvider.Provider,
-    { value: value.componentContext },
-    children,
-  )
+  return React.createElement(AppContextProvider.Provider, { value }, children)
 }
 
-export { ComponentContextProvider, FleurContext }
+export { AppContextProvider, FleurContext }

@@ -19,6 +19,7 @@ export class AppContext {
   public readonly componentContext: ComponentContext
   public readonly storeContext: StoreContext
   public readonly stores: Map<string, Store<any>> = new Map()
+  private readonly stateProxy: Record<string, any>
   public readonly actionCallbackMap: Map<
     StoreClass,
     Map<ActionIdentifier<any>, ((payload: any) => void)[]>
@@ -32,6 +33,7 @@ export class AppContext {
     this.app.stores.forEach(StoreClass => {
       this.initializeStore(StoreClass)
     })
+    this.stateProxy = this.createStateProxy()
   }
 
   public dehydrate(): HydrateState {
@@ -45,35 +47,31 @@ export class AppContext {
   }
 
   public rehydrate(state: HydrateState) {
-    this.app.stores.forEach(StoreClass => {
-      if (!state.stores[StoreClass.storeName]) return
-
-      if (!this.stores.has(StoreClass.storeName)) {
-        this.initializeStore(StoreClass)
-      }
-
-      this.stores
-        .get(StoreClass.storeName)!
-        .rehydrate(state.stores[StoreClass.storeName])
+    this.stores.forEach((_, storeName) => {
+      if (!state.stores[storeName]) return
+      this.stores.get(storeName)!.rehydrate(state.stores[storeName])
     })
   }
 
   public getStore(storeName: string): Store
   public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
   public getStore<T extends StoreClass<any>>(
-    StoreClass: T | string,
+    store: T | string,
   ): InstanceType<T> {
     const storeName =
-      typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
+      typeof store === 'string' ? store : this.app.storeClassToName.get(store)!
 
     if (process.env.NODE_ENV !== 'production') {
-      const storeRegistered = this.app.stores.has(storeName)
-      invariant(storeRegistered, `Store ${storeName} is must be registered`)
+      invariant(!!storeName, `Store ${storeName} is must be registered`)
     }
 
     return (
       (this.stores.get(storeName) as any) || this.initializeStore(storeName)
     )
+  }
+
+  public getState<T extends Record<string, any>>(): T {
+    return this.stateProxy as T
   }
 
   public async executeOperation<O extends Operation>(
@@ -90,13 +88,20 @@ export class AppContext {
     this.dispatcher.dispatch(actionIdentifier, payload)
   }
 
+  public subscribe(listener: () => void) {
+    this.storeContext.on('change', listener)
+    return () => this.storeContext.off('change', listener)
+  }
+
   private initializeStore(storName: string): Store
   private initializeStore<T extends StoreClass<any>>(
     StoreClass: T,
   ): InstanceType<T>
   private initializeStore(StoreClass: StoreClass<any> | string) {
     const storeName =
-      typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
+      typeof StoreClass === 'string'
+        ? StoreClass
+        : this.app.storeClassToName.get(StoreClass)!
 
     if (process.env.NODE_ENV !== 'production') {
       const storeRegistered = this.app.stores.has(storeName)
@@ -135,5 +140,24 @@ export class AppContext {
     })
 
     return store
+  }
+
+  private createStateProxy() {
+    const properties = [...this.stores].reduce<PropertyDescriptorMap>(
+      (accum, [storeName]) => {
+        accum[storeName] = {
+          get: () => this.getStore(storeName).state,
+          set: () => {
+            throw new Error("Can't assign value into root store")
+          },
+          enumerable: true,
+          configurable: false,
+        }
+        return accum
+      },
+      {},
+    )
+
+    return Object.defineProperties({}, properties)
   }
 }

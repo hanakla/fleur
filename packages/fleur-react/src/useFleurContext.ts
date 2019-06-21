@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 
-import { ComponentContextProvider } from './ComponentContextProvider'
+import { AppContextProvider } from './AppContextProvider'
 
 export const useFleurContext = () => {
-  const context = useContext(ComponentContextProvider)
-  return context
+  const { componentContext } = useContext(AppContextProvider)
+  return { ...componentContext }
 }

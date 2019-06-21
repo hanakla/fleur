@@ -1,7 +1,7 @@
 import { AppContext } from '@fleur/fleur'
 import * as React from 'react'
 
-import { FleurContext } from './ComponentContextProvider'
+import { FleurContext } from './AppContextProvider'
 
 const createElementWithContext = <P>(
   context: AppContext,

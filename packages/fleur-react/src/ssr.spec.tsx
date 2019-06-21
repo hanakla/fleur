@@ -1,4 +1,11 @@
-import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
+import Fleur, {
+  action,
+  listen,
+  operation,
+  Store,
+  RootStateType,
+  StoreClass,
+} from '@fleur/fleur'
 import * as cheerio from 'cheerio'
 import * as express from 'express'
 import { Server } from 'http'
@@ -7,7 +14,7 @@ import * as ReactDOMServer from 'react-dom/server'
 import * as request from 'request-promise'
 
 import { useStore } from './useStore'
-import { FleurContext } from './ComponentContextProvider'
+import { FleurContext } from './AppContextProvider'
 
 describe('Sever side rendering', () => {
   let server: Server
@@ -20,9 +27,8 @@ describe('Sever side rendering', () => {
       ctx.dispatch(increaseIdent, { increase })
     })
 
-    class TestStore extends Store {
-      public static storeName = 'TestStore'
-      protected state = { count: 0 }
+    class TestStore extends Store<{ count: number }> {
+      public state = { count: 0 }
       private increase = listen(increaseIdent, ({ increase }) => {
         this.updateWith(d => (d.count += increase))
       })
@@ -31,15 +37,19 @@ describe('Sever side rendering', () => {
       }
     }
 
+    const stores = { TestStore }
+
+    type RootState = RootStateType<typeof stores>
+
     const Component = () => {
-      const { count } = useStore([TestStore], getStore => ({
-        count: getStore(TestStore).getCount(),
+      const { count } = useStore((state: RootState) => ({
+        count: state.TestStore.count,
       }))
 
       return <div>{`Your count ${count}`}</div>
     }
 
-    app = new Fleur({ stores: [TestStore] })
+    app = new Fleur({ stores })
 
     const serverApp = express()
     serverApp.get('/', async (req, res) => {

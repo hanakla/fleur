@@ -7,7 +7,7 @@ import { withFleurContext, ContextProp } from './withFleurContext'
 
 describe('withFleurContext', () => {
   it('Is received context in props', async () => {
-    const app = new Fleur()
+    const app = new Fleur({ stores: {} })
     const context = app.createContext()
 
     const Receiver = (arg: { prop: string } & ContextProp) => <div />

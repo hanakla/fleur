@@ -1,10 +1,13 @@
-import { useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useContext,
+} from 'react'
+import { AppContextProvider } from './AppContextProvider'
 
-import { StoreClass } from '@fleur/fleur'
-import { useFleurContext } from './useFleurContext'
-import { StoreGetter } from './connectToStores'
-
-type StoreToPropMapper = (getStore: StoreGetter) => any
+type StoreToPropMapper = (state: any) => any
 
 const canUseDOM = typeof window !== 'undefined'
 
@@ -28,13 +31,10 @@ const bounce = (fn: () => void, bounceTime: number) => {
 }
 
 export const useStore = <Mapper extends StoreToPropMapper>(
-  stores: StoreClass[],
   mapStoresToProps: Mapper,
 ): ReturnType<Mapper> => {
-  const { getStore } = useFleurContext()
-
+  const appContext = useContext(AppContextProvider)
   const [, rerender] = useReducer(s => s + 1, 0)
-
   const mapStoresToState = () => rerender({})
 
   const changeHandler = useCallback(
@@ -44,16 +44,9 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   )
 
   useIsomorphicEffect(() => {
-    stores.forEach(store => {
-      getStore(store).on('onChange', changeHandler)
-    })
-
-    return () => {
-      stores.forEach(store => {
-        getStore(store).off('onChange', changeHandler)
-      })
-    }
+    const off = appContext.subscribe(changeHandler)
+    return off
   }, [])
 
-  return mapStoresToProps(getStore)
+  return mapStoresToProps(appContext.getState())
 }

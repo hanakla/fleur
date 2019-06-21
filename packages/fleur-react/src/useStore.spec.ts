@@ -9,7 +9,7 @@ import * as React from 'react'
 import { renderHook, act } from 'react-hooks-testing-library'
 
 import { useStore } from './useStore'
-import { FleurContext } from './ComponentContextProvider'
+import { FleurContext } from './AppContextProvider'
 
 describe('useStore', () => {
   // Action Identifier
@@ -36,7 +36,7 @@ describe('useStore', () => {
   }
 
   // App
-  const app = new Fleur({ stores: [TestStore] })
+  const app = new Fleur({ stores: { TestStore } })
 
   const wrapperFactory = (context: AppContext) => {
     return ({ children }: { children: React.ReactNode }) =>
@@ -45,10 +45,10 @@ describe('useStore', () => {
 
   it('Should map stores to states', async () => {
     const context = app.createContext()
-    const { result, rerender, unmount } = renderHook(
+    const { result, unmount } = renderHook(
       () =>
-        useStore([TestStore], getStore => ({
-          count: getStore(TestStore).count,
+        useStore(state => ({
+          count: state.TestStore.count,
         })),
       { wrapper: wrapperFactory(context) },
     )
@@ -66,12 +66,13 @@ describe('useStore', () => {
 
   it('Should unlisten on component unmounted', async () => {
     const context = app.createContext()
-    const { unmount } = renderHook(() => useStore([TestStore], () => ({})), {
+
+    const { unmount } = renderHook(() => useStore(() => ({})), {
       wrapper: wrapperFactory(context),
     })
 
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
+    expect(context.storeContext.listeners['change']).toHaveLength(1)
     unmount()
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(0)
+    expect(context.storeContext.listeners['change']).toHaveLength(0)
   })
 })

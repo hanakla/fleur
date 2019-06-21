@@ -7,7 +7,7 @@ Runs on Node / Web.
 
 ## Feature
 
-- Fully typed. Friendly to type inference.
+- Fully typed. Friendly to type inference
 - Comfortable to write code
 - Default async operations (side effector) support
 - immer.js builtin Store
@@ -31,10 +31,10 @@ import { listen, Store } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
 interface State {
-  count: number 
+  count: number
 }
 
-export class CounterStore extends Store<State> {
+export class CountStore extends Store<State> {
   public state: State = { count: 0 }
 
   private handleIncrease = listen(CounterActions.increase, payload => {
@@ -45,10 +45,6 @@ export class CounterStore extends Store<State> {
   private handleDecrease = listen(CounterActions.decrease, payload => {
     this.updateWith(draft => (draft.count -= payload.amount))
   })
-
-  public get count() {
-    return this.state.count
-  }
 }
 ```
 
@@ -58,34 +54,40 @@ import { operations } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
 export const CounterOps = operations({
-  increase(ctx, amount: number) {
-    ctx.dispatch(CounterActions.increase, { amount })
+  increase(context, amount: number) {
+    context.dispatch(CounterActions.increase, { amount })
   },
-  decrease(ctx, amount: number) {
-    ctx.dispatch(CounterActions.decrease, { amount })
+  decrease(context, amount: number) {
+    context.dispatch(CounterActions.decrease, { amount })
   },
 })
 ```
 
 ```typescript
 // app.ts
-import Fleur, { withReduxDevTools } from '@fleur/fleur'
-import { CounterStore } from './store.ts'
+import Fleur, { withReduxDevTools, RootStateType } from '@fleur/fleur'
+import { CountStore } from './store.ts'
 import { CounterOps } from './operations.ts'
 
+const stores = {
+  counter: CountStore,
+}
+
+export RootState = RootStateType<typeof stores>
+
 const app = new Fleur({
-  stores: [CounterStore],
+  stores,
 })(async () => {
-  const ctx = app.createContext()
+  const context = app.createContext()
 
   // Enable redux-devtools if you want
-  withReduxDevTools(ctx)
+  withReduxDevTools(context)
 
-  await ctx.executeOperation(CounterOps.increase, 10)
-  console.log(ctx.getStore(SomeStore).count) // => 10
+  await context.executeOperation(CounterOps.increase, 10)
+  console.log(context.getState().count) // => 10
 
-  await ctx.executeOperation(CounterOps.decrease, 20)
-  console.log(ctx.getStore(SomeStore).count) // => -10
+  await context.executeOperation(CounterOps.decrease, 20)
+  console.log(context.getState().count) // => -10
 })()
 ```
 

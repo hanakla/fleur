@@ -14,14 +14,14 @@ import { useFleurContext, useStore } from '@fleur/fleur-react'
 import { increaseOp } from './operations'
 
 export const AppRoot = props => {
-  const context = useFleurContext()
+  const { executeOperation } = useFleurContext()
 
-  const { count } = useStore([CountStore], getStore => ({
-    count: getStore(CountStore).getCount(),
+  const { count } = useStore(state => ({
+    count: state.count.count,
   }))
 
   const handleCountClick = useCallback(() => {
-    context.executeOperation(increaseOp)
+    executeOperation(increaseOp)
   }, [])
 
   return <div onClick={handleCountClick}>{count}</div>
@@ -45,8 +45,8 @@ import CountStore from './stores/CountStore'
 
 export default withFleurContext(
   // pick Props from Store with `connectToStores()`
-  connectToStores([CountStore], getStore => ({
-    count: getStore(CountStore).getCount(),
+  connectToStores(state => ({
+    count: state.count.count,
   }))(
     class AppRoot extends React.PureComponent {
       private handleCountClick = () => {
@@ -63,12 +63,15 @@ export default withFleurContext(
 ```
 
 ```tsx
-import Fleur from '@fleur/fleur'
+import Fleur, { RootStateType } from '@fleur/fleur'
 import { FleurContext } from '@fleur/fleur-react'
 import AppRoot from './components/AppRoot'
 import CountStore from './stores/CountStore'
 
-const app = new Fleur({ stores: [ CountStore ] })
+const stores = { count: CountStore }
+export type RouteState = RootStateType<typeof stores>
+
+const app = new Fleur({ stores })
 
 const context = app.createContext()
 ReactDOM.render(<FleurContext value={context}><AppRoot /></FluerContext>, {})

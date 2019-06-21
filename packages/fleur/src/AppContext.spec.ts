@@ -5,16 +5,17 @@ describe('AppContext', () => {
   describe('dehydrate', () => {
     it('Should dehydrate', () => {
       class SomeStore extends Store {
-        public static storeName = 'SomeStore'
         public state = { some: 1 }
       }
       class Some2Store extends Store {
-        public static storeName = 'Some2Store'
         public state = { some2: 2 }
       }
 
       const app = new Fleur({
-        stores: [SomeStore, Some2Store],
+        stores: {
+          some: SomeStore,
+          some2: Some2Store,
+        },
       })
 
       const ctx = app.createContext()
@@ -24,8 +25,8 @@ describe('AppContext', () => {
 
       expect(ctx.dehydrate()).toEqual({
         stores: {
-          SomeStore: { some: 1 },
-          Some2Store: { some2: 2 },
+          some: { some: 1 },
+          some2: { some2: 2 },
         },
       })
     })
@@ -34,21 +35,25 @@ describe('AppContext', () => {
   describe('rehydrate', () => {
     it('Should dehydrate', () => {
       class SomeStore extends Store {
-        public static storeName = 'SomeStore'
         public state = { some: 1 }
       }
       class Some2Store extends Store {
-        public static storeName = 'Some2Store'
         public state = { some2: 2 }
       }
 
       const app = new Fleur({
-        stores: [SomeStore, Some2Store],
+        stores: {
+          some: SomeStore,
+          some2: Some2Store,
+        },
       })
 
       const ctx = app.createContext()
       ctx.rehydrate({
-        stores: { SomeStore: { some: 1 }, Some2Store: { some2: 2 } },
+        stores: {
+          some: { some: 1 },
+          some2: { some2: 2 },
+        },
       })
 
       expect(ctx.getStore(SomeStore).state).toEqual({ some: 1 })
@@ -58,11 +63,10 @@ describe('AppContext', () => {
 
   describe('getStore', () => {
     class SomeStore extends Store {
-      public static storeName = 'SomeStore'
       public state = { some: 1 }
     }
 
-    const app = new Fleur({ stores: [SomeStore] })
+    const app = new Fleur({ stores: { some: SomeStore } })
 
     it('Should get Store instance from StoreClass', () => {
       const context = app.createContext()
@@ -71,7 +75,7 @@ describe('AppContext', () => {
 
     it('Should get Store instance from store name', () => {
       const context = app.createContext()
-      expect(context.getStore('SomeStore')).toBeInstanceOf(SomeStore)
+      expect(context.getStore('some')).toBeInstanceOf(SomeStore)
     })
   })
 })
