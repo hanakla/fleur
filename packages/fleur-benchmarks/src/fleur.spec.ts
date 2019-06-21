@@ -31,15 +31,15 @@ describe('benchmark', () => {
     }
 
     const Component = () => {
-      const { count } = useStore([TestStore], getStore => ({
-        count: getStore(TestStore).count,
+      const { count } = useStore((state: any) => ({
+        count: state.TestStore.count,
       }))
 
       return React.createElement('div', {}, `${count}`)
     }
 
     const app = new Fleur({
-      stores: [TestStore],
+      stores: { TestStore },
     })
 
     const context = app.createContext()
@@ -69,27 +69,29 @@ describe('benchmark', () => {
       ctx.dispatch(incrementAction, {})
     })
 
-    const stores = Array.from(Array(numOfStores)).map(
-      (_, idx) =>
-        class TestStore extends Store<{ count: number }> {
-          public static storeName = `TestStore${idx}`
+    const stores = Array.from(Array(numOfStores)).reduce((accum, _, idx) => {
+      accum[`store${idx}`] = class extends Store<{ count: number }> {
+        public state = { count: 0 }
 
-          public state = { count: 0 }
+        private handleIncrement = listen(incrementAction, payload => {
+          callCounter()
+          this.updateWith(d => d.count++)
+        })
 
-          private handleIncrement = listen(incrementAction, payload => {
-            callCounter()
-            this.updateWith(d => d.count++)
-          })
+        get count() {
+          return this.state.count
+        }
+      }
 
-          get count() {
-            return this.state.count
-          }
-        },
-    )
+      return accum
+    }, {})
 
     const Component = () => {
-      const { sum } = useStore(stores, getStore => ({
-        sum: stores.reduce((accum, s) => accum + getStore(s).count, 0),
+      const { sum } = useStore(stores, (state: any) => ({
+        sum: Object.values(state).reduce(
+          (accum, [_, count]) => accum + count.count,
+          0,
+        ),
       }))
 
       return `${sum}`

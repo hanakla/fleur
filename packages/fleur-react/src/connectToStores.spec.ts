@@ -48,7 +48,9 @@ describe('connectToStores', () => {
 
   it('Should map stores to props', async () => {
     const context = app.createContext()
-    const element = createElementWithContext(context, Connected, {})
+    const element = createElementWithContext(context, Connected, {
+      anotherProp: 'string',
+    })
     const { root, update, unmount } = create(element)
     update(element)
 
