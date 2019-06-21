@@ -8,4 +8,4 @@ update_configs:
       - match:
           dependency_type: "direct"
       - match:
-          update_type: "security:patch"
+          update_type: "security"
