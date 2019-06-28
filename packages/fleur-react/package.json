@@ -23,7 +23,7 @@
     "@types/react-test-renderer": "16.8.2",
     "@types/request-promise": "4.1.42",
     "cheerio": "1.0.0-rc.2",
-    "express": "4.16.4",
+    "express": "4.17.1",
     "jest": "24.8.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
