@@ -1,4 +1,7 @@
-### 1.1.0
+### 1.1.1
+
+- #56 Fix type error of `Type instantiation is excessively deep and possibly infinite.`
+  (Update dependency: immer.js)### 1.1.0
 
 - #31 Add `reducerStore`
 
