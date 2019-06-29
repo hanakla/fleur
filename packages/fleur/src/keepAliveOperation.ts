@@ -13,7 +13,7 @@ interface Operator {
   (context: OperationContext, ...args: any[]): Promise<Disposer> | Disposer
 }
 
-export const keepAliveOperation = <O extends Operator>(operator: Operator) => {
+export const keepAliveOperation = <O extends Operator>(operator: O) => {
   let disposer: (() => void) | void
   let alived = false
 
