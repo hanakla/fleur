@@ -6,7 +6,7 @@
     "devDependencies": {
         "cross-env": "5.2.0",
         "husky": "1.2.0",
-        "lint-staged": "8.2.1",
+        "lint-staged": "9.1.0",
         "prettier": "1.15.3",
         "tslint": "5.11.0",
         "tslint-config-prettier": "1.17.0",
