@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/history": "4.7.2",
-    "@types/invariant": "2.2.29",
+    "@types/invariant": "2.2.30",
     "@types/react-test-renderer": "16.8.2",
     "jest": "24.8.0",
     "react-hooks-testing-library": "0.6.0",
