@@ -3,43 +3,53 @@ import { mockOperationContext } from './mockOperationContext'
 import { mockStore } from './mockStore'
 
 describe('mockOperationContext', () => {
-  it('Example', async () => {
-    // Actions.ts
-    const resetAction = action<{}>()
-    const increaseAction = action<{ increase: number }>()
+  //
+  // Actions.ts
+  //
+  const resetAction = action<{}>()
+  const increaseAction = action<{ increase: number }>()
 
-    // CountStore.ts
-    class CountStore extends Store<{ count: number }> {
-      public static storeName = 'CountStore'
+  //
+  // CountStore.ts
+  //
+  class CountStore extends Store<{ count: number }> {
+    public static storeName = 'CountStore'
 
-      protected state = { count: 0 }
+    public state = { count: 0 }
 
-      private resetCount = listen(resetAction, () =>
-        this.updateWith(state => (state.count = 0)),
-      )
+    private resetCount = listen(resetAction, () =>
+      this.updateWith(state => (state.count = 0)),
+    )
 
-      private increaseCount = listen(increaseAction, payload =>
-        this.updateWith(state => (state.count += payload.increase)),
-      )
-      getCount() {
-        return this.state.count
-      }
+    private increaseCount = listen(increaseAction, payload =>
+      this.updateWith(state => (state.count += payload.increase)),
+    )
+
+    get count() {
+      return this.state.count
     }
+  }
 
-    // Operations.ts
-    const resetCountOp = operation(context => {
-      context.dispatch(resetAction, {})
-    })
-    const increaseOp = operation(async (context, increase: number) => {
-      await context.executeOperation(resetCountOp)
-      context.dispatch(increaseAction, { increase })
-    })
+  //
+  // Operations.ts
+  //
+  const resetCountOp = operation(context => {
+    context.dispatch(resetAction, {})
+  })
+  const increaseOp = operation(async (context, increase: number) => {
+    await context.executeOperation(resetCountOp)
+    context.dispatch(increaseAction, { increase })
+  })
 
-    const context = mockOperationContext({
-      stores: [mockStore(CountStore, { count: 100 })],
-    })
+  //
+  // spec/baseMock.ts
+  //
+  const baseContext = mockOperationContext({
+    stores: [mockStore(CountStore, { count: 100 })],
+  })
 
-    // Spec
+  it('Example', async () => {
+    const context = baseContext.derive()
     await context.executeOperation(increaseOp, 100)
 
     expect(context.dispatchs[0]).toMatchObject({
@@ -52,6 +62,22 @@ describe('mockOperationContext', () => {
       payload: { increase: 100 },
     })
 
-    expect(context.getStore(CountStore).getCount()).toBe(100)
+    expect(context.getStore(CountStore).count).toBe(100)
+  })
+
+  it('Derive store state', () => {
+    const derivedContext = baseContext.derive(({ deriveStore }) => {
+      deriveStore(CountStore, state => {
+        state.count = 10
+      })
+    })
+
+    const derivedContext2 = baseContext.derive(({ deriveStore }) => {
+      deriveStore(CountStore, { count: 20 })
+    })
+
+    expect(baseContext.getStore(CountStore).count).toBe(100)
+    expect(derivedContext.getStore(CountStore).count).toBe(10)
+    expect(derivedContext2.getStore(CountStore).count).toBe(20)
   })
 })
