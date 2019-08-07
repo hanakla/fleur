@@ -6,6 +6,7 @@ type ExtractStateType<T extends Store> = T extends Store<infer S> ? S : never
 export interface MockStore {
   name: string
   store: Store<any>
+  StoreClass: StoreClass<any>
 }
 
 export const mockStore = <S extends StoreClass>(
@@ -14,5 +15,5 @@ export const mockStore = <S extends StoreClass>(
 ): MockStore => {
   const store = new StoreClass(mockStoreContext())
   Object.assign((store as any).state, partialState)
-  return { name: StoreClass.storeName, store }
+  return { name: StoreClass.storeName, store, StoreClass }
 }

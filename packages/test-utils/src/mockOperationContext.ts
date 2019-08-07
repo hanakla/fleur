@@ -1,7 +1,21 @@
 import { Store, StoreClass } from '@fleur/fleur'
 import { Operation, OperationArgs } from '@fleur/fleur/typings/Operations'
 import { ActionIdentifier } from '@fleur/fleur'
-import { MockStore } from './mockStore'
+import { MockStore, mockStore } from './mockStore'
+import immer, { Draft } from 'immer'
+
+type ExtractState<T extends StoreClass<any>> = T extends StoreClass<infer R>
+  ? R
+  : never
+
+interface StoreDeriver {
+  <T extends StoreClass>(
+    store: T,
+    modifier:
+      | ((state: Draft<ExtractState<T>>) => void)
+      | Partial<ExtractState<T>>,
+  ): void
+}
 
 export class MockOperationContext {
   public dispatchs: { action: ActionIdentifier<any>; payload: any }[] = []
@@ -45,6 +59,38 @@ export class MockOperationContext {
           }
         })
     })
+  }
+
+  public derive(
+    modifier: ({ deriveStore: derive }: { deriveStore: StoreDeriver }) => void,
+  ): MockOperationContext {
+    const cloneStores = this.stores.map(entry =>
+      mockStore(entry.StoreClass, entry.store.state),
+    )
+
+    const stores = immer(cloneStores, mockStores => {
+      const storeDeriver: StoreDeriver = (StoreClass, modifier) => {
+        const mock = mockStores.find(
+          entry => entry.name === StoreClass.storeName,
+        )
+
+        if (!mock) {
+          throw new Error(`Reference unmocked store ${StoreClass.storeName}`)
+        }
+
+        if (typeof modifier === 'function') {
+          mock.store.state = immer(mock.store.state, (draft: any) => {
+            modifier(draft)
+          })
+        } else {
+          mock.store.state = { ...mock.store.state, ...modifier }
+        }
+      }
+
+      modifier({ deriveStore: storeDeriver })
+    })
+
+    return new MockOperationContext(stores)
   }
 }
 

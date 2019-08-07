@@ -2,6 +2,7 @@
 
 exports[`mockStoreContext Should create Store entry correctly 1`] = `
 Object {
+  "StoreClass": [Function],
   "name": "SomeStore",
   "store": SomeStore {
     "context": StoreContext {
