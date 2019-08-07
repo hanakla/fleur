@@ -62,7 +62,7 @@ export class MockOperationContext {
   }
 
   public derive(
-    modifier: ({ deriveStore: derive }: { deriveStore: StoreDeriver }) => void,
+    modifier?: ({ deriveStore: derive }: { deriveStore: StoreDeriver }) => void,
   ): MockOperationContext {
     const cloneStores = this.stores.map(entry =>
       mockStore(entry.StoreClass, entry.store.state),
@@ -87,7 +87,9 @@ export class MockOperationContext {
         }
       }
 
-      modifier({ deriveStore: storeDeriver })
+      if (modifier) {
+        modifier({ deriveStore: storeDeriver })
+      }
     })
 
     return new MockOperationContext(stores)
