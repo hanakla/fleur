@@ -49,20 +49,20 @@ describe('mockOperationContext', () => {
   })
 
   it('Example', async () => {
-    // Spec
-    await baseContext.executeOperation(increaseOp, 100)
+    const context = baseContext.derive()
+    await context.executeOperation(increaseOp, 100)
 
-    expect(baseContext.dispatchs[0]).toMatchObject({
+    expect(context.dispatchs[0]).toMatchObject({
       action: resetAction,
       payload: {},
     })
 
-    expect(baseContext.dispatchs[1]).toMatchObject({
+    expect(context.dispatchs[1]).toMatchObject({
       action: increaseAction,
       payload: { increase: 100 },
     })
 
-    expect(baseContext.getStore(CountStore).count).toBe(100)
+    expect(context.getStore(CountStore).count).toBe(100)
   })
 
   it('Derive store state', () => {
