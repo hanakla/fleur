@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "@types/invariant": "2.2.30",
-    "cache-loader": "4.0.1",
     "husky": "3.0.1",
     "jest": "24.8.0",
     "lint-staged": "9.2.1",
