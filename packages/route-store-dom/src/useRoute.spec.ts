@@ -1,6 +1,6 @@
 import React from 'react'
 import { FleurContext } from '@fleur/fleur-react'
-import { renderHook } from 'react-hooks-testing-library'
+import { renderHook, act } from '@testing-library/react-hooks'
 import Fleur, { AppContext } from '@fleur/fleur'
 
 import { useRoute } from './useRoute'
@@ -42,10 +42,12 @@ describe('useRoute', () => {
       wrapper: wrapperFactory(appContext, routeContext),
     })
 
-    history.pushState({}, '', '/test/10?sort=asc#anchor')
-    window.dispatchEvent(new Event('popstate'))
-    await new Promise(r => requestAnimationFrame(r))
-    rerender()
+    await act(async () => {
+      history.pushState({}, '', '/test/10?sort=asc#anchor')
+      window.dispatchEvent(new Event('popstate'))
+      await new Promise(r => requestAnimationFrame(r))
+      rerender()
+    })
 
     expect(result.current.error).toBe(null)
     expect(result.current.route).toMatchInlineSnapshot(`
@@ -73,9 +75,11 @@ describe('useRoute', () => {
       }
     `)
 
-    history.pushState({}, '', '/not_found')
-    window.dispatchEvent(new Event('popstate'))
-    await new Promise(r => requestAnimationFrame(r))
+    await act(async () => {
+      history.pushState({}, '', '/not_found')
+      window.dispatchEvent(new Event('popstate'))
+      await new Promise(r => requestAnimationFrame(r))
+    })
 
     expect(result.current.route).toBe(null)
     expect(result.current.error).toMatchObject({

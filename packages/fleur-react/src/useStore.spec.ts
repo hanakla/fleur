@@ -6,7 +6,7 @@ import Fleur, {
   AppContext,
 } from '@fleur/fleur'
 import * as React from 'react'
-import { renderHook, act } from 'react-hooks-testing-library'
+import { renderHook, act } from '@testing-library/react-hooks'
 
 import { useStore } from './useStore'
 import { FleurContext } from './ComponentContextProvider'
@@ -55,10 +55,10 @@ describe('useStore', () => {
 
     expect(result.current).toMatchObject({ count: 10 })
 
-    act(() => {
-      context.executeOperation(op)
+    await act(async () => {
+      await context.executeOperation(op)
+      await new Promise(r => requestAnimationFrame(r))
     })
-    await new Promise(r => requestAnimationFrame(r))
 
     expect(result.current).toMatchObject({ count: 20 })
     unmount()
