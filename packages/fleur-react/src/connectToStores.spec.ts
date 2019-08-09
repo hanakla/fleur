@@ -2,7 +2,7 @@ import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
 
 import { connectToStores } from './connectToStores'
 import { createElementWithContext } from './createElementWithContext'
-import { create } from 'react-test-renderer'
+import { create, act } from 'react-test-renderer'
 
 describe('connectToStores', () => {
   // Action Identifier
@@ -60,8 +60,10 @@ describe('connectToStores', () => {
 
     expect(root.findByType(Receiver).props).toEqual({ count: 10 })
 
-    await context.executeOperation(op)
-    await new Promise(r => requestAnimationFrame(r))
+    await act(async () => {
+      await context.executeOperation(op)
+      await new Promise(r => requestAnimationFrame(r))
+    })
 
     expect(root.findByType(Receiver).props).toEqual({ count: 20 })
     unmount()

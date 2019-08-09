@@ -16,6 +16,7 @@
     "react-dom": ">= 16.8.x"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^1.1.0",
     "@types/cheerio": "0.22.12",
     "@types/express": "4.17.0",
     "@types/jest": "24.0.15",
@@ -27,7 +28,6 @@
     "jest": "24.8.0",
     "react": "16.9.0",
     "react-dom": "16.9.0",
-    "react-hooks-testing-library": "0.6.0",
     "react-test-renderer": "16.9.0",
     "request-promise": "4.2.4",
     "ts-jest": "24.0.2",
