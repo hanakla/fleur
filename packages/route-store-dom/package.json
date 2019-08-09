@@ -24,10 +24,10 @@
   "devDependencies": {
     "@types/history": "4.7.2",
     "@types/invariant": "2.2.30",
-    "@types/react-test-renderer": "16.8.3",
+    "@types/react-test-renderer": "16.9.0",
     "jest": "24.8.0",
     "react-hooks-testing-library": "0.6.0",
-    "react-test-renderer": "16.8.6",
+    "react-test-renderer": "16.9.0",
     "ts-jest": "24.0.2",
     "typescript": "3.5.3"
   },
