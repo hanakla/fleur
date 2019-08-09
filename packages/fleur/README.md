@@ -75,7 +75,9 @@ import { CounterOps } from './operations.ts'
 
 const app = new Fleur({
   stores: [CounterStore],
-})(async () => {
+})
+
+;(async () => {
   const ctx = app.createContext()
 
   // Enable redux-devtools if you want
