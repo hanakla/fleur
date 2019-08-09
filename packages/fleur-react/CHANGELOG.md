@@ -1,3 +1,8 @@
+### 1.0.1
+
+- [#84](https://github.com/ra-gg/fleur/pull/84) Upgrade React to 16.9
+- [#84](https://github.com/ra-gg/fleur/pull/84) Migrate `react-hooks-testing-library` to `@testing-library/react-hooks`
+
 ### 1.0.0
 
 - #29 Rename `useComponentContext` / `withComponentContext` to `useFleurContext` / `withFleurContext`
