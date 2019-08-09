@@ -38,7 +38,7 @@ describe('useRoute', () => {
     const appContext = app.createContext()
     const routeContext = createRouterContext()
 
-    const { result } = renderHook(() => useRoute(), {
+    const { result, rerender } = renderHook(() => useRoute(), {
       wrapper: wrapperFactory(appContext, routeContext),
     })
 
@@ -46,6 +46,7 @@ describe('useRoute', () => {
       history.pushState({}, '', '/test/10?sort=asc#anchor')
       window.dispatchEvent(new Event('popstate'))
       await new Promise(r => requestAnimationFrame(r))
+      rerender()
     })
 
     expect(result.current.error).toBe(null)
