@@ -1,7 +1,8 @@
-import { createContext } from '../domains/app'
 import { default as NextApp } from 'next/app'
 import { FleurContext } from '@fleur/fleur-react'
 import { useMemo } from 'react'
+import { bindFleurContext } from '@fleur/next'
+import { createContext } from '../domains/app'
 
 export const getOrCreateFleurContext = (state: any = null) => {
   const isServer = typeof window === 'undefined'
@@ -33,14 +34,14 @@ export const appWithFleurContext = (App: typeof NextApp) => {
   }
 
   Comp.getInitialProps = async appContext => {
-    const context = getOrCreateFleurContext()
-    ;(appContext.ctx as any).context = context
+    const fleurContext = getOrCreateFleurContext()
+    bindFleurContext(fleurContext, appContext)
 
     const appProps = await App.getInitialProps(appContext)
 
     return {
       ...appProps,
-      __FLEUR_STATE__: context.dehydrate(),
+      __FLEUR_STATE__: fleurContext.dehydrate(),
     }
   }
 

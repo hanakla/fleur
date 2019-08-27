@@ -1,7 +1,6 @@
 import { NextPage } from 'next'
 
 const Article: NextPage = props => {
-  // console.log(props)
   return null
 }
 

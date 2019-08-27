@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "devDependencies": {
+    "@fleur/next": "^0.0.0"
+  },
   "dependencies": {
     "next": "^9.0.5"
   }

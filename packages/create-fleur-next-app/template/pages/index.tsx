@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-// import { NextPage, NextPageContext } from 'next'
-// import { useRouter } from 'next/router'
 import { useStore, useFleurContext } from '@fleur/fleur-react'
+import { PageContext } from '@fleur/next'
 import { CounterStore } from '../domains/Counter/store'
 import { CounterOps } from '../domains/Counter/ops'
 import { NextPage } from 'next'
@@ -24,8 +23,8 @@ const Index: NextPage = ({}) => {
   return <div>Count: {count}</div>
 }
 
-Index.getInitialProps = async ctx => {
-  await (ctx as any).context.executeOperation(
+Index.getInitialProps = async (ctx: PageContext) => {
+  await ctx.executeOperation(
     CounterOps.asyncIncrement,
     (Math.random() * 1000) | 0,
   )
