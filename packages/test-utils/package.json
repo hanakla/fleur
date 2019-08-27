@@ -13,7 +13,7 @@
     "@fleur/fleur": ">= 1.0.0"
   },
   "devDependencies": {
-    "jest": "24.8.0",
+    "jest": "24.9.0",
     "ts-jest": "24.0.2",
     "typescript": "3.5.3"
   },
