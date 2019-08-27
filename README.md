@@ -21,5 +21,5 @@ Social hashtag: #fleurjs
 - [@fleur/di](./packages/di) - Library independency DI function
 - [@fleur/fleur-react](./packages/fleur-react) - Fleur react connector
 - [@fleur/route-store-dom](./packages/route-store-dom) - Fleur DOM router
-- [@fleur/test-utils](./packages/test-utils) - Fleur Test helpers
+- [@fleur/testing](./packages/testing) - Fleur Test helpers
 - [fleur-benchmarks](./packages/fleur-benchmarks) - Benchmarks. (Fleur vs Fluxible vs react-redux)
