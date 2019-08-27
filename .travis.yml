@@ -30,7 +30,7 @@ script:
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
-  - cd - && cd packages/testings
+  - cd - && cd packages/testing
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
