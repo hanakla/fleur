@@ -1,3 +1,7 @@
+### 1.1.2
+
+- #86 Update immer.js to 3.2.0
+
 ### 1.1.1
 
 - #56 Fix type error of `Type instantiation is excessively deep and possibly infinite.`
