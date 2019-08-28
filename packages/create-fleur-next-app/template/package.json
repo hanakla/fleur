@@ -10,7 +10,7 @@
   "dependencies": {
     "@fleur/fleur": "^1.1.2",
     "@fleur/fleur-react": "^1.0.1",
-    "@fleur/next": "^1.0.0",
+    "@fleur/next": "^0.1.0-alpha",
     "next": "^9.0.5"
   }
 }

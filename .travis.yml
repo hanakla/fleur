@@ -36,7 +36,7 @@ script:
 
   - cd - && cd packages/create-fleur-next-app
   - yarn prepublishOnly
-  - yarn create-fleur-next-app test-app
+  - node ./bin/index test-app
 
   - cd - && cd packages/next
   - yarn prepublishOnly
