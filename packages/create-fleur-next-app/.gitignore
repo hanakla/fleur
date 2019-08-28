@@ -1,4 +1,5 @@
 node_modules/
-.next/
-next-env.d.ts
-bin/
+/bin
+/template/.next/
+/template/next-env.d.ts
+/template/yarn.lock

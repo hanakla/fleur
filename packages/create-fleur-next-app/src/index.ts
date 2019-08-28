@@ -11,6 +11,15 @@ import validateProjectName from 'validate-npm-package-name'
 
 let appName: string = ''
 
+const PACKAGES = [
+  '@fleur/fleur',
+  '@fleur/fleur-react',
+  '@fleur/next',
+  'next',
+  'react',
+  'react-dom',
+]
+
 const program = new Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-directory>')
@@ -18,6 +27,7 @@ const program = new Command(packageJson.name)
   .action(name => {
     appName = name.trim()
   })
+  .option('--use-npm')
   .parse(process.argv)
 
 const printValidationResults = (errors: string[] = []) => {
@@ -75,8 +85,14 @@ async function run() {
   appPackageJson.name = appName
   writeFileSync(packageJsonPath, JSON.stringify(appPackageJson, null, '  '))
 
+  const packageCommand: [string, string[]] = program.useNpm
+    ? ['npm', ['install', ...PACKAGES]]
+    : ['yarn', ['add', ...PACKAGES]]
+
   await new Promise((resolve, reject) => {
-    spawn('yarn', ['install'], {
+    const [proc, args] = packageCommand
+
+    spawn(proc, args, {
       stdio: 'inherit',
       cwd: appPath,
       env: { ...process.env },
