@@ -1,7 +1,7 @@
 {
   "name": "@fleur/next",
-  "version": "0.1.0",
-  "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/next",
+  "version": "0.1.0-alpha",
+  "repository": "https://github.com/ra-gg/fleur/tree/master/packages/next",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "author": "Mitsuka Hanakura<ragg.devpr@gmail.com>",

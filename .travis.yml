@@ -34,5 +34,12 @@ script:
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
+  - cd - && cd packages/create-fleur-next-app
+  - yarn prepublishOnly
+  - yarn create-fleur-next-app test-app
+
+  - cd - && cd packages/next
+  - yarn prepublishOnly
+
   - cd - && cd packages/fleur-benchmarks
   - yarn test
