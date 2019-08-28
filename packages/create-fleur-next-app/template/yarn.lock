@@ -797,6 +797,19 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@fleur/fleur-react@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@fleur/fleur-react/-/fleur-react-1.0.1.tgz#54c3740ced4c35895f3d050401ab1881f445a685"
+  integrity sha512-YV3ofByGQruqZvxtji05hUAQ8uxZBRUh+IuLOKfdj0GM8T/WVFkGFFOazXvbBX9Cb7cRgL36mb1qYXI9rVFbZw==
+
+"@fleur/fleur@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@fleur/fleur/-/fleur-1.1.2.tgz#f8a5a8cf130a37a3212ccd11ecdcff1a214f314c"
+  integrity sha512-ySioOuaHvJNfuq6KQukSVymPv3PCUK2Q32GjGmUVo5kF0c44kKXI7sAv7vY6xaLeIh8mbKsrucVz5hh/kq2JOw==
+  dependencies:
+    immer "^3.2.0"
+    invariant "^2.2.4"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -2372,6 +2385,11 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
+immer@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-3.2.0.tgz#53686471e9dd2b070e0fb5500c6fdecd3a99375f"
+  integrity sha512-+a2R8z9eELHst6aht++nzVzJ8LJ+Hsg49qttfg9Kc/vmoxEdPXw5/rV6+4DYWGgnq+B36KbLr4OTaGtS9mDjtg==
+
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
@@ -2410,7 +2428,7 @@ ini@~1.3.0:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
 
-invariant@^2.2.2:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==

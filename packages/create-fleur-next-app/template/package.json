@@ -1,13 +1,16 @@
 {
   "name": "template",
-  "version": "0.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "@fleur/next": "^0.0.0"
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
+    "@fleur/fleur": "^1.1.2",
+    "@fleur/fleur-react": "^1.0.1",
+    "@fleur/next": "^1.0.0",
     "next": "^9.0.5"
   }
 }
