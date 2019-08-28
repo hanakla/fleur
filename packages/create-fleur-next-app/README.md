@@ -5,4 +5,5 @@ Create Next.js application with [fleur](https://github.com/ra-gg/fleur)
 ## Quick start
 
 With yarn: `yarn create fleur-next-app <your-app-name>`
+
 With npm: `npx create-fleur-next-app <your-app-name>`
