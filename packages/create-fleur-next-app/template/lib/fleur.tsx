@@ -8,10 +8,6 @@ export const getOrCreateFleurContext = (state: any = null) => {
   const isServer = typeof window === 'undefined'
   const context = createContext()
 
-  if (isServer) {
-    return context
-  }
-
   if (state) {
     context.rehydrate(state)
   }
