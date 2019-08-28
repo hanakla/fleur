@@ -18,8 +18,10 @@ Social hashtag: #fleurjs
 ## Packages
 
 - [@fleur/fleur](./packages/fleur) - Basic flux-flow framework
-- [@fleur/di](./packages/di) - Library independency DI function
 - [@fleur/fleur-react](./packages/fleur-react) - Fleur react connector
-- [@fleur/route-store-dom](./packages/route-store-dom) - Fleur DOM router
 - [@fleur/testing](./packages/testing) - Fleur Test helpers
+- [create-fleur-next-app](./packages/create-fleur-next-app) - Create Next.js app with Fleur
+- [@fleur/next](./packages/create-fleur-next-app) - Next.js integration helpers
+- [@fleur/di](./packages/di) - Library independency DI function
+- [@fleur/route-store-dom](./packages/route-store-dom) - Fleur DOM router
 - [fleur-benchmarks](./packages/fleur-benchmarks) - Benchmarks. (Fleur vs Fluxible vs react-redux)
