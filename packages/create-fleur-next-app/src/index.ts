@@ -11,7 +11,7 @@ import validateProjectName from 'validate-npm-package-name'
 
 let appName: string = ''
 
-const PACKAGES = [
+const APP_DEPS = [
   '@fleur/fleur',
   '@fleur/fleur-react',
   '@fleur/next',
@@ -19,6 +19,8 @@ const PACKAGES = [
   'react',
   'react-dom',
 ]
+
+const APP_DEV_DEPS = ['typescript', '@types/react', '@types/node']
 
 const program = new Command(packageJson.name)
   .version(packageJson.version)
@@ -85,26 +87,36 @@ async function run() {
   appPackageJson.name = appName
   writeFileSync(packageJsonPath, JSON.stringify(appPackageJson, null, '  '))
 
-  const packageCommand: [string, string[]] = program.useNpm
-    ? ['npm', ['install', ...PACKAGES]]
-    : ['yarn', ['add', ...PACKAGES]]
+  {
+    const packageCommands: [string, string[]][] = program.useNpm
+      ? [
+          ['npm', ['install', ...APP_DEPS]],
+          ['npm', ['install', '-D', ...APP_DEV_DEPS]],
+        ]
+      : [
+          ['yarn', ['add', ...APP_DEPS]],
+          ['yarn', ['add', '-D', ...APP_DEV_DEPS]],
+        ]
 
-  await new Promise((resolve, reject) => {
-    const [proc, args] = packageCommand
+    for (let command of packageCommands) {
+      await new Promise((resolve, reject) => {
+        const [proc, args] = command
 
-    spawn(proc, args, {
-      stdio: 'inherit',
-      cwd: appPath,
-      env: { ...process.env },
-    }).on('close', code => {
-      if (code !== 0) {
-        reject(new Error('`yarn install` failed'))
-        return
-      }
+        spawn(proc, args, {
+          stdio: 'inherit',
+          cwd: appPath,
+          env: { ...process.env },
+        }).on('close', code => {
+          if (code !== 0) {
+            reject(new Error('`yarn install` failed'))
+            return
+          }
 
-      resolve()
-    })
-  })
+          resolve()
+        })
+      })
+    }
+  }
 
   console.log(`${chalk.green('Success!')} Created ${appName} at ${appPath}`)
 }
