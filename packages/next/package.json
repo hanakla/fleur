@@ -1,0 +1,20 @@
+{
+  "name": "@fleur/next",
+  "version": "0.1.0",
+  "repository": "https://github.com/ra-gg/fleur/tree/master/packages/next",
+  "main": "lib/index.js",
+  "types": "typings/index.d.ts",
+  "author": "Mitsuka Hanakura<ragg.devpr@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib"
+  },
+  "devDependencies": {
+    "typescript": "3.5.3"
+  },
+  "dependencies": {
+    "@fleur/fleur": "^1.1.0",
+    "next": "^9.0.0"
+  },
+  "sideEffects": false
+}

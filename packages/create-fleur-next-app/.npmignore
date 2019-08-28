@@ -1,0 +1,3 @@
+templates/.next
+templates/next-env.d.ts
+templates/yarn.lock
