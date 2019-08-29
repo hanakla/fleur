@@ -1,3 +1,11 @@
+### 2.0.0
+
+- Add `selector()` and type `Selector`
+
+#### Breaking changes
+
+- All `getStore` function now returns Store#state instead of Store instance
+
 ### 1.1.2
 
 - #86 Update immer.js to 3.2.0
