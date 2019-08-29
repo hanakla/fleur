@@ -22,7 +22,7 @@ script:
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 
-  - cd - && cd packages/fleur-react
+  - cd - && cd packages/react
   - yarn prepublishOnly
   - yarn test --coverage --verbose
 

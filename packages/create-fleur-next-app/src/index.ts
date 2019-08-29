@@ -13,7 +13,7 @@ let appName: string = ''
 
 const APP_DEPS = [
   '@fleur/fleur',
-  '@fleur/fleur-react',
+  '@fleur/react',
   '@fleur/next',
   'next',
   'react',

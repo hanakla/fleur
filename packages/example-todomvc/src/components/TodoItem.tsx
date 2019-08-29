@@ -4,7 +4,7 @@ import {
   ContextProp,
   connectToStores,
   StoreGetter,
-} from '@fleur/fleur-react'
+} from '@fleur/react'
 import { ENTER_KEY, ESCAPE_KEY } from '../domain/constants'
 import { TodoEntity } from '../domain/Todo/types'
 import classNames from 'classnames'

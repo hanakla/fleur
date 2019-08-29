@@ -1,4 +1,4 @@
-import { useFleurContext } from '@fleur/fleur-react'
+import { useFleurContext } from '@fleur/react'
 import React, { useCallback, forwardRef } from 'react'
 import { parse } from 'url'
 import { navigateOp } from './operations'

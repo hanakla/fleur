@@ -3,6 +3,7 @@
 #### Breaking changes
 
 - Type `StoreGetter` moved to `@fleur/fleur`, it remove from `@fleur/fleur-react`
+- Package name renamed to `@fleur/react` from `@fleur/fleur-react`
 
 ### 1.0.1
 

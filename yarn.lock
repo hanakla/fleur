@@ -866,6 +866,14 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@fleur/fleur@^1.1.0":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@fleur/fleur/-/fleur-1.1.2.tgz#f8a5a8cf130a37a3212ccd11ecdcff1a214f314c"
+  integrity sha512-ySioOuaHvJNfuq6KQukSVymPv3PCUK2Q32GjGmUVo5kF0c44kKXI7sAv7vY6xaLeIh8mbKsrucVz5hh/kq2JOw==
+  dependencies:
+    immer "^3.2.0"
+    invariant "^2.2.4"
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"

@@ -3,7 +3,7 @@
 An Fully-typed Flux framework inspired by Fluxible.
 Runs on Node / Web.
 
-(No dependence to React. see [this](https://www.npmjs.com/package/@fleur/fleur-react) if you want to use with React.)
+(No dependence to React. see [this](https://www.npmjs.com/package/@fleur/react) if you want to use with React.)
 
 ## Feature
 
@@ -96,4 +96,4 @@ const app = new Fleur({
 
 ## How to use with React?
 
-See [`@fleur/fleur-react`](https://www.npmjs.com/package/@fleur/fleur-react).
+See [`@fleur/react`](https://www.npmjs.com/package/@fleur/react).
