@@ -11,8 +11,6 @@ export const bindFleurContext = (
   context: AppContext,
   nextContext: NextAppContext,
 ) => {
-  ;(nextContext.ctx as any).executeOperation = context.executeOperation.bind(
-    context,
-  )
-  ;(nextContext.ctx as any).getStore = context.getStore.bind(context)
+  ;(nextContext.ctx as any).executeOperation = context.executeOperation
+  ;(nextContext.ctx as any).getStore = context.getStore
 }
