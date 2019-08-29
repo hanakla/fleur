@@ -1,7 +1,6 @@
 import { ActionIdentifier } from './Action'
-import { AppContext } from './AppContext'
+import { AppContext, StoreGetter } from './AppContext'
 import { Operation, OperationArgs } from './Operations'
-import { StoreClass } from './Store'
 import { ExtractPayloadType } from './Action'
 
 export class OperationContext {
@@ -14,7 +13,7 @@ export class OperationContext {
     await this.context.executeOperation(operator, ...args)
   }
 
-  public getStore = <T extends StoreClass>(storeClass: T): InstanceType<T> => {
+  public getStore: StoreGetter = storeClass => {
     return this.context.getStore(storeClass)
   }
 

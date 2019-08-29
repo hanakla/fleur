@@ -1,4 +1,4 @@
-import { AppContext } from './AppContext'
+import { AppContext, StoreGetter } from './AppContext'
 import { Operation, OperationArgs } from './Operations'
 import { StoreClass } from './Store'
 

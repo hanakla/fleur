@@ -1,10 +1,8 @@
-import { ComponentContext, StoreClass } from '@fleur/fleur'
+import { StoreClass, StoreGetter } from '@fleur/fleur'
 import * as React from 'react'
 
 import { useStore } from './useStore'
 import { WithRef } from './WithRef'
-
-export type StoreGetter = ComponentContext['getStore']
 
 type StoreToPropMapper<P, T> = (getStore: StoreGetter, props: P) => T
 

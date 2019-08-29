@@ -9,6 +9,10 @@ import { Operation, OperationArgs } from './Operations'
 import { Store, StoreClass, ExtractStateOfStoreClass } from './Store'
 import { StoreContext } from './StoreContext'
 
+export type StoreGetter = <T extends StoreClass<any>>(
+  StoreClass: T,
+) => ExtractStateOfStoreClass<T>
+
 export interface HydrateState {
   stores: { [storeName: string]: object }
 }
