@@ -1,3 +1,7 @@
+### 1.2.0
+
+- Type `StoreGetter` moved from `@fleur/fleur-react`
+
 ### 1.1.2
 
 - #86 Update immer.js to 3.2.0

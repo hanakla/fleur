@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
-
-import { StoreClass } from '@fleur/fleur'
+import { StoreClass, StoreGetter } from '@fleur/fleur'
 import { useFleurContext } from './useFleurContext'
-import { StoreGetter } from './connectToStores'
 
 type StoreToPropMapper = (getStore: StoreGetter) => any
 

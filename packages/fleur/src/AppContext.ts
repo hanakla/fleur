@@ -13,6 +13,10 @@ export interface HydrateState {
   stores: { [storeName: string]: object }
 }
 
+export interface StoreGetter {
+  <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
+}
+
 export class AppContext {
   public readonly dispatcher: Dispatcher
   public readonly operationContext: OperationContext
