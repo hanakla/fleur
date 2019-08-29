@@ -1,3 +1,9 @@
+### 2.0.0
+
+#### Breaking changes
+
+- Type `StoreGetter` moved to `@fleur/fleur`, it remove from `@fleur/fleur-react`
+
 ### 1.0.1
 
 - [#84](https://github.com/ra-gg/fleur/pull/84) Upgrade React to 16.9
