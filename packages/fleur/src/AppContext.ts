@@ -6,7 +6,7 @@ import Dispatcher from './Dispatcher'
 import { Fleur } from './Fleur'
 import { OperationContext } from './OperationContext'
 import { Operation, OperationArgs } from './Operations'
-import { Store, StoreClass } from './Store'
+import { Store, StoreClass, ExtractStateOfStoreClass } from './Store'
 import { StoreContext } from './StoreContext'
 
 export interface HydrateState {
@@ -59,10 +59,12 @@ export class AppContext {
   }
 
   public getStore(storeName: string): Store
-  public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
+  public getStore<T extends StoreClass<any>>(
+    StoreClass: T,
+  ): ExtractStateOfStoreClass<T>
   public getStore<T extends StoreClass<any>>(
     StoreClass: T | string,
-  ): InstanceType<T> {
+  ): ExtractStateOfStoreClass<T> {
     const storeName =
       typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
 
@@ -71,9 +73,8 @@ export class AppContext {
       invariant(storeRegistered, `Store ${storeName} is must be registered`)
     }
 
-    return (
-      (this.stores.get(storeName) as any) || this.initializeStore(storeName)
-    )
+    const store = this.stores.get(storeName) || this.initializeStore(storeName)
+    return store.state
   }
 
   public async executeOperation<O extends Operation>(

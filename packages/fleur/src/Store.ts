@@ -9,6 +9,10 @@ export interface StoreClass<T = {}> {
   new (context: StoreContext): Store<T>
 }
 
+export type ExtractStateOfStoreClass<
+  T extends StoreClass<any>
+> = T extends StoreClass<infer S> ? S : never
+
 export const listen = <A extends ActionIdentifier<any>>(
   action: A,
   producer: (payload: ExtractPayloadType<A>) => void,
@@ -69,7 +73,7 @@ export const reducerStore = <S>(
 
     private static listeners: [
       ActionIdentifier<any>,
-      (draft: Draft<S>, payload: any) => void
+      (draft: Draft<S>, payload: any) => void,
     ][] = []
 
     public static listen<T extends ActionIdentifier<any>>(
