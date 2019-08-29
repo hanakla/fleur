@@ -70,8 +70,12 @@ describe('useStore', () => {
       wrapper: wrapperFactory(context),
     })
 
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
+    expect(context.getStoreInstance(TestStore).listeners.onChange).toHaveLength(
+      1,
+    )
     unmount()
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(0)
+    expect(context.getStoreInstance(TestStore).listeners.onChange).toHaveLength(
+      0,
+    )
   })
 })

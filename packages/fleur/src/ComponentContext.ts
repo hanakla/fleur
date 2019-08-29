@@ -12,7 +12,14 @@ export class ComponentContext {
     this.context.executeOperation(operation, ...args)
   }
 
-  public getStore = <T extends StoreClass>(StoreClass: T): InstanceType<T> => {
+  public getStore: StoreGetter = (StoreClass: StoreClass<any>) => {
     return this.context.getStore(StoreClass)
+  }
+
+  /**
+   * @internal Fleur internal API, don't use it in production
+   */
+  public getStoreInstance = <T extends StoreClass<any>>(StoreClass: T) => {
+    return this.context.getStoreInstance(StoreClass)
   }
 }

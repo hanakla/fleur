@@ -62,7 +62,7 @@ export class AppContext {
     })
   }
 
-  public getStore(storeName: string): Store
+  public getStore(storeName: string): any
   public getStore<T extends StoreClass<any>>(
     StoreClass: T,
   ): ExtractStateOfStoreClass<T>
@@ -77,8 +77,28 @@ export class AppContext {
       invariant(storeRegistered, `Store ${storeName} is must be registered`)
     }
 
-    const store = this.stores.get(storeName) || this.initializeStore(storeName)
+    const store = this.getStoreInstance(storeName)
     return store.state
+  }
+
+  public getStoreInstance(storeName: string): any
+  public getStoreInstance<T extends StoreClass<any>>(
+    StoreClass: T,
+  ): InstanceType<T>
+  public getStoreInstance<T extends StoreClass<any>>(
+    StoreClass: T | string,
+  ): InstanceType<T> {
+    const storeName =
+      typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
+
+    if (process.env.NODE_ENV !== 'production') {
+      const storeRegistered = this.app.stores.has(storeName)
+      invariant(storeRegistered, `Store ${storeName} is must be registered`)
+    }
+
+    const store = (this.stores.get(storeName) ||
+      this.initializeStore(storeName)) as InstanceType<T>
+    return store
   }
 
   public async executeOperation<O extends Operation>(

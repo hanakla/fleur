@@ -20,20 +20,17 @@ describe('Sever side rendering', () => {
       ctx.dispatch(increaseIdent, { increase })
     })
 
-    class TestStore extends Store {
+    class TestStore extends Store<{ count: number }> {
       public static storeName = 'TestStore'
-      protected state = { count: 0 }
+      public state = { count: 0 }
       private increase = listen(increaseIdent, ({ increase }) => {
         this.updateWith(d => (d.count += increase))
       })
-      public getCount() {
-        return this.state.count
-      }
     }
 
     const Component = () => {
       const { count } = useStore([TestStore], getStore => ({
-        count: getStore(TestStore).getCount(),
+        count: getStore(TestStore).count,
       }))
 
       return <div>{`Your count ${count}`}</div>
@@ -92,7 +89,7 @@ describe('Sever side rendering', () => {
       expect(dehydratedState1).toEqual({ stores: { TestStore: { count: 10 } } })
       const clientContext1 = app.createContext()
       clientContext1.rehydrate(dehydratedState1)
-      expect(clientContext1.getStore('TestStore').state).toEqual({ count: 10 })
+      expect(clientContext1.getStore('TestStore')).toEqual({ count: 10 })
 
       // Another request
       const res2 = await request.get('http://localhost:31987/?amount=20')
@@ -106,7 +103,7 @@ describe('Sever side rendering', () => {
       expect(dehydratedState2).toEqual({ stores: { TestStore: { count: 20 } } })
       const clientContext2 = app.createContext()
       clientContext2.rehydrate(dehydratedState2)
-      expect(clientContext2.getStore('TestStore').state).toEqual({ count: 20 })
+      expect(clientContext2.getStore('TestStore')).toEqual({ count: 20 })
     } catch (e) {
       throw e
     }

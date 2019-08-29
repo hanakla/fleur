@@ -30,7 +30,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   stores: StoreClass[],
   mapStoresToProps: Mapper,
 ): ReturnType<Mapper> => {
-  const { getStore } = useFleurContext()
+  const { getStore, getStoreInstance } = useFleurContext()
 
   const [, rerender] = useReducer(s => s + 1, 0)
 
@@ -44,12 +44,12 @@ export const useStore = <Mapper extends StoreToPropMapper>(
 
   useIsomorphicEffect(() => {
     stores.forEach(store => {
-      getStore(store).on('onChange', changeHandler)
+      getStoreInstance(store).on('onChange', changeHandler)
     })
 
     return () => {
       stores.forEach(store => {
-        getStore(store).off('onChange', changeHandler)
+        getStoreInstance(store).off('onChange', changeHandler)
       })
     }
   }, [])
