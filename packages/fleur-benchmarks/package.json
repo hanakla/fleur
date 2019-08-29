@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@fleur/fleur": "*",
-    "@fleur/react": "*",
+    "@fleur/react": "2.0.0-alpha.1",
     "@types/react-dom": "16.8.5",
     "@types/react-redux": "7.1.1",
     "@types/redux": "3.6.0",
