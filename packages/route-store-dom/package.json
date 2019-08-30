@@ -13,7 +13,7 @@
   },
   "peerDependencies": {
     "@fleur/fleur": ">= 1.0.0",
-    "@fleur/fleur-react": ">= 1.0.0"
+    "@fleur/react": ">= 2.0.0"
   },
   "dependencies": {
     "fast-deep-equal": "^2.0.1",

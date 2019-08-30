@@ -127,7 +127,7 @@ server.use(async (req, res) => {
 // client.tsx
 //
 import { AppRoot } from './components/AppRoot'
-import { FleurContext } from '@fleur/fleur-react'
+import { FleurContext } from '@fleur/react'
 import { RouterProvider, restoreNavigateOp } from '@fleur/route-store-dom'
 
 document.addEventListener('DOMContentLoaded', async () => {

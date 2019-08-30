@@ -1,8 +1,4 @@
-import {
-  withFleurContext,
-  connectToStores,
-  ContextProp,
-} from '@fleur/fleur-react'
+import { withFleurContext, connectToStores, ContextProp } from '@fleur/react'
 import React from 'react'
 import {} from '@fleur/route-store-dom'
 

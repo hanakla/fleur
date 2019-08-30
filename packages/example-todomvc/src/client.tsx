@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { App } from './components/App'
 import { app } from './app'
-import { FleurContext } from '@fleur/fleur-react'
+import { FleurContext } from '@fleur/react'
 import { RouterProvider, restoreNavigateOp } from '@fleur/route-store-dom'
 import { withReduxDevTools } from '@fleur/fleur'
 

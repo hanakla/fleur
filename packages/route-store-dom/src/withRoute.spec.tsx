@@ -1,7 +1,7 @@
 import React from 'react'
 import { create } from 'react-test-renderer'
 import Fleur, { AppContext } from '@fleur/fleur'
-import { FleurContext } from '@fleur/fleur-react'
+import { FleurContext } from '@fleur/react'
 import { createRouteStore } from './createRouteStore'
 import { RouterProvider } from './RouterContext'
 import { navigateOp } from './operations'

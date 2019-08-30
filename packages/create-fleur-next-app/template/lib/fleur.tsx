@@ -1,5 +1,5 @@
 import { default as NextApp } from 'next/app'
-import { FleurContext } from '@fleur/fleur-react'
+import { FleurContext } from '@fleur/react'
 import { useMemo } from 'react'
 import { bindFleurContext } from '@fleur/next'
 import { createContext } from '../domains/app'

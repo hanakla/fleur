@@ -1,5 +1,5 @@
 import express from 'express'
-import { FleurContext } from '@fleur/fleur-react'
+import { FleurContext } from '@fleur/react'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import {

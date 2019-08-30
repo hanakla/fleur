@@ -1,5 +1,5 @@
 import React from 'react'
-import { FleurContext } from '@fleur/fleur-react'
+import { FleurContext } from '@fleur/react'
 import { renderHook, act } from '@testing-library/react-hooks'
 import Fleur, { AppContext } from '@fleur/fleur'
 
