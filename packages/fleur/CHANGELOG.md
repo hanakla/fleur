@@ -1,3 +1,7 @@
+### 1.2.1
+
+- Fix missing export (selectorWithStore)
+
 ### 1.2.0
 
 - Add `selector()` and `selectorWithStore()`<br />
