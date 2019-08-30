@@ -36,6 +36,10 @@ export class AppContext {
     this.app.stores.forEach(StoreClass => {
       this.initializeStore(StoreClass)
     })
+
+    this.getStore = this.getStore.bind(this)
+    this.executeOperation = this.executeOperation.bind(this)
+    this.dispatch = this.dispatch.bind(this)
   }
 
   public dehydrate(): HydrateState {
