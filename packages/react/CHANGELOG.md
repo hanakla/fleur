@@ -1,3 +1,10 @@
+### 2.0.0
+
+#### Breaking Changes
+
+- Package name changed to `@fleur/react`
+- `StoreGetter` type removed and moved to `@fleur/fleur`
+
 ### 1.0.1
 
 - [#84](https://github.com/ra-gg/fleur/pull/84) Upgrade React to 16.9

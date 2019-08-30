@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useStore, useFleurContext } from '@fleur/fleur-react'
+import { useStore, useFleurContext } from '@fleur/react'
 import { PageContext } from '@fleur/next'
 import { CounterStore } from '../domains/Counter/store'
 import { CounterOps } from '../domains/Counter/ops'

@@ -3,7 +3,7 @@
 An Fully-typed Flux framework inspired by Fluxible.
 Runs on Node / Web.
 
-(No dependence to React. see [this](https://www.npmjs.com/package/@fleur/fleur-react) if you want to use with React.)
+(No dependence to React. see [this](https://www.npmjs.com/package/@fleur/react) if you want to use with React.)
 
 ## Feature
 
@@ -27,28 +27,23 @@ export const CounterActions = actions('Counter', {
 
 ```typescript
 // store.ts (Store)
-import { listen, Store } from '@fleur/fleur'
+import { reducerStore } from '@fleur/fleur'
 import { CounterActions } from './actions.ts'
 
 interface State {
-  count: number 
+  count: number
 }
 
-export class CounterStore extends Store<State> {
-  public state: State = { count: 0 }
-
-  private handleIncrease = listen(CounterActions.increase, payload => {
-    // `this.updateWith` is immutable changing `this.state` with `immer.js`
-    this.updateWith(draft => (draft.count += payload.amount))
+export const CounterStore = reducerStore<State>('CounterStore', () => ({
+  count: 0
+}))
+  .listen(CounterActions.increase, (draft, payload) => {
+    // immutable changing state with `immer.js`
+    draft.count += payload.amount
   })
-
-  private handleDecrease = listen(CounterActions.decrease, payload => {
-    this.updateWith(draft => (draft.count -= payload.amount))
+  .listen(CounterActions.decrease, (draft, payload) => {
+    draft.count -= payload.amount
   })
-
-  public get count() {
-    return this.state.count
-  }
 }
 ```
 
@@ -68,15 +63,24 @@ export const CounterOps = operations({
 ```
 
 ```typescript
+// selectors.ts
+
+import { selector } from '@fleur/fleur'
+import { CounterStore } from './store.ts'
+
+export const selectCount = selector(getState => getState(CounterStore).count)
+```
+
+```typescript
 // app.ts
 import Fleur, { withReduxDevTools } from '@fleur/fleur'
 import { CounterStore } from './store.ts'
 import { CounterOps } from './operations.ts'
+import { selectCount } from './selectors.ts'
 
 const app = new Fleur({
   stores: [CounterStore],
 })
-
 ;(async () => {
   const ctx = app.createContext()
 
@@ -84,13 +88,13 @@ const app = new Fleur({
   withReduxDevTools(ctx)
 
   await ctx.executeOperation(CounterOps.increase, 10)
-  console.log(ctx.getStore(SomeStore).count) // => 10
+  console.log(selectCount(ctx.getStore)) // => 10
 
   await ctx.executeOperation(CounterOps.decrease, 20)
-  console.log(ctx.getStore(SomeStore).count) // => -10
+  console.log(selectCount(ctx.getStore)) // => -10
 })()
 ```
 
 ## How to use with React?
 
-See [`@fleur/fleur-react`](https://www.npmjs.com/package/@fleur/fleur-react).
+See [`@fleur/react`](https://www.npmjs.com/package/@fleur/react).

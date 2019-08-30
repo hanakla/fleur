@@ -13,6 +13,10 @@ export interface HydrateState {
   stores: { [storeName: string]: object }
 }
 
+export interface StoreGetter {
+  <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
+}
+
 export class AppContext {
   public readonly dispatcher: Dispatcher
   public readonly operationContext: OperationContext
@@ -32,6 +36,10 @@ export class AppContext {
     this.app.stores.forEach(StoreClass => {
       this.initializeStore(StoreClass)
     })
+
+    this.getStore = this.getStore.bind(this)
+    this.executeOperation = this.executeOperation.bind(this)
+    this.dispatch = this.dispatch.bind(this)
   }
 
   public dehydrate(): HydrateState {

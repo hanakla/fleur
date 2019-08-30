@@ -2,7 +2,7 @@ import { TodoFilterType } from '../domain/constants'
 import { pluralize } from '../utils/utils'
 import classNames from 'classnames'
 import React from 'react'
-import { withFleurContext, ContextProp } from '@fleur/fleur-react'
+import { withFleurContext, ContextProp } from '@fleur/react'
 import { TodoOps } from '../domain/Todo/operations'
 import { Link } from '@fleur/route-store-dom'
 

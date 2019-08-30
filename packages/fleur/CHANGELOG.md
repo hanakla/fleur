@@ -1,3 +1,10 @@
+### 1.2.0
+
+- Add `selector()` and `selectorWithStore()`<br />
+  `selectorWithStore()` is provided for compatibility.<br />
+  Please think to use `selector()` first.
+- Type `StoreGetter` moved from `@fleur/fleur-react`
+
 ### 1.1.2
 
 - #86 Update immer.js to 3.2.0

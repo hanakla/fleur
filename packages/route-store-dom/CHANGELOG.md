@@ -1,3 +1,7 @@
+### 2.1.0
+
+- Update `@fleur/fleur-react` to `@fleur/react`
+
 ### 2.0.1
 
 - [#84](https://github.com/ra-gg/fleur/pull/84) Upgrade react-test-renderer to 16.9
