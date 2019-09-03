@@ -1,3 +1,7 @@
+### 1.2.2
+
+- Update module and fix internal typings
+
 ### 1.2.1
 
 - Fix missing export (selectorWithStore)
