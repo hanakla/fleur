@@ -1,27 +1,31 @@
 {
-    "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
-    "devDependencies": {
-        "cross-env": "5.2.1",
-        "husky": "3.0.5",
-        "lint-staged": "9.2.5",
-        "prettier": "1.18.2",
-        "tslint": "5.19.0",
-        "tslint-config-prettier": "1.18.0",
-        "typescript": "3.6.2"
-    },
-    "husky": {
-        "hooks": {
-          "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "*.{ts,tsx}": [
-            "tslint --fix",
-            "prettier --write",
-            "git add"
-        ]
+  "private": true,
+  "scripts": {
+    "build": "wsrun --exclude-missing --serial -c prepublishOnly"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "cross-env": "5.2.1",
+    "husky": "3.0.5",
+    "lint-staged": "9.2.5",
+    "prettier": "1.18.2",
+    "tslint": "5.19.0",
+    "tslint-config-prettier": "1.18.0",
+    "typescript": "3.6.2",
+    "wsrun": "5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  }
 }
