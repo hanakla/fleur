@@ -19,7 +19,7 @@ export const withRoute = <P extends RouteProps>(
 
     return React.createElement(Component, {
       ref,
-      ...(props as P),
+      ...(props as any),
       route,
       routeError: error,
       routerContext: routerContext,
