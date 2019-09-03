@@ -8,10 +8,9 @@ const createElementWithContext = <P>(
   Component: React.ComponentType<P>,
   props?: P,
 ): React.ReactElement =>
-  React.createElement(
-    FleurContext,
-    { value: context },
-    React.createElement(Component, props || ({} as any)),
-  )
+  React.createElement(FleurContext, {
+    value: context,
+    children: React.createElement(Component, props || ({} as any)),
+  })
 
 export { createElementWithContext }
