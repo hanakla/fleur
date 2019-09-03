@@ -1,3 +1,7 @@
+### 2.1.1
+
+- Update deps
+
 ### 2.1.0
 
 - Update `@fleur/fleur-react` to `@fleur/react`
