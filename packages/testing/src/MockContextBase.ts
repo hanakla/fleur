@@ -1,6 +1,6 @@
-import { MockStore, mockStore } from './mockStore'
+import { StoreClass } from '@fleur/fleur'
 import immer, { Draft } from 'immer'
-import { StoreClass, Store } from '@fleur/fleur'
+import { MockStore, mockStore } from './mockStore'
 
 type ExtractState<T extends StoreClass<any>> = T extends StoreClass<infer R>
   ? R
@@ -15,18 +15,22 @@ interface StoreDeriver {
   ): void
 }
 
-export class MockedContext {
-  public stores: MockStore[] = []
+export class MockContextBase {
+  public mockStores: MockStore[] = []
 
-  constructor(stores: MockStore[]) {
-    this.stores = stores
+  constructor({ stores }: { stores: MockStore[] }) {
+    this.mockStores = stores
   }
 
-  public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T> {
+  public getStore = <T extends StoreClass<any>>(
+    StoreClass: T,
+  ): InstanceType<T> => {
     if (!StoreClass.storeName || StoreClass.storeName === '')
-      throw new Error(`Store.storeName must be defined in ${Store.name}`)
+      throw new Error(`Store.storeName must be defined in ${StoreClass.name}`)
 
-    const store = this.stores.find(entry => entry.name === StoreClass.storeName)
+    const store = this.mockStores.find(
+      entry => entry.name === StoreClass.storeName,
+    )
     if (!store) throw new Error(`Store \`${StoreClass.storeName}\` not found`)
 
     return store.store as any
@@ -35,7 +39,7 @@ export class MockedContext {
   public derive(
     modifier?: ({ deriveStore: derive }: { deriveStore: StoreDeriver }) => void,
   ): this {
-    const cloneStores = this.stores.map(entry =>
+    const cloneStores = this.mockStores.map(entry =>
       mockStore(entry.StoreClass, entry.store.state),
     )
 
@@ -46,15 +50,15 @@ export class MockedContext {
         )
 
         if (!mock) {
-          throw new Error(`Reference unmocked store ${StoreClass.storeName}`)
+          throw new Error(
+            `deriveStore: Reference unmocked store ${StoreClass.storeName}`,
+          )
         }
 
         if (typeof modifier === 'function') {
-          mock.store.state = immer(mock.store.state, (draft: any) => {
-            modifier(draft)
-          })
+          mock.store.state = immer(mock.store.state, modifier)
         } else {
-          mock.store.state = { ...mock.store.state, ...modifier }
+          mock.store.state = { ...mock.store.state, ...(modifier as object) }
         }
       }
 
@@ -63,6 +67,6 @@ export class MockedContext {
       }
     })
 
-    return new (this.constructor as any)(stores)
+    return new (this.constructor as any)({ stores })
   }
 }

@@ -1,20 +1,25 @@
 import { Operation, OperationArgs } from '@fleur/fleur/typings/Operations'
-import { MockedContext } from './MockedContext'
-import { MockStore } from '../typings/mockStore'
+import { MockStore } from './mockStore'
+import { MockContextBase } from './MockContextBase'
+import { mockStoreContext } from './mockStoreContext'
 
-export class MockComponentContext extends MockedContext {
+export class MockedComponentContext extends MockContextBase {
   public executes: { op: Operation; args: any }[] = []
+  protected componentContext: this = this
+  protected storeContext = mockStoreContext()
 
-  public async executeOperation<O extends Operation>(
+  public executeOperation = async <O extends Operation>(
     operation: O,
     ...args: OperationArgs<O>
-  ): Promise<void> {
+  ): Promise<void> => {
     this.executes.push({ op: operation, args })
   }
 }
 
-export const mockComponentContext = (options: {
+export const mockComponentContext = ({
+  stores,
+}: {
   stores: MockStore[]
-}): MockComponentContext => {
-  return new MockComponentContext(options.stores)
+}): MockedComponentContext => {
+  return new MockedComponentContext({ stores })
 }
