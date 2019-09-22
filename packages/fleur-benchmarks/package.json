@@ -9,7 +9,7 @@
   "devDependencies": {
     "@fleur/fleur": "*",
     "@fleur/react": "*",
-    "@types/react-dom": "16.8.5",
+    "@types/react-dom": "16.9.0",
     "@types/react-redux": "7.1.2",
     "@types/redux": "3.6.0",
     "jest": "24.9.0",
