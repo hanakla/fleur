@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@fleur/fleur": "^1.1.0",
-    "next": "^9.0.0"
+    "next": "^9.0.8"
   },
   "sideEffects": false
 }
