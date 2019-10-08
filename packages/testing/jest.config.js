@@ -1,1 +1,4 @@
-module.exports = require('../../jest.config')
+module.exports = {
+  ...require('../../jest.config'),
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
+}
