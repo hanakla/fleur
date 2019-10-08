@@ -14,7 +14,7 @@
     "@types/invariant": "2.2.30",
     "husky": "3.0.5",
     "jest": "24.9.0",
-    "lint-staged": "9.2.5",
+    "lint-staged": "9.4.1",
     "prettier": "1.18.2",
     "ts-jest": "24.0.2",
     "tslint": "5.20.0",
