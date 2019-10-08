@@ -1,3 +1,7 @@
+### 1.2.3
+
+- [#124](https://github.com/ra-gg/fleur/pull/124) Update immer from 3.2.0 to 4.0.0
+
 ### 1.2.2
 
 - Update module and fix internal typings
