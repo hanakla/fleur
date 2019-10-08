@@ -14,7 +14,7 @@
     "prepublishOnly": "ncc build src/index.ts -o ./bin --minify --no-cache --no-source-map-register"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.20.4"
+    "@zeit/ncc": "^0.20.5"
   },
   "dependencies": {
     "chalk": "2.4.2",

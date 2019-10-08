@@ -1,2 +1,3 @@
 export { mockStore } from './mockStore'
-export { mockOperationContext } from './mockOperationContext'
+export { mockFleurContext } from './mockFleurContext'
+export { TestingFleurContext } from './TestingFleurContext'
