@@ -4,4 +4,4 @@ Test helpers for @fleur/fleur
 
 ## Example
 
-See [this spec](https://github.com/ra-gg/fleur/blob/master/packages/testing/src/index.spec.ts)
+See [this spec](https://github.com/ra-gg/fleur/blob/master/packages/testing/src/index.spec.tsx)
