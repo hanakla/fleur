@@ -10,11 +10,11 @@
     "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib"
   },
   "devDependencies": {
-    "next": "^9.0.8",
+    "next": "^9.1.1",
     "typescript": "3.6.3"
   },
   "peerDependencies": {
-    "next": "^9.0.8"
+    "next": "^9.1.1"
   },
   "dependencies": {
     "@fleur/fleur": "^1.1.0"
