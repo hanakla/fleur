@@ -22,7 +22,7 @@ describe('Sever side rendering', () => {
 
     class TestStore extends Store {
       public static storeName = 'TestStore'
-      protected state = { count: 0 }
+      public state = { count: 0 }
       private increase = listen(increaseIdent, ({ increase }) => {
         this.updateWith(d => (d.count += increase))
       })
@@ -32,7 +32,7 @@ describe('Sever side rendering', () => {
     }
 
     const Component = () => {
-      const { count } = useStore([TestStore], getStore => ({
+      const { count } = useStore(getStore => ({
         count: getStore(TestStore).getCount(),
       }))
 

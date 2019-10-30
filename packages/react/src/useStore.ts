@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useState,
+  useRef,
+} from 'react'
 import { StoreClass, StoreGetter } from '@fleur/fleur'
 import { useFleurContext } from './useFleurContext'
 
@@ -6,7 +13,7 @@ type StoreToPropMapper = (getStore: StoreGetter) => any
 
 const canUseDOM = typeof window !== 'undefined'
 
-const useIsomorphicEffect = canUseDOM ? useLayoutEffect : useEffect
+const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect
 
 const bounce = (fn: () => void, bounceTime: number) => {
   let lastExecuteTime = 0
@@ -26,10 +33,10 @@ const bounce = (fn: () => void, bounceTime: number) => {
 }
 
 export const useStore = <Mapper extends StoreToPropMapper>(
-  stores: StoreClass[],
   mapStoresToProps: Mapper,
 ): ReturnType<Mapper> => {
   const { getStore } = useFleurContext()
+  const referencedStores = useRef<Set<StoreClass>>(new Set())
 
   const [, rerender] = useReducer(s => s + 1, 0)
 
@@ -41,17 +48,25 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     [],
   )
 
-  useIsomorphicEffect(() => {
-    stores.forEach(store => {
-      getStore(store).on('onChange', changeHandler)
-    })
+  const getStoreInspector = useCallback(
+    <T extends StoreClass>(storeClass: T) => {
+      if (!referencedStores.current.has(storeClass)) {
+        referencedStores.current.add(storeClass)
+        getStore(storeClass).on('onChange', changeHandler)
+      }
 
+      return getStore(storeClass)
+    },
+    [getStore],
+  )
+
+  useIsomorphicLayoutEffect(() => {
     return () => {
-      stores.forEach(store => {
+      referencedStores.current.forEach(store => {
         getStore(store).off('onChange', changeHandler)
       })
     }
-  }, [])
+  }, [changeHandler])
 
-  return mapStoresToProps(getStore)
+  return mapStoresToProps(getStoreInspector)
 }

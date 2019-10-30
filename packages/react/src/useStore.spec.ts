@@ -47,7 +47,7 @@ describe('useStore', () => {
     const context = app.createContext()
     const { result, rerender, unmount } = renderHook(
       () =>
-        useStore([TestStore], getStore => ({
+        useStore(getStore => ({
           count: getStore(TestStore).count,
         })),
       { wrapper: wrapperFactory(context) },
@@ -66,9 +66,14 @@ describe('useStore', () => {
 
   it('Should unlisten on component unmounted', async () => {
     const context = app.createContext()
-    const { unmount } = renderHook(() => useStore([TestStore], () => ({})), {
-      wrapper: wrapperFactory(context),
-    })
+    const { unmount } = renderHook(
+      () => {
+        useStore(getStore => ({ count: getStore(TestStore).count }))
+      },
+      {
+        wrapper: wrapperFactory(context),
+      },
+    )
 
     expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
     unmount()
