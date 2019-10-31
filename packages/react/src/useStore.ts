@@ -36,6 +36,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
 ): ReturnType<Mapper> => {
   const { getStore } = useFleurContext()
   const referencedStores = useRef<Set<StoreClass>>(new Set())
+  const isMounted = useRef<boolean>(false)
 
   const [, rerender] = useReducer(s => s + 1, 0)
 
@@ -51,7 +52,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     <T extends StoreClass>(storeClass: T) => {
       if (!referencedStores.current.has(storeClass)) {
         referencedStores.current.add(storeClass)
-        getStore(storeClass).on('onChange', changeHandler)
+        isMounted.current && getStore(storeClass).on('onChange', changeHandler)
       }
 
       return getStore(storeClass)
@@ -60,6 +61,11 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   )
 
   useIsomorphicLayoutEffect(() => {
+    isMounted.current = true
+    referencedStores.current.forEach(store => {
+      getStore(store).on('onChange', changeHandler)
+    })
+
     return () => {
       referencedStores.current.forEach(store => {
         getStore(store).off('onChange', changeHandler)

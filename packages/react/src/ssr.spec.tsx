@@ -1,3 +1,5 @@
+/** @jest-environment node */
+
 import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
 import * as cheerio from 'cheerio'
 import * as express from 'express'
