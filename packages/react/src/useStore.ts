@@ -3,7 +3,6 @@ import {
   useEffect,
   useLayoutEffect,
   useReducer,
-  useState,
   useRef,
 } from 'react'
 import { StoreClass, StoreGetter } from '@fleur/fleur'

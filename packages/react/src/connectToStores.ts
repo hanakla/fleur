@@ -1,4 +1,4 @@
-import { StoreClass, StoreGetter } from '@fleur/fleur'
+import { StoreGetter } from '@fleur/fleur'
 import * as React from 'react'
 
 import { useStore } from './useStore'
@@ -11,7 +11,6 @@ type ConnectedComponent<Props, MappedProps> = React.ComponentType<
 >
 
 export const connectToStores = <Props, MappedProps = {}>(
-  stores: StoreClass[],
   mapStoresToProps: StoreToPropMapper<Props, MappedProps>,
 ) => <ComponentProps extends object>(
   Component: React.ComponentType<ComponentProps>,
