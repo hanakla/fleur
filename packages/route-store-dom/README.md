@@ -42,7 +42,7 @@ import { Router } from '../Router.ts'
 export const UserShow = () => {
   const { routerContext, params } = useRoute()
 
-  const { user } = useStore([UserStore], getStore => ({
+  const { user } = useStore(getStore => ({
     user: getStore(UserStore).getUser(params.id),
   }))
 

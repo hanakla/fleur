@@ -1,9 +1,10 @@
 import Fleur, {
   action,
-  listen,
   operation,
-  Store,
   AppContext,
+  reducerStore,
+  selector,
+  selectorWithStore,
 } from '@fleur/fleur'
 import * as React from 'react'
 import { renderHook, act } from '@testing-library/react-hooks'
@@ -21,34 +22,33 @@ describe('useStore', () => {
   })
 
   // Store
-  const TestStore = class extends Store<{ count: number }> {
-    public static storeName = 'TestStore'
+  const TestStore = reducerStore<{ count: number }>('TestStore', () => ({
+    count: 10,
+  })).listen(ident, (draft, { increase }) => (draft.count += increase))
 
-    public state = { count: 10 }
-
-    get count() {
-      return this.state.count
-    }
-
-    private increase = listen(ident, payload => {
-      this.updateWith(d => (d.count += payload.increase))
-    })
-  }
+  const Test2Store = reducerStore('Test2Store', () => ({ test2: 'hi' }))
 
   // App
-  const app = new Fleur({ stores: [TestStore] })
+  const app = new Fleur({ stores: [TestStore, Test2Store] })
 
   const wrapperFactory = (context: AppContext) => {
     return ({ children }: { children: React.ReactNode }) =>
       React.createElement(FleurContext, { value: context }, children)
   }
 
+  // selectors
+  const getTest2 = selector(getState => getState(Test2Store).test2)
+  const getMultiple = selectorWithStore(getStore => {
+    getTest2(getStore)
+    getStore(TestStore)
+  })
+
   it('Should map stores to states', async () => {
     const context = app.createContext()
     const { result, rerender, unmount } = renderHook(
       () =>
-        useStore([TestStore], getStore => ({
-          count: getStore(TestStore).count,
+        useStore(getStore => ({
+          count: getStore(TestStore).state.count,
         })),
       { wrapper: wrapperFactory(context) },
     )
@@ -64,11 +64,33 @@ describe('useStore', () => {
     unmount()
   })
 
+  it('Should listen stores via deep selector', () => {
+    const context = app.createContext()
+    const { unmount } = renderHook(
+      () => {
+        useStore(getMultiple)
+      },
+      { wrapper: wrapperFactory(context) },
+    )
+
+    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
+    expect(context.getStore(Test2Store).listeners.onChange).toHaveLength(1)
+
+    unmount()
+    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(0)
+    expect(context.getStore(Test2Store).listeners.onChange).toHaveLength(0)
+  })
+
   it('Should unlisten on component unmounted', async () => {
     const context = app.createContext()
-    const { unmount } = renderHook(() => useStore([TestStore], () => ({})), {
-      wrapper: wrapperFactory(context),
-    })
+    const { unmount } = renderHook(
+      () => {
+        useStore(getStore => ({ count: getStore(TestStore).count }))
+      },
+      {
+        wrapper: wrapperFactory(context),
+      },
+    )
 
     expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
     unmount()

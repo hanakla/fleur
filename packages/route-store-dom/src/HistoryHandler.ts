@@ -12,7 +12,7 @@ export const HistoryHandler = () => {
   const { history } = useRouterContext()
   const { executeOperation } = useFleurContext()
 
-  const { route, progressRoute } = useStore([RouteStore], getStore => ({
+  const { route, progressRoute } = useStore(getStore => ({
     route: getStore(RouteStore).currentRoute,
     progressRoute: getStore(RouteStore).progressRoute,
   }))

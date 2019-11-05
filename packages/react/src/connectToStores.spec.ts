@@ -30,7 +30,7 @@ describe('connectToStores', () => {
 
   // Component
   const Receiver = (props: { count: number; anotherProp: string }) => null
-  const Connected = connectToStores([TestStore], getStore => ({
+  const Connected = connectToStores(getStore => ({
     count: getStore(TestStore).count,
   }))(Receiver)
 

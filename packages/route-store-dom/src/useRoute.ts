@@ -8,7 +8,7 @@ export const useRoute = () => {
 
   invariant(routerContext, 'useRoute can use only under RouterContext')
 
-  const { route, error } = useStore([RouteStore], getStore => {
+  const { route, error } = useStore(getStore => {
     const { currentRoute: route } = getStore(RouteStore)
 
     return {

@@ -87,7 +87,7 @@ describe('@fleur/testing integration tests', () => {
 
     const Component = ({ amount }: { amount: number }) => {
       const { executeOperation } = useFleurContext()
-      const { count } = useStore([CounterStore], getStore => ({
+      const { count } = useStore(getStore => ({
         count: getCount(getStore),
       }))
 
