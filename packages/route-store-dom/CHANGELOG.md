@@ -1,3 +1,7 @@
+### 2.2.0
+
+- [#160] Upgrade minimum required `@fleur/fleur` version to 3.0.0 and follow API changes
+
 ### 2.1.1
 
 - Update deps
