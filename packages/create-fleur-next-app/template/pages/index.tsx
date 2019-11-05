@@ -8,7 +8,7 @@ import { NextPage } from 'next'
 const Index: NextPage = ({}) => {
   const { executeOperation } = useFleurContext()
 
-  const { count } = useStore([CounterStore], getStore => ({
+  const { count } = useStore(getStore => ({
     count: getStore(CounterStore).state.count,
   }))
 

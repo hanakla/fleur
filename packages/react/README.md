@@ -16,7 +16,7 @@ import { increaseOp } from './operations'
 export const AppRoot = props => {
   const context = useFleurContext()
 
-  const { count } = useStore([CountStore], getStore => ({
+  const { count } = useStore(getStore => ({
     count: getStore(CountStore).getCount(),
   }))
 
