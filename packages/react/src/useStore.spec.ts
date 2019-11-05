@@ -1,9 +1,9 @@
 import Fleur, {
   action,
-  listen,
   operation,
-  Store,
   AppContext,
+  reducerStore,
+  selector,
 } from '@fleur/fleur'
 import * as React from 'react'
 import { renderHook, act } from '@testing-library/react-hooks'
@@ -21,19 +21,11 @@ describe('useStore', () => {
   })
 
   // Store
-  const TestStore = class extends Store<{ count: number }> {
-    public static storeName = 'TestStore'
+  const TestStore = reducerStore<{ count: number }>('TestStore', () => ({
+    count: 10,
+  })).listen(ident, (draft, { increase }) => (draft.count += increase))
 
-    public state = { count: 10 }
-
-    get count() {
-      return this.state.count
-    }
-
-    private increase = listen(ident, payload => {
-      this.updateWith(d => (d.count += payload.increase))
-    })
-  }
+  const Test2Store = reducerStore('Test2Store', () => ({}))
 
   // App
   const app = new Fleur({ stores: [TestStore] })
@@ -43,12 +35,16 @@ describe('useStore', () => {
       React.createElement(FleurContext, { value: context }, children)
   }
 
+  // selectors
+  const getTest2 = selector(getState => getState(Test2Store) && null)
+  const getDeep = selector([getTest2], ([]) => [])
+
   it('Should map stores to states', async () => {
     const context = app.createContext()
     const { result, rerender, unmount } = renderHook(
       () =>
         useStore(getStore => ({
-          count: getStore(TestStore).count,
+          count: getStore(TestStore).state.count,
         })),
       { wrapper: wrapperFactory(context) },
     )

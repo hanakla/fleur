@@ -31,7 +31,7 @@ describe('benchmark', () => {
     }
 
     const Component = () => {
-      const { count } = useStore([TestStore], getStore => ({
+      const { count } = useStore(getStore => ({
         count: getStore(TestStore).count,
       }))
 
@@ -88,7 +88,7 @@ describe('benchmark', () => {
     )
 
     const Component = () => {
-      const { sum } = useStore(stores, getStore => ({
+      const { sum } = useStore(getStore => ({
         sum: stores.reduce((accum, s) => accum + getStore(s).count, 0),
       }))
 
