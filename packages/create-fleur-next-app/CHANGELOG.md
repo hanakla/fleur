@@ -1,6 +1,6 @@
 ### 0.3.0
 
-- [#160] Bump up Fleur version to 3.0.0 and follow API changes
+- [#160] Bump up `@fleur/react` version to 3.0.0 and follow API changes
 
 ## 0.2.0
 
