@@ -22,7 +22,7 @@
     "typescript": "3.6.4"
   },
   "dependencies": {
-    "immer": "^4.0.0",
+    "immer": "^5.0.0",
     "invariant": "^2.2.4"
   },
   "sideEffects": false
