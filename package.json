@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "bili": "4.8.1",
     "cross-env": "6.0.3",
     "husky": "3.0.9",
     "lint-staged": "9.4.2",

@@ -1,25 +1,23 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./src",
-        "target": "es2015",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "strictNullChecks": true,
-        "forceConsistentCasingInFileNames": true,
-        "lib": [
-            "es2015",
-            "es2016",
-            "es2017",
-            "dom"
-        ],
-        "outDir": "dist",
-    },
-    "exclude": [
-        "src/**/*.spec.ts",
-        "test_lib/"
-    ]
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "declaration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2015", "es2016", "es2017", "dom"],
+    "importHelpers": false,
+    "noEmitHelpers": false,
+    "outDir": "dist"
+  },
+  "files": ["src/index.ts"],
+  "exclude": ["src/**/*.spec.ts", "test_lib/"]
 }

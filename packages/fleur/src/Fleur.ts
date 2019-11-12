@@ -1,4 +1,4 @@
-import * as invariant from 'invariant'
+import invariant from 'invariant'
 
 import { AppContext } from './AppContext'
 import { StoreClass } from './Store'
