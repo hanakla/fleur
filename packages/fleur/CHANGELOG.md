@@ -1,3 +1,8 @@
+### 1.3.0
+
+- [#177](https://github.com/ra-gg/fleur/pull/177/files) Add ESM build
+- [#177](https://github.com/ra-gg/fleur/pull/177/files) Expose `Operation` and `OperationArgs` type
+
 ### 1.2.3
 
 - [#124](https://github.com/ra-gg/fleur/pull/124) Update immer from 3.2.0 to 4.0.0

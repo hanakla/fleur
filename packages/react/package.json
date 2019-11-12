@@ -1,14 +1,15 @@
 {
   "name": "@fleur/react",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "repository": "https://github.com/ra-gg/fleur/tree/master/packages/react",
-  "main": "lib/index.js",
-  "types": "typings/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "author": "ragg<ragg.devpr@gmail.com>",
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "prepublishOnly": "rm -rf ./{lib,typings} \n tsc --emitDeclarationOnly --declaration --outDir ./typings \n tsc --outDir lib"
+    "prepublishOnly": "rm -rf ./dist && tsc --emitDeclarationOnly --declaration --outDir ./dist && bili"
   },
   "peerDependencies": {
     "@fleur/fleur": ">= 1.0.0",
@@ -30,7 +31,9 @@
     "react-dom": "16.9.0",
     "react-test-renderer": "16.11.0",
     "request-promise": "4.2.4",
+    "rollup-plugin-typescript2": "0.25.2",
     "ts-jest": "24.1.0",
+    "tslib": "1.10.0",
     "typescript": "3.6.4"
   },
   "sideEffects": false

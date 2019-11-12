@@ -1,16 +1,22 @@
+### 3.1.0
+
+- [#177](https://github.com/ra-gg/fleur/pull/177/files) Add ESM build
+
 ### 3.0.0
 
 #### Feature
 
 - [#160](https://github.com/ra-gg/fleur/pull/160) `useStore` and `connectToStores` no longer need to specify listening Store on first argument.
   Now automaticaly listening store retrieved via `getStore` (includes via selector)
-  
+
   ```typescript
-  // new 
+  // new
   const { count } = useStore(getStore => ({ count: getCount(getStore) }))
-  
+
   // past
-  const { count } = useStore([CounterStore], getStore => ({ count: getCount(getStore) }))
+  const { count } = useStore([CounterStore], getStore => ({
+    count: getCount(getStore),
+  }))
   ```
 
 ### 2.0.0
