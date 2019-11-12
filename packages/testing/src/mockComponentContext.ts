@@ -1,4 +1,4 @@
-import { Operation, OperationArgs } from '@fleur/fleur/typings/Operations'
+import { Operation, OperationArgs } from '@fleur/fleur'
 import { MockStore } from './mockStore'
 import { MockContextBase } from './MockContextBase'
 import { mockStoreContext } from './mockStoreContext'
