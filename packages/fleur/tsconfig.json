@@ -4,7 +4,6 @@
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",
-    "declaration": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,

@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "prepublishOnly": "rm -rf ./dist && bili"
+    "prepublishOnly": "rm -rf ./dist && tsc --emitDeclarationOnly --declaration --outDir ./dist && bili"
   },
   "peerDependencies": {
     "@fleur/fleur": ">= 1.0.0",

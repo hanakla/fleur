@@ -8,7 +8,7 @@
   "author": "Ragg<ragg.devpr@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "rm -rf ./dist && bili",
+    "prepublishOnly": "rm -rf ./dist && tsc --emitDeclarationOnly --declaration --outDir ./dist && bili",
     "test": "jest --verbose"
   },
   "devDependencies": {

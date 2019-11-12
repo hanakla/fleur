@@ -4,7 +4,6 @@
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",
-    "declaration": true,
     "jsx": "react",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -15,6 +14,6 @@
     "lib": ["dom", "es2015", "es2016", "es2017"],
     "outDir": "dist"
   },
-  "files": ["./src/index.ts"],
+  "files": ["src/index.ts"],
   "exclude": ["node_modules"]
 }
