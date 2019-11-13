@@ -22,10 +22,12 @@ export const asyncAction = <
   Started = unknown,
   Done = unknown,
   Failed = unknown
->() => ({
-  started: action<Started>('.started'),
-  done: action<Done>('.done'),
-  failed: action<Failed>('.failed'),
+>(
+  name: string = '',
+) => ({
+  started: action<Started>(name + '.started'),
+  done: action<Done>(name + '.done'),
+  failed: action<Failed>(name + '.failed'),
 })
 
 export function actions<T extends ActionMap>(
