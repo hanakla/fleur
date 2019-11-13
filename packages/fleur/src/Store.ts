@@ -1,7 +1,6 @@
 import immer, { Draft } from 'immer'
 
 import { ActionIdentifier, ExtractPayloadType } from './Action'
-import Emitter from './Emitter'
 import { StoreContext } from './StoreContext'
 
 export interface StoreClass<T = {}> {
@@ -13,6 +12,8 @@ export type ExtractStateOfStoreClass<
   T extends StoreClass<any>
 > = T extends StoreClass<infer R> ? R : never
 
+type Listener = () => void
+
 export const listen = <A extends ActionIdentifier<any>>(
   action: A,
   producer: (payload: ExtractPayloadType<A>) => void,
@@ -22,18 +23,26 @@ export const listen = <A extends ActionIdentifier<any>>(
   producer,
 })
 
-export interface StoreEvents {
-  onChange: void
-}
-
-export class Store<T = any> extends Emitter<StoreEvents> {
+export class Store<T = any> {
   public static storeName: string = ''
 
   public state: T
   protected requestId: number | null = null
+  private listeners: Listener[] = []
 
-  constructor(protected context: StoreContext) {
-    super()
+  constructor(protected context: StoreContext) {}
+
+  public on(listener: Listener) {
+    this.listeners.push(listener)
+  }
+
+  public off(listener: Listener) {
+    this.listeners = this.listeners.filter(l => l !== listener)
+  }
+
+  /** DO NOT USE THIS, It's internal method */
+  public _emit() {
+    this.listeners.forEach(listener => listener())
   }
 
   public rehydrate(state: any): void {
@@ -45,7 +54,7 @@ export class Store<T = any> extends Emitter<StoreEvents> {
   }
 
   public emitChange(): void {
-    this.emit('onChange', void 0)
+    this.context.enqueueToUpdate(this)
   }
 
   protected updateWith(producer: (draft: Draft<T>) => void): void {

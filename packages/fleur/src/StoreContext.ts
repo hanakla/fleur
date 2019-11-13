@@ -25,7 +25,7 @@ export class StoreContext {
     if (this.updateQueue.size <= 0) return
 
     this.batch(() => {
-      this.updateQueue.forEach(store => store.emit('onChange', void 0))
+      this.updateQueue.forEach(store => store._emit())
       this.updateQueue.clear()
     })
   }
