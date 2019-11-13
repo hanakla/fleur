@@ -1,4 +1,4 @@
-import { action, actions, ActionsOf } from './Action'
+import { action, asyncAction, actions, ActionsOf } from './Action'
 
 describe('Action', () => {
   it('Should named action', () => {
@@ -13,6 +13,16 @@ describe('Action', () => {
     })
     expect(a.increment.name).toBe('Counter/increment')
     expect(a.decrement.name).toBe('Counter/decrement')
+  })
+
+  it('Should expose async actions', () => {
+    const a = actions('Async', {
+      fetch: asyncAction<{}, {}, {}>(),
+    })
+
+    expect(a.fetch.started.name).toBe('Async/fetch.started')
+    expect(a.fetch.done.name).toBe('Async/fetch.done')
+    expect(a.fetch.failed.name).toBe('Async/fetch.failed')
   })
 
   it('ActionsOf use case', () => {

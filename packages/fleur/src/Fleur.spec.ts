@@ -1,4 +1,4 @@
-import { action } from './Action'
+import { action, asyncAction } from './Action'
 import { Fleur } from './Fleur'
 import { operations } from './Operations'
 import { Store, listen, reducerStore } from './Store'
@@ -8,6 +8,7 @@ describe('Fleur', () => {
     const actions = {
       increase: action<{ increase: number }>('increase'),
       decrease: action<{ decrease: number }>('decrease'),
+      fetch: asyncAction<{}, {}, {}>(),
     }
 
     class TestStore extends Store {
@@ -23,7 +24,10 @@ describe('Fleur', () => {
       })
     }
 
-    const Test2Store = reducerStore('Test2Store', () => ({ count: 0 }))
+    const Test2Store = reducerStore('Test2Store', () => ({
+      count: 0,
+      fetching: false,
+    }))
       .listen(
         actions.increase,
         (draft, payload) => (draft.count += payload.increase),
@@ -32,6 +36,8 @@ describe('Fleur', () => {
         actions.decrease,
         (draft, payload) => (draft.count -= payload.decrease),
       )
+      .listen(actions.fetch.started, draft => (draft.fetching = true))
+      .listen(actions.fetch.done, draft => (draft.fetching = false))
 
     const app = new Fleur({
       stores: [TestStore, Test2Store],
@@ -46,6 +52,12 @@ describe('Fleur', () => {
       decrease({ dispatch }, decrease: number) {
         dispatch(actions.decrease, { decrease })
       },
+      fetchData({ dispatch }) {
+        dispatch(actions.fetch.started, {})
+        requestAnimationFrame(() => {
+          dispatch(actions.fetch.done, {})
+        })
+      },
     })
 
     await ctx.executeOperation(ops.increase, 10)
@@ -55,5 +67,10 @@ describe('Fleur', () => {
     await ctx.executeOperation(ops.decrease, 20)
     expect(ctx.getStore(TestStore).state.count).toBe(-10)
     expect(ctx.getStore(Test2Store).state.count).toBe(-10)
+
+    await ctx.executeOperation(ops.fetchData)
+    expect(ctx.getStore(Test2Store).state.fetching).toBe(true)
+    await new Promise(r => requestAnimationFrame(r))
+    expect(ctx.getStore(Test2Store).state.fetching).toBe(false)
   })
 })
