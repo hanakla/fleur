@@ -3,7 +3,7 @@ export { Fleur as default } from './Fleur' // Aliasing for editor intellisense
 export { Store, reducerStore, StoreClass, listen } from './Store'
 export { StoreContext } from './StoreContext'
 export { OperationContext } from './OperationContext'
-export { action, actions, ActionsOf } from './Action'
+export { action, asyncAction, actions, ActionsOf } from './Action'
 export { AppContext, StoreGetter } from './AppContext'
 export { ComponentContext } from './ComponentContext'
 export { operations, operation, Operation, OperationArgs } from './Operations'
