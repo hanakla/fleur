@@ -5,6 +5,20 @@
 
 ## Example
 
+
+```tsx
+// bootstrap
+import Fleur from '@fleur/fleur'
+import { FleurContext } from '@fleur/react'
+import AppRoot from './components/AppRoot'
+import CountStore from './stores/CountStore'
+
+const app = new Fleur({ stores: [ CountStore ] })
+
+const context = app.createContext()
+ReactDOM.render(<FleurContext value={context}><AppRoot /></FluerContext>, {})
+```
+
 Hooks style:
 
 ```tsx
@@ -45,7 +59,7 @@ import CountStore from './stores/CountStore'
 
 export default withFleurContext(
   // pick Props from Store with `connectToStores()`
-  connectToStores([CountStore], getStore => ({
+  connectToStores(getStore => ({
     count: getStore(CountStore).getCount(),
   }))(
     class AppRoot extends React.PureComponent {
@@ -60,16 +74,4 @@ export default withFleurContext(
     },
   ),
 )
-```
-
-```tsx
-import Fleur from '@fleur/fleur'
-import { FleurContext } from '@fleur/react'
-import AppRoot from './components/AppRoot'
-import CountStore from './stores/CountStore'
-
-const app = new Fleur({ stores: [ CountStore ] })
-
-const context = app.createContext()
-ReactDOM.render(<FleurContext value={context}><AppRoot /></FluerContext>, {})
 ```
