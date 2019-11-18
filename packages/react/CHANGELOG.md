@@ -1,12 +1,12 @@
 ### 3.1.0
 
-- [#177](https://github.com/ra-gg/fleur/pull/177/files) Add ESM build
+- [#177](https://github.com/fleur-js/fleur/pull/177/files) Add ESM build
 
 ### 3.0.0
 
 #### Feature
 
-- [#160](https://github.com/ra-gg/fleur/pull/160) `useStore` and `connectToStores` no longer need to specify listening Store on first argument.
+- [#160](https://github.com/fleur-js/fleur/pull/160) `useStore` and `connectToStores` no longer need to specify listening Store on first argument.
   Now automaticaly listening store retrieved via `getStore` (includes via selector)
 
   ```typescript
@@ -28,8 +28,8 @@
 
 ### 1.0.1
 
-- [#84](https://github.com/ra-gg/fleur/pull/84) Upgrade React to 16.9
-- [#84](https://github.com/ra-gg/fleur/pull/84) Migrate `react-hooks-testing-library` to `@testing-library/react-hooks`
+- [#84](https://github.com/fleur-js/fleur/pull/84) Upgrade React to 16.9
+- [#84](https://github.com/fleur-js/fleur/pull/84) Migrate `react-hooks-testing-library` to `@testing-library/react-hooks`
 
 ### 1.0.0
 
