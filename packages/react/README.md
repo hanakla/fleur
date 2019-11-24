@@ -1,10 +1,9 @@
-# 🌼 @fleur/react ⚛️ [![npm version](https://badge.fury.io/js/%40fleur%2Freact.svg)](https://www.npmjs.com/package/@fleur/react) [![travis](https://travis-ci.org/ra-gg/fleur.svg?branch=master)](https://travis-ci.org/ra-gg/fleur) ![minifiedgzip](https://badgen.net/bundlephobia/minzip/@fleur/react)
+# 🌼 @fleur/react ⚛️ [![npm version](https://badge.fury.io/js/%40fleur%2Freact.svg)](https://www.npmjs.com/package/@fleur/react) [![travis](https://travis-ci.org/fleur-js/fleur.svg?branch=master)](https://travis-ci.org/fleur-js/fleur) ![minifiedgzip](https://badgen.net/bundlephobia/minzip/@fleur/react)
 
 `@fleur/fleur` connector for React.
 (See [`@fleur/fleur`](https://www.npmjs.com/package/@fleur/fleur) for basic usage.)
 
 ## Example
-
 
 ```tsx
 // bootstrap

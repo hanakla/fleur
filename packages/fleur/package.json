@@ -1,7 +1,7 @@
 {
   "name": "@fleur/fleur",
   "version": "1.3.0",
-  "homepage": "https://github.com/ra-gg/fleur/tree/master/packages/fleur",
+  "homepage": "https://github.com/fleur-js/fleur/tree/master/packages/fleur",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",

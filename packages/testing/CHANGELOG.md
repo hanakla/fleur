@@ -1,11 +1,11 @@
 ### 2.0.0
 
-- [#104](https://github.com/ra-gg/fleur/pull/104) Support component testing.  
-  See [this file](https://github.com/ra-gg/fleur/tree/master/packages/testing/src/index.spec.tsx#L85) for example.
+- [#104](https://github.com/fleur-js/fleur/pull/104) Support component testing.
+  See [this file](https://github.com/fleur-js/fleur/tree/master/packages/testing/src/index.spec.tsx#L85) for example.
 
 #### Breaking changes
 
-- [#104](https://github.com/ra-gg/fleur/pull/104) `mockOperationContext()` is now privated.  
+- [#104](https://github.com/fleur-js/fleur/pull/104) `mockOperationContext()` is now privated.
   Use `mockFleurContext().mockOperationContext()` instead.
 
 ### 1.1.2
