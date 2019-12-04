@@ -12,7 +12,7 @@ Object {
       "enqueueToUpdate": [Function],
       "updateQueue": Set {},
     },
-    "listeners": Object {},
+    "listeners": Array [],
     "requestId": null,
     "state": Object {
       "state": "mock",
