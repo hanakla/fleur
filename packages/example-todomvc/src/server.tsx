@@ -66,3 +66,10 @@ server.use(async (req, res) => {
 
 console.log('Running server in :3000')
 server.listen(3000)
+
+setInterval(() => {
+  console.log(
+    `Heap: ${Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) /
+      100} MB`,
+  )
+}, 1000)
