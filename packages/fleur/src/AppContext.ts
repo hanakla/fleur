@@ -43,6 +43,7 @@ export class AppContext {
       executeOperation: this.executeOperation,
       dispatch: this.dispatch,
       getStore: this.getStore,
+      getDep: this.getDep,
     }
 
     this.componentContext = {
@@ -50,6 +51,7 @@ export class AppContext {
         this.executeOperation(op, ...args)
       },
       getStore: this.getStore,
+      getDep: this.getDep,
     }
   }
 
@@ -75,6 +77,10 @@ export class AppContext {
         .get(StoreClass.storeName)!
         .rehydrate(state.stores[StoreClass.storeName])
     })
+  }
+
+  public getDep<T>(obj: T): T {
+    return obj
   }
 
   public getStore(storeName: string): Store

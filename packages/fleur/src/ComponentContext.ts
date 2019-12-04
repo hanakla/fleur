@@ -8,4 +8,6 @@ export interface ComponentContext {
   ): void | undefined
 
   getStore<T extends StoreClass>(StoreClass: T): InstanceType<T>
+
+  getDep<T>(o: T): T
 }

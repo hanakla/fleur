@@ -13,10 +13,16 @@ describe('@fleur/testing integration tests', () => {
   //
   const increaseAction = action<{ amount: number }>()
 
+  // API.ts
+  const postIncrease = async (amount: number): Promise<number> => {
+    throw new Error('postIncrease must be mock')
+  }
+
   //
   // Operations.ts
   //
-  const increaseOp = operation(({ dispatch }, amount: number) => {
+  const increaseOp = operation(async ({ dispatch, getDep }, amount: number) => {
+    await getDep(postIncrease)(1)
     dispatch(increaseAction, { amount })
   })
 
@@ -52,7 +58,10 @@ describe('@fleur/testing integration tests', () => {
     const baseContext = mockContext.mockOperationContext()
 
     it('Should dispatch increaseAction with given amount', async () => {
-      const context = baseContext.derive()
+      const context = baseContext.derive(({ injectDep }) => {
+        injectDep(postIncrease, async (amount: number) => amount)
+      })
+
       await context.executeOperation(increaseOp, 10)
 
       expect(context.dispatchs[0]).toMatchObject({
