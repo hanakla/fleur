@@ -1,5 +1,4 @@
 import { ActionIdentifier } from './Action'
-import Emitter from './Emitter'
 
 export interface Events {
   dispatch: {
@@ -8,14 +7,17 @@ export interface Events {
   }
 }
 
+type Listener = (action: Events['dispatch']) => void
+
 export default class Dispatcher {
-  private emitter = new Emitter<Events>()
+  private listeners: Listener[] = []
 
   public listen(listener: (action: Events['dispatch']) => void) {
-    this.emitter.on('dispatch', listener)
+    this.listeners.push(listener)
   }
 
   public dispatch<P>(type: ActionIdentifier<P>, payload: P) {
-    this.emitter.emit('dispatch', { type, payload })
+    const action = { type, payload }
+    this.listeners.forEach(listener => listener(action))
   }
 }

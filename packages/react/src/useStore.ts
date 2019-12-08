@@ -52,7 +52,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     <T extends StoreClass>(storeClass: T) => {
       if (!referencedStores.current.has(storeClass)) {
         referencedStores.current.add(storeClass)
-        isMounted.current && getStore(storeClass).on('onChange', changeHandler)
+        isMounted.current && getStore(storeClass).on(changeHandler)
       }
 
       return getStore(storeClass)
@@ -63,12 +63,12 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   useIsomorphicLayoutEffect(() => {
     isMounted.current = true
     referencedStores.current.forEach(store => {
-      getStore(store).on('onChange', changeHandler)
+      getStore(store).on(changeHandler)
     })
 
     return () => {
       referencedStores.current.forEach(store => {
-        getStore(store).off('onChange', changeHandler)
+        getStore(store).off(changeHandler)
       })
     }
   }, [changeHandler])

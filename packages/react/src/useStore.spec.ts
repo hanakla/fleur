@@ -73,27 +73,27 @@ describe('useStore', () => {
       { wrapper: wrapperFactory(context) },
     )
 
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
-    expect(context.getStore(Test2Store).listeners.onChange).toHaveLength(1)
+    expect(context.getStore(TestStore)['listeners']).toHaveLength(1)
+    expect(context.getStore(Test2Store)['listeners']).toHaveLength(1)
 
     unmount()
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(0)
-    expect(context.getStore(Test2Store).listeners.onChange).toHaveLength(0)
+    expect(context.getStore(TestStore)['listeners']).toHaveLength(0)
+    expect(context.getStore(Test2Store)['listeners']).toHaveLength(0)
   })
 
   it('Should unlisten on component unmounted', async () => {
     const context = app.createContext()
     const { unmount } = renderHook(
       () => {
-        useStore(getStore => ({ count: getStore(TestStore).count }))
+        useStore(getStore => ({ count: getStore(TestStore).state.count }))
       },
       {
         wrapper: wrapperFactory(context),
       },
     )
 
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(1)
+    expect(context.getStore(TestStore)['listeners']).toHaveLength(1)
     unmount()
-    expect(context.getStore(TestStore).listeners.onChange).toHaveLength(0)
+    expect(context.getStore(TestStore)['listeners']).toHaveLength(0)
   })
 })

@@ -20,7 +20,7 @@ interface Props extends ContextProp {
 }
 
 export default withFleurContext(
-  connectToStores([TodoStore], getStore => {
+  connectToStores(getStore => {
     const { currentRoute } = getStore(Router)
 
     return {

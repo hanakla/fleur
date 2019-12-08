@@ -30,8 +30,6 @@ export class AppContext {
 
   constructor(private app: Fleur) {
     this.dispatcher = new Dispatcher()
-    this.operationContext = new OperationContext(this)
-    this.componentContext = new ComponentContext(this)
     this.storeContext = new StoreContext()
     this.app.stores.forEach(StoreClass => {
       this.initializeStore(StoreClass)
@@ -40,6 +38,19 @@ export class AppContext {
     this.getStore = this.getStore.bind(this)
     this.executeOperation = this.executeOperation.bind(this)
     this.dispatch = this.dispatch.bind(this)
+
+    this.operationContext = {
+      executeOperation: this.executeOperation,
+      dispatch: this.dispatch,
+      getStore: this.getStore,
+    }
+
+    this.componentContext = {
+      executeOperation: (op, ...args) => {
+        this.executeOperation(op, ...args)
+      },
+      getStore: this.getStore,
+    }
   }
 
   public dehydrate(): HydrateState {

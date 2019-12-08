@@ -1,16 +1,12 @@
 import React from 'react'
-import {
-  withFleurContext,
-  ContextProp,
-  connectToStores,
-  StoreGetter,
-} from '@fleur/react'
+import { withFleurContext, ContextProp, connectToStores } from '@fleur/react'
 import { ENTER_KEY, ESCAPE_KEY } from '../domain/constants'
 import { TodoEntity } from '../domain/Todo/types'
 import classNames from 'classnames'
 import { TodoOps } from '../domain/Todo/operations'
 import { setEditTodoId } from '../domain/App/operations'
 import { AppStore } from '../domain/App/store'
+import { StoreGetter } from '@fleur/fleur'
 
 interface Props extends ContextProp {
   todo: TodoEntity
@@ -129,5 +125,5 @@ class TodoItemComponent extends React.Component<Props, State> {
 }
 
 export const TodoItem = withFleurContext(
-  connectToStores([AppStore], mapStoresToProps)(TodoItemComponent),
+  connectToStores(mapStoresToProps)(TodoItemComponent),
 )

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "webpack --mode development && ts-node ./src/server.tsx"
+    "start": "webpack --mode development && ts-node ./src/server.tsx",
+    "bench": "ab -n 10000 -c 100 http://localhost:3000/"
   },
   "dependencies": {
     "@fleur/fleur": "*",
