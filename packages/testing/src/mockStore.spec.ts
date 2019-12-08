@@ -10,6 +10,25 @@ describe('mockStoreContext', () => {
     }
 
     const actual = mockStore(SomeStore, { state: 'mock' })
-    expect(actual).toMatchSnapshot()
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "StoreClass": [Function],
+        "name": "SomeStore",
+        "store": SomeStore {
+          "context": StoreContext {
+            "animateId": -1,
+            "batch": [Function],
+            "dispatchChange": [Function],
+            "enqueueToUpdate": [Function],
+            "updateQueue": Set {},
+          },
+          "listeners": Array [],
+          "requestId": null,
+          "state": Object {
+            "state": "mock",
+          },
+        },
+      }
+    `)
   })
 })

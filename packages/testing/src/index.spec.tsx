@@ -15,6 +15,7 @@ describe('@fleur/testing integration tests', () => {
 
   // API.ts
   const postIncrease = async (amount: number): Promise<number> => {
+    amount
     throw new Error('postIncrease must be mock')
   }
 

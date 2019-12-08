@@ -45,6 +45,7 @@ describe('mockComponentContext', () => {
   //
   const baseContext = mockComponentContext({
     stores: [mockStore(CountStore, { count: 100 })],
+    mocks: new Map(),
   })
 
   it('Example', async () => {
