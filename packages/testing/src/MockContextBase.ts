@@ -56,7 +56,7 @@ export class MockContextBase {
     return store.store as any
   }
 
-  public getDep = <T>(source: T): T => {
+  public depend = <T>(source: T): T => {
     return this.mockObjects.has(source) ? this.mockObjects.get(source) : source
   }
 

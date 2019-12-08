@@ -15,10 +15,10 @@ describe('MockContextBase', () => {
       injectDep(realObj, mockObj)
     })
 
-    expect(baseContext.getDep(realObj)).toMatchObject({ real: true })
-    expect(derivedContext.getDep(realObj)).toMatchObject({ real: false })
-    expect(baseContext.getDep(realFunction)()).toBe('Hello')
-    expect(derivedContext.getDep(realFunction)()).toBe('HELL')
+    expect(baseContext.depend(realObj)).toMatchObject({ real: true })
+    expect(derivedContext.depend(realObj)).toMatchObject({ real: false })
+    expect(baseContext.depend(realFunction)()).toBe('Hello')
+    expect(derivedContext.depend(realFunction)()).toBe('HELL')
   })
 
   it('Should patch state to Stores', () => {

@@ -74,4 +74,33 @@ describe('AppContext', () => {
       expect(context.getStore('SomeStore')).toBeInstanceOf(SomeStore)
     })
   })
+
+  describe('depend', () => {
+    const app = new Fleur()
+
+    it('Should depend returns passing object', () => {
+      const source = () => {}
+      const context = app.createContext()
+      expect(context.depend(source)).toBe(source)
+    })
+  })
+
+  describe('Child contexts', () => {
+    const app = new Fleur()
+
+    it('Should passing methods', () => {
+      const context = app.createContext()
+      const { componentContext, operationContext } = context
+
+      // It's wrapped for ignoring return value
+      expect(componentContext.executeOperation).toBeInstanceOf(Function)
+      expect(componentContext.getStore).toBe(context.getStore)
+      expect(componentContext.depend).toBe(context.depend)
+
+      expect(operationContext.executeOperation).toBe(context.executeOperation)
+      expect(operationContext.getStore).toBe(context.getStore)
+      expect(operationContext.dispatch).toBe(context.dispatch)
+      expect(operationContext.depend).toBe(context.depend)
+    })
+  })
 })

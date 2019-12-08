@@ -9,5 +9,5 @@ export interface ComponentContext {
 
   getStore<T extends StoreClass>(StoreClass: T): InstanceType<T>
 
-  getDep<T>(o: T): T
+  depend<T>(o: T): T
 }

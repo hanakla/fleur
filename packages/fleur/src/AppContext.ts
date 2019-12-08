@@ -38,12 +38,13 @@ export class AppContext {
     this.getStore = this.getStore.bind(this)
     this.executeOperation = this.executeOperation.bind(this)
     this.dispatch = this.dispatch.bind(this)
+    this.depend = this.depend.bind(this)
 
     this.operationContext = {
       executeOperation: this.executeOperation,
       dispatch: this.dispatch,
       getStore: this.getStore,
-      getDep: this.getDep,
+      depend: this.depend,
     }
 
     this.componentContext = {
@@ -51,7 +52,7 @@ export class AppContext {
         this.executeOperation(op, ...args)
       },
       getStore: this.getStore,
-      getDep: this.getDep,
+      depend: this.depend,
     }
   }
 
@@ -79,7 +80,7 @@ export class AppContext {
     })
   }
 
-  public getDep<T>(obj: T): T {
+  public depend<T>(obj: T): T {
     return obj
   }
 

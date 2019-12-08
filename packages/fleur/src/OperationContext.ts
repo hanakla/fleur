@@ -16,5 +16,5 @@ export interface OperationContext {
     payload: ExtractPayloadType<AI>,
   ): void
 
-  getDep<T>(o: T): T
+  depend<T>(o: T): T
 }
