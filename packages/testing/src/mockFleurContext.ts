@@ -5,14 +5,26 @@ import { MockContextBase } from './MockContextBase'
 
 export class MockedFleurContext extends MockContextBase {
   public mockComponentContext() {
-    return mockComponentContext({ stores: this.mockStores })
+    return mockComponentContext({
+      stores: this.mockStores,
+      mocks: this.mockObjects,
+    })
   }
 
   public mockOperationContext() {
-    return mockOperationContext({ stores: this.mockStores })
+    return mockOperationContext({
+      stores: this.mockStores,
+      mocks: this.mockObjects,
+    })
   }
 }
 
-export const mockFleurContext = ({ stores }: { stores: MockStore[] }) => {
-  return new MockedFleurContext({ stores })
+export const mockFleurContext = ({
+  stores,
+  mocks = new Map(),
+}: {
+  stores: MockStore[]
+  mocks?: Map<any, any>
+}) => {
+  return new MockedFleurContext({ stores, mocks })
 }

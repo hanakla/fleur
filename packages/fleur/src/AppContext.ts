@@ -38,11 +38,13 @@ export class AppContext {
     this.getStore = this.getStore.bind(this)
     this.executeOperation = this.executeOperation.bind(this)
     this.dispatch = this.dispatch.bind(this)
+    this.depend = this.depend.bind(this)
 
     this.operationContext = {
       executeOperation: this.executeOperation,
       dispatch: this.dispatch,
       getStore: this.getStore,
+      depend: this.depend,
     }
 
     this.componentContext = {
@@ -50,6 +52,7 @@ export class AppContext {
         this.executeOperation(op, ...args)
       },
       getStore: this.getStore,
+      depend: this.depend,
     }
   }
 
@@ -75,6 +78,10 @@ export class AppContext {
         .get(StoreClass.storeName)!
         .rehydrate(state.stores[StoreClass.storeName])
     })
+  }
+
+  public depend<T>(obj: T): T {
+    return obj
   }
 
   public getStore(storeName: string): Store

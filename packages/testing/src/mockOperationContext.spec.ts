@@ -46,6 +46,7 @@ describe('mockOperationContext', () => {
   //
   const baseContext = mockOperationContext({
     stores: [mockStore(CountStore, { count: 100 })],
+    mocks: new Map(),
   })
 
   it('Example', async () => {
@@ -63,21 +64,5 @@ describe('mockOperationContext', () => {
     })
 
     expect(context.getStore(CountStore).count).toBe(100)
-  })
-
-  it('Derive store state', () => {
-    const derivedContext = baseContext.derive(({ deriveStore }) => {
-      deriveStore(CountStore, state => {
-        state.count = 10
-      })
-    })
-
-    const derivedContext2 = baseContext.derive(({ deriveStore }) => {
-      deriveStore(CountStore, { count: 20 })
-    })
-
-    expect(baseContext.getStore(CountStore).count).toBe(100)
-    expect(derivedContext.getStore(CountStore).count).toBe(10)
-    expect(derivedContext2.getStore(CountStore).count).toBe(20)
   })
 })

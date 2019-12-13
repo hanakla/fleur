@@ -18,8 +18,10 @@ export class MockedComponentContext extends MockContextBase {
 
 export const mockComponentContext = ({
   stores,
+  mocks,
 }: {
-  stores: MockStore[]
+  stores: readonly MockStore[]
+  mocks: Map<any, any>
 }): MockedComponentContext => {
-  return new MockedComponentContext({ stores })
+  return new MockedComponentContext({ stores, mocks })
 }

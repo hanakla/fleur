@@ -18,12 +18,13 @@ export const withFleurContext = <Props extends ContextProp>(
   Component: React.ComponentType<Props>,
 ): React.ComponentType<WithRef<ExcludeContextProp<Props>>> => {
   return React.forwardRef((props: any, ref) => {
-    const { getStore, executeOperation } = useFleurContext()
+    const { getStore, executeOperation, depend } = useFleurContext()
 
     return React.createElement(Component, {
       ref,
       ...props,
       getStore,
+      depend,
       executeOperation,
     })
   })

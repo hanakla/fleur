@@ -18,6 +18,7 @@ describe('withFleurContext', () => {
     )
 
     expect(root.findByType(Receiver).props).toEqual({
+      depend: context.componentContext.depend,
       executeOperation: context.componentContext.executeOperation,
       getStore: context.componentContext.getStore,
       prop: 'prop string',

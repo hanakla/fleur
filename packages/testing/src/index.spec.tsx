@@ -3,7 +3,7 @@ import { action, operation, reducerStore, selector } from '@fleur/fleur'
 import { useStore, useFleurContext } from '@fleur/react'
 import { mockFleurContext } from './mockFleurContext'
 import { mockStore } from './mockStore'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import { TestingFleurContext } from './TestingFleurContext'
 
@@ -13,10 +13,17 @@ describe('@fleur/testing integration tests', () => {
   //
   const increaseAction = action<{ amount: number }>()
 
+  // API.ts
+  const postIncrease = async (amount: number): Promise<number> => {
+    amount
+    throw new Error('postIncrease must be mock')
+  }
+
   //
   // Operations.ts
   //
-  const increaseOp = operation(({ dispatch }, amount: number) => {
+  const increaseOp = operation(async ({ dispatch, depend }, amount: number) => {
+    await depend(postIncrease)(1)
     dispatch(increaseAction, { amount })
   })
 
@@ -52,7 +59,10 @@ describe('@fleur/testing integration tests', () => {
     const baseContext = mockContext.mockOperationContext()
 
     it('Should dispatch increaseAction with given amount', async () => {
-      const context = baseContext.derive()
+      const context = baseContext.derive(({ injectDep }) => {
+        injectDep(postIncrease, async (amount: number) => amount)
+      })
+
       await context.executeOperation(increaseOp, 10)
 
       expect(context.dispatchs[0]).toMatchObject({
@@ -84,9 +94,10 @@ describe('@fleur/testing integration tests', () => {
   //
   describe('Component test', () => {
     const baseContext = mockContext.mockComponentContext()
+    const dependFunc = async () => {}
 
     const Component = ({ amount }: { amount: number }) => {
-      const { executeOperation } = useFleurContext()
+      const { executeOperation, depend } = useFleurContext()
       const { count } = useStore(getStore => ({
         count: getCount(getStore),
       }))
@@ -94,6 +105,10 @@ describe('@fleur/testing integration tests', () => {
       const handleClick = useCallback(() => {
         executeOperation(increaseOp, amount)
       }, [amount])
+
+      useEffect(() => {
+        depend(dependFunc)()
+      }, [])
 
       return (
         <button type="button" onClick={handleClick} data-testid="button">
@@ -134,6 +149,22 @@ describe('@fleur/testing integration tests', () => {
         op: increaseOp,
         args: [20],
       })
+    })
+
+    it('Should mock depend() object', () => {
+      const spy = jest.fn()
+
+      const context = baseContext.derive(({ injectDep }) => {
+        injectDep(dependFunc, spy)
+      })
+
+      render(
+        <TestingFleurContext value={context}>
+          <Component amount={0} />
+        </TestingFleurContext>,
+      )
+
+      expect(spy).toBeCalledTimes(1)
     })
   })
 })
