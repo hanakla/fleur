@@ -1,4 +1,4 @@
-import { action, asyncAction, actions, ActionsOf } from './Action'
+import { action, actions, ActionsOf } from './Action'
 
 describe('Action', () => {
   it('Should named action', () => {
@@ -17,7 +17,7 @@ describe('Action', () => {
 
   it('Should expose async actions', () => {
     const a = actions('Async', {
-      fetch: asyncAction<{}, {}, {}>(),
+      fetch: action.async<{}, {}, {}>(),
     })
 
     expect(a.fetch.started.name).toBe('Async/fetch.started')

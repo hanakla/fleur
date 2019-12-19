@@ -18,11 +18,7 @@ export const action = <P>(name?: string): ActionIdentifier<P> => {
   return identifier
 }
 
-export const asyncAction = <
-  Started = unknown,
-  Done = unknown,
-  Failed = unknown
->(
+action.async = <Started = unknown, Done = unknown, Failed = unknown>(
   name: string = '',
 ) => ({
   started: action<Started>(name + '.started'),
