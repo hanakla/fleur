@@ -4,7 +4,7 @@ import { MockStore } from './mockStore'
 import { MockContextBase } from './MockContextBase'
 
 export class MockOperationContext extends MockContextBase {
-  public dispatchs: { action: ActionIdentifier<any>; payload: any }[] = []
+  public dispatches: { action: ActionIdentifier<any>; payload: any }[] = []
 
   public executeOperation = async <O extends Operation>(
     operation: O,
@@ -17,7 +17,7 @@ export class MockOperationContext extends MockContextBase {
     action: AI,
     payload: ReturnType<AI>,
   ): void => {
-    this.dispatchs.push({ action, payload })
+    this.dispatches.push({ action, payload })
     this.mockStores.forEach(({ store }) => {
       Object.keys(store)
         .filter(
