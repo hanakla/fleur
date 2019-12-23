@@ -4,6 +4,8 @@ export type ActionsOf<
   T extends { [action: string]: ActionIdentifier<any> }
 > = T[keyof T]
 
+type ActionMap = { [key: string]: ActionIdentifier<any> | ActionMap }
+
 export const action = <P>(name?: string): ActionIdentifier<P> => {
   const identifier = ((): P => {
     throw new Error('Do not call ActionIdentifier as function')
@@ -16,15 +18,28 @@ export const action = <P>(name?: string): ActionIdentifier<P> => {
   return identifier
 }
 
-export function actions<T extends { [key: string]: ActionIdentifier<any> }>(
+action.async = <Started = unknown, Done = unknown, Failed = unknown>(
+  name: string = '',
+) => ({
+  started: action<Started>(name + '.started'),
+  done: action<Done>(name + '.done'),
+  failed: action<Failed>(name + '.failed'),
+})
+
+export function actions<T extends ActionMap>(
   namePrefix: string,
-  actions: T,
+  actionMap: T,
+  separator: string = '/',
 ): T {
-  Object.keys(actions).forEach(key => {
-    Object.defineProperty(actions[key], 'name', {
-      value: `${namePrefix}/${key}`,
-    })
+  Object.keys(actionMap).forEach(key => {
+    if (typeof actionMap[key] === 'function') {
+      Object.defineProperty(actionMap[key], 'name', {
+        value: `${namePrefix}${separator}${key}`,
+      })
+    } else {
+      actions(`${namePrefix}${separator}${key}`, actionMap[key], '.')
+    }
   })
 
-  return actions
+  return actionMap
 }
