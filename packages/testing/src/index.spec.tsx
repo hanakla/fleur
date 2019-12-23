@@ -1,11 +1,5 @@
 import * as React from 'react'
-import {
-  action,
-  operation,
-  reducerStore,
-  selector,
-  OperationContext,
-} from '@fleur/fleur'
+import { action, operation, reducerStore, selector } from '@fleur/fleur'
 import { useStore, useFleurContext } from '@fleur/react'
 import { mockFleurContext } from './mockFleurContext'
 import { mockStore } from './mockStore'
