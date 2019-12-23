@@ -83,7 +83,11 @@ describe('Sever side rendering', () => {
   it('test', async () => {
     try {
       // First request
-      const res1 = await request.get('http://localhost:31987/?amount=10')
+      const [res1, res2] = await Promise.all([
+        request.get('http://localhost:31987/?amount=10'),
+        request.get('http://localhost:31987/?amount=20'),
+      ])
+
       const dehydratedState1 = JSON.parse(
         cheerio
           .load(res1)('script')
@@ -97,7 +101,6 @@ describe('Sever side rendering', () => {
       expect(clientContext1.getStore('TestStore').state).toEqual({ count: 10 })
 
       // Another request
-      const res2 = await request.get('http://localhost:31987/?amount=20')
       const dehydratedState2 = JSON.parse(
         cheerio
           .load(res2)('script')
