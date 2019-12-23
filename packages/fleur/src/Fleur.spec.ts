@@ -1,4 +1,4 @@
-import { action, asyncAction } from './Action'
+import { action } from './Action'
 import { Fleur } from './Fleur'
 import { operations } from './Operations'
 import { Store, listen, reducerStore } from './Store'
@@ -8,7 +8,7 @@ describe('Fleur', () => {
     const actions = {
       increase: action<{ increase: number }>('increase'),
       decrease: action<{ decrease: number }>('decrease'),
-      fetch: asyncAction<{}, {}, {}>(),
+      fetch: action.async<{}, {}, {}>(),
     }
 
     class TestStore extends Store {
