@@ -1,3 +1,7 @@
+### 3.2.0
+
+- [#182](https://github.com/fleur-js/fleur/pull/182) Implement dependency injection
+
 ### 3.1.0
 
 - [#177](https://github.com/fleur-js/fleur/pull/177/files) Add ESM build
