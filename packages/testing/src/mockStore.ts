@@ -13,7 +13,7 @@ export interface MockStore {
 
 export const mockStore = <S extends StoreClass>(
   StoreClass: S,
-  partialState: Partial<ExtractStateType<S>>,
+  partialState: Partial<ExtractStateType<S>> = {},
 ): MockStore => {
   const store = new StoreClass(mockStoreContext())
   Object.assign((store as any).state, partialState)
