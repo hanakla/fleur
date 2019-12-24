@@ -1,3 +1,5 @@
+![ogp](./github-assets/ogp.png)
+
 # 🌼 Fleur 🌼 [![travis](https://travis-ci.org/fleur-js/fleur.svg?branch=master)](https://travis-ci.org/fleur-js/fleur)
 
 An Fully-typed Flux framework inspired by Fluxible.  
