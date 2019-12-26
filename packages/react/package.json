@@ -34,7 +34,7 @@
     "rollup-plugin-typescript2": "0.25.2",
     "ts-jest": "24.1.0",
     "tslib": "1.10.0",
-    "typescript": "3.6.4"
+    "typescript": "3.7.4"
   },
   "sideEffects": false
 }
