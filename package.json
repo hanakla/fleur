@@ -14,7 +14,7 @@
     "prettier": "1.19.1",
     "tslint": "5.20.0",
     "tslint-config-prettier": "1.18.0",
-    "typescript": "3.6.4",
+    "typescript": "3.7.4",
     "wsrun": "5.0.2"
   },
   "husky": {
