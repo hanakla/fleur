@@ -2,7 +2,7 @@ import { default as NextApp } from 'next/app'
 import { FleurContext } from '@fleur/react'
 import { useMemo } from 'react'
 import { bindFleurContext } from '@fleur/next'
-import { createContext } from '../domains/app'
+import { createContext } from '../domains'
 
 export const getOrCreateFleurContext = (state: any = null) => {
   const isServer = typeof window === 'undefined'
