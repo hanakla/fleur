@@ -1,7 +1,11 @@
 import { default as NextApp } from 'next/app'
 import { FleurContext } from '@fleur/react'
 import { useMemo } from 'react'
-import { bindFleurContext } from '@fleur/next'
+import {
+  bindFleurContext,
+  serializeContext,
+  deserializeContext,
+} from '@fleur/next'
 import { createContext } from '../domains'
 
 export const getOrCreateFleurContext = (state: any = null) => {
@@ -18,7 +22,7 @@ export const getOrCreateFleurContext = (state: any = null) => {
 export const appWithFleurContext = (App: typeof NextApp) => {
   const Comp = ({ __FLEUR_STATE__, ...props }: any) => {
     const fleurContext = useMemo(
-      () => getOrCreateFleurContext(__FLEUR_STATE__),
+      () => getOrCreateFleurContext(deserializeContext(__FLEUR_STATE__)),
       [],
     )
 
@@ -37,7 +41,7 @@ export const appWithFleurContext = (App: typeof NextApp) => {
 
     return {
       ...appProps,
-      __FLEUR_STATE__: fleurContext.dehydrate(),
+      __FLEUR_STATE__: serializeContext(fleurContext),
     }
   }
 
