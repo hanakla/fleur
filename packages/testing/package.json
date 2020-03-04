@@ -17,7 +17,7 @@
     "@fleur/react": "*",
     "@testing-library/react": "9.4.0",
     "jest": "24.9.0",
-    "ts-jest": "24.1.0",
+    "ts-jest": "25.2.1",
     "typescript": "3.7.4"
   },
   "dependencies": {
