@@ -15,7 +15,7 @@
     "@types/invariant": "2.2.31",
     "husky": "3.1.0",
     "jest": "24.9.0",
-    "lint-staged": "9.5.0",
+    "lint-staged": "10.0.8",
     "prettier": "1.19.1",
     "rollup-plugin-typescript2": "0.25.2",
     "ts-jest": "25.2.1",
