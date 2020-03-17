@@ -20,7 +20,7 @@
     "rollup-plugin-typescript2": "0.25.2",
     "ts-jest": "25.2.1",
     "tslib": "1.10.0",
-    "tslint": "5.20.1",
+    "tslint": "6.1.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.7.4"
   },
