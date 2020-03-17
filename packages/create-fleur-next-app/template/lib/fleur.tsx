@@ -1,10 +1,11 @@
-import { default as NextApp } from 'next/app'
+import NextApp, { AppContext, AppProps, AppInitialProps } from 'next/app'
 import { FleurContext } from '@fleur/react'
 import { useMemo } from 'react'
 import {
   bindFleurContext,
   serializeContext,
   deserializeContext,
+  PageContext,
 } from '@fleur/next'
 import { createContext } from '../domains'
 
@@ -19,7 +20,18 @@ export const getOrCreateFleurContext = (state: any = null) => {
   return context
 }
 
-export const appWithFleurContext = (App: typeof NextApp) => {
+export type FleurAppContext = AppContext & { ctx: PageContext }
+
+declare class ClassApp extends NextApp {
+  static getInitialProps(appContext: FleurAppContext): Promise<AppInitialProps>
+}
+
+interface FunctionApp {
+  (props: AppProps): JSX.Element
+  getInitialProps(appContext: FleurAppContext): Promise<AppInitialProps>
+}
+
+export const appWithFleurContext = (App: typeof ClassApp | FunctionApp) => {
   const Comp = ({ __FLEUR_STATE__, ...props }: any) => {
     const fleurContext = useMemo(
       () => getOrCreateFleurContext(deserializeContext(__FLEUR_STATE__)),
