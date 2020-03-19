@@ -38,7 +38,10 @@ export const withReduxDevTools = (
   })
 
   const dispatch = context.dispatch.bind(context)
-  context.dispatch = (actionIdentifier: any, payload: any) => {
+  context.dispatch = context.operationContext.dispatch = (
+    actionIdentifier: any,
+    payload: any,
+  ) => {
     dispatch(actionIdentifier, payload)
     devTools.send(
       { type: actionIdentifier.name, payload },
