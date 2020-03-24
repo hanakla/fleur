@@ -40,19 +40,32 @@ export class AppContext {
     this.dispatch = this.dispatch.bind(this)
     this.depend = this.depend.bind(this)
 
+    const self = this
     this.operationContext = {
-      executeOperation: this.executeOperation,
-      dispatch: this.dispatch,
-      getStore: this.getStore,
-      depend: this.depend,
+      get executeOperation() {
+        return self.executeOperation
+      },
+      get dispatch() {
+        return self.dispatch
+      },
+      get getStore() {
+        return self.getStore
+      },
+      get depend() {
+        return self.depend
+      },
     }
 
     this.componentContext = {
       executeOperation: (op, ...args) => {
-        this.executeOperation(op, ...args)
+        self.executeOperation(op, ...args)
       },
-      getStore: this.getStore,
-      depend: this.depend,
+      get getStore() {
+        return self.getStore
+      },
+      get depend() {
+        return self.depend
+      },
     }
   }
 
