@@ -1,3 +1,7 @@
+### 0.4.1
+
+- [#238](https://github.com/fleur-js/fleur/pull/238) Update to use function custom `App` in create-fleur-next-app template
+
 ### 0.4.0
 
 - [#213](https://github.com/fleur-js/fleur/pull/213) Shrink `domains` example
