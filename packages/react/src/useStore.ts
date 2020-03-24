@@ -42,6 +42,7 @@ const is = (x: any, y: any): boolean => {
   }
 }
 
+/** Shallow equality check */
 const isEqual = (prev: any, next: any) => {
   if (is(prev, next)) return true
   if (typeof prev !== typeof next) return false
@@ -79,15 +80,16 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   const { getStore } = useFleurContext()
   const referencedStores = useRef<Set<StoreClass>>(new Set())
   const isMounted = useRef<boolean>(false)
-  const latestSelectedState = useRef<ReturnType<Mapper>>()
-
   const [, rerender] = useReducer(s => s + 1, 0)
 
   const getStoreInspector = useCallback(
     <T extends StoreClass>(storeClass: T) => {
       if (!referencedStores.current.has(storeClass)) {
         referencedStores.current.add(storeClass)
-        isMounted.current && getStore(storeClass).on(changeHandler)
+
+        if (isMounted.current) {
+          getStore(storeClass).on(bouncedHandleStoreMutation)
+        }
       }
 
       return getStore(storeClass)
@@ -95,36 +97,38 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     [getStore],
   )
 
-  const selectedState = mapStoresToProps(getStoreInspector)
+  const latestState = useRef<ReturnType<Mapper> | null>(null)
 
-  const mapStoresToState = useCallback(() => {
-    console.log(latestSelectedState.current!, selectedState)
-    if (checkEquality(latestSelectedState.current!, selectedState)) return
+  if (!latestState.current) {
+    latestState.current = mapStoresToProps(getStoreInspector)
+  }
+
+  const handleStoreMutation = useCallback(() => {
+    const nextState = mapStoresToProps(getStoreInspector)
+    if (checkEquality(latestState.current!, nextState)) return
+    latestState.current = nextState
     rerender({})
-  }, [selectedState])
+  }, [mapStoresToProps, getStoreInspector])
 
-  const changeHandler = useCallback(
+  const bouncedHandleStoreMutation = useCallback(
     // Synchronous mapping on SSR
-    canUseDOM ? bounce(mapStoresToState, 10) : mapStoresToState,
-    [mapStoresToState],
+    canUseDOM ? bounce(handleStoreMutation, 10) : handleStoreMutation,
+    [handleStoreMutation],
   )
 
   useIsomorphicLayoutEffect(() => {
-    latestSelectedState.current = selectedState
-  })
-
-  useIsomorphicLayoutEffect(() => {
     isMounted.current = true
+
     referencedStores.current.forEach(store => {
-      getStore(store).on(changeHandler)
+      getStore(store).on(bouncedHandleStoreMutation)
     })
 
     return () => {
       referencedStores.current.forEach(store => {
-        getStore(store).off(changeHandler)
+        getStore(store).off(bouncedHandleStoreMutation)
       })
     }
-  }, [changeHandler])
+  }, [bouncedHandleStoreMutation])
 
-  return selectedState
+  return latestState.current as ReturnType<Mapper>
 }
