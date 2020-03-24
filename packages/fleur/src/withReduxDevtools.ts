@@ -37,11 +37,8 @@ export const withReduxDevTools = (
     context.stores.forEach(store => store.emitChange())
   })
 
-  const dispatch = context.dispatch.bind(context)
-  context.dispatch = context.operationContext.dispatch = (
-    actionIdentifier: any,
-    payload: any,
-  ) => {
+  const dispatch = context.dispatch
+  context.dispatch = (actionIdentifier: any, payload: any) => {
     dispatch(actionIdentifier, payload)
     devTools.send(
       { type: actionIdentifier.name, payload },
