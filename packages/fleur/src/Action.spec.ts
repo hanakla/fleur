@@ -15,6 +15,16 @@ describe('Action', () => {
     expect(a.decrement.name).toBe('Counter/decrement')
   })
 
+  it('Should expose async actions', () => {
+    const a = actions('Async', {
+      fetch: action.async<{}, {}, {}>(),
+    })
+
+    expect(a.fetch.started.name).toBe('Async/fetch.started')
+    expect(a.fetch.done.name).toBe('Async/fetch.done')
+    expect(a.fetch.failed.name).toBe('Async/fetch.failed')
+  })
+
   it('ActionsOf use case', () => {
     const a = actions('Counter', {
       increment: action<{ increase: number }>(),

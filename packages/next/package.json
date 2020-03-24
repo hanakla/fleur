@@ -1,23 +1,25 @@
 {
   "name": "@fleur/next",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/fleur-js/fleur/tree/master/packages/next",
   "main": "lib/index.js",
-  "types": "typings/index.d.ts",
+  "types": "lib/index.d.ts",
   "author": "Mitsuka Hanakura<ragg.devpr@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib"
+    "prepublishOnly": "rm -rf ./lib && tsc --emitDeclarationOnly --declaration --outDir ./lib && tsc --outDir lib"
   },
   "devDependencies": {
-    "next": "^9.1.3",
-    "typescript": "3.6.4"
+    "@types/serialize-javascript": "1.5.0",
+    "next": "^9.1.6",
+    "typescript": "3.7.4"
   },
   "peerDependencies": {
-    "next": "^9.1.3"
+    "next": "^9.1.6"
   },
   "dependencies": {
-    "@fleur/fleur": "^1.1.0"
+    "@fleur/fleur": "^1.1.0",
+    "serialize-javascript": "2.1.2"
   },
   "sideEffects": false
 }

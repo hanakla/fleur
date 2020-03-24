@@ -89,6 +89,7 @@ export const AppRoot = () => {
 //
 import Fleur from '@fleur/fleur'
 import { navigateOp, createRouterContext } from '@fleur/route-store-dom'
+import serialize from 'serialize-javascript';
 import express from 'express'
 import { Router } from './Router'
 import { AppRoot } from './components/AppRoot'
@@ -114,7 +115,7 @@ server.use(async (req, res) => {
     </FleurContext>,
   )
 
-  const rehydrated = JSON.stringify(context.dehydrate())
+  const rehydrated = serialize(context.dehydrate())
 
   res.status(routerContext.status)
   res
@@ -131,7 +132,7 @@ import { FleurContext } from '@fleur/react'
 import { RouterProvider, restoreNavigateOp } from '@fleur/route-store-dom'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const state = JSON.parse(document.querySelector('#state').innerHTML)
+  const state = window.__dehydrated
   const context = app.createContext()
 
   context.rehydrate(state)

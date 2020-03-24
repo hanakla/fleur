@@ -1,33 +1,40 @@
 import React, { useEffect } from 'react'
 import { useStore, useFleurContext } from '@fleur/react'
 import { PageContext } from '@fleur/next'
-import { CounterStore } from '../domains/Counter/store'
-import { CounterOps } from '../domains/Counter/ops'
 import { NextPage } from 'next'
+import { AppSelectors, AppOps } from '../domains/App'
 
 const Index: NextPage = ({}) => {
   const { executeOperation } = useFleurContext()
 
-  const { count } = useStore(getStore => ({
-    count: getStore(CounterStore).state.count,
+  const { count, accessDate } = useStore(getStore => ({
+    count: AppSelectors.getCount(getStore),
+    accessDate: AppSelectors.getAccessDate(getStore),
   }))
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      executeOperation(CounterOps.increment)
+      executeOperation(AppOps.increment)
     }, 100)
 
     return () => clearInterval(intervalId)
   }, [])
 
-  return <div>Count: {count}</div>
+  return (
+    <div>
+      Count: {count}
+      <br />
+      Access date: {accessDate.toLocaleDateString()}
+    </div>
+  )
 }
 
 Index.getInitialProps = async (ctx: PageContext) => {
-  await ctx.executeOperation(
-    CounterOps.asyncIncrement,
-    (Math.random() * 1000) | 0,
-  )
+  await Promise.all([
+    ctx.executeOperation(AppOps.asyncIncrement, (Math.random() * 1000) | 0),
+    ctx.executeOperation(AppOps.settleAccessDate),
+  ])
+
   return {}
 }
 

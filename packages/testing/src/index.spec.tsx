@@ -65,7 +65,7 @@ describe('@fleur/testing integration tests', () => {
 
       await context.executeOperation(increaseOp, 10)
 
-      expect(context.dispatchs[0]).toMatchObject({
+      expect(context.dispatches[0]).toMatchObject({
         action: increaseAction,
         payload: { amount: 10 },
       })

@@ -1,3 +1,9 @@
+### 3.0.0
+
+- [#182](https://github.com/fleur-js/fleur/pull/182) Implement dependency injection
+- [#184](https://github.com/fleur-js/fleur/pull/184) Rename `operationContext.{dispatchs => dispatches}` (Fix typo)
+- [#185](https://github.com/fleur-js/fleur/pull/185) Optionalize second argument of `mockStore()`
+
 ### 2.0.0
 
 - [#104](https://github.com/fleur-js/fleur/pull/104) Support component testing.

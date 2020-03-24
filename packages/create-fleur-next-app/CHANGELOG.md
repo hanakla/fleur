@@ -1,3 +1,12 @@
+### 0.4.1
+
+- [#238](https://github.com/fleur-js/fleur/pull/238) Update to use function custom `App` in create-fleur-next-app template
+
+### 0.4.0
+
+- [#213](https://github.com/fleur-js/fleur/pull/213) Shrink `domains` example
+- [#213](https://github.com/fleur-js/fleur/pull/213) Using new `@fleur/next` API for serializing SSR state
+
 ### 0.3.0
 
 - [#160](https://github.com/fleur-js/fleur/pull/160) Bump up `@fleur/react` version to 3.0.0 and follow API changes

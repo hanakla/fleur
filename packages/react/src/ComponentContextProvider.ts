@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ComponentContext, AppContext } from '@fleur/fleur'
-import { unstable_batchedUpdates } from 'react-dom'
+import { unstable_batchedUpdates } from './utils/batchedUpdates'
 
 // `null as any` - ignore out of context case
 const ComponentContextProvider = React.createContext<ComponentContext>(

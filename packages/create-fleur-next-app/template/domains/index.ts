@@ -1,8 +1,8 @@
 import Fleur from '@fleur/fleur'
-import { CounterStore } from './Counter/store'
+import { AppStore } from './App'
 
 const app = new Fleur({
-  stores: [CounterStore],
+  stores: [AppStore],
 })
 
 export const createContext = () => app.createContext()

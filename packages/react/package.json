@@ -1,6 +1,6 @@
 {
   "name": "@fleur/react",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "repository": "https://github.com/fleur-js/fleur/tree/master/packages/react",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -9,7 +9,12 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "prepublishOnly": "rm -rf ./dist && tsc --emitDeclarationOnly --declaration --outDir ./dist && bili"
+    "clean-dist": "rm -rf ./dist",
+    "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build:esm": "bili",
+    "build:commonjs": "tsc -m commonjs --outDir ./dist",
+    "build": "yarn build:declarations && yarn build:esm && yarn build:commonjs",
+    "prepublishOnly": "yarn clean-dist && yarn build"
   },
   "peerDependencies": {
     "@fleur/fleur": ">= 1.0.0",
@@ -18,23 +23,23 @@
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^3.2.1",
-    "@types/cheerio": "0.22.13",
+    "@types/cheerio": "0.22.16",
     "@types/express": "4.17.1",
-    "@types/jest": "24.0.22",
+    "@types/jest": "25.1.4",
     "@types/react": "16.9.11",
-    "@types/react-test-renderer": "16.9.1",
-    "@types/request-promise": "4.1.44",
+    "@types/react-test-renderer": "16.9.2",
+    "@types/request-promise": "4.1.45",
     "cheerio": "1.0.0-rc.3",
     "express": "4.17.1",
-    "jest": "24.9.0",
-    "react": "16.11.0",
+    "jest": "25.1.0",
+    "react": "16.13.0",
     "react-dom": "16.9.0",
-    "react-test-renderer": "16.11.0",
+    "react-test-renderer": "16.12.0",
     "request-promise": "4.2.4",
     "rollup-plugin-typescript2": "0.25.2",
-    "ts-jest": "24.1.0",
-    "tslib": "1.10.0",
-    "typescript": "3.6.4"
+    "ts-jest": "25.2.1",
+    "tslib": "1.11.1",
+    "typescript": "3.7.4"
   },
   "sideEffects": false
 }

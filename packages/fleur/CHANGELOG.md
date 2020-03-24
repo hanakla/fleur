@@ -1,3 +1,14 @@
+### 1.4.1
+
+- Fix uncaptured dispatch in `withReduxDevtools`
+  - [#240](https://github.com/fleur-js/fleur/pull/240) Fix withReduxDevTools bug
+  - [#249](https://github.com/fleur-js/fleur/pull/249) Fix un-proxied context methods
+
+### 1.4.0
+
+- [#178](https://github.com/fleur-js/fleur/pull/178) Add `action.async()` action group creator function
+- [#182](https://github.com/fleur-js/fleur/pull/182) Implement dependency injection
+
 ### 1.3.0
 
 - [#177](https://github.com/fleur-js/fleur/pull/177/files) Add ESM build
