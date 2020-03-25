@@ -11,6 +11,8 @@ import { renderHook, act } from '@testing-library/react-hooks'
 
 import { useStore } from './useStore'
 import { FleurContext } from './ComponentContextProvider'
+import { create } from 'react-test-renderer'
+import { createElementWithContext } from './createElementWithContext'
 
 describe('useStore', () => {
   // Action Identifier
