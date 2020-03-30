@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@fleur/fleur": "^1.1.0",
-    "serialize-javascript": "2.1.2"
+    "serialize-javascript": "3.0.0"
   },
   "sideEffects": false
 }
