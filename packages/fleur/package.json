@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/invariant": "2.2.31",
-    "husky": "3.1.0",
+    "husky": "4.2.3",
     "jest": "25.1.0",
     "lint-staged": "10.0.8",
     "prettier": "1.19.1",
