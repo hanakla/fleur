@@ -5,7 +5,7 @@ export class StoreContext {
   private animateId: number = -1
   private batch = (cb: () => void) => cb()
 
-  public injectBatch(batch: () => void) {
+  public injectBatch(batch: (cb: () => void) => void) {
     this.batch = batch
   }
 
