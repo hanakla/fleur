@@ -24,7 +24,7 @@ const FleurContext = ({
   } = {},
 }: {
   value: AppContext
-  children: React.ReactNode
+  children?: React.ReactNode
   options?: ComponentContextOption
 }) => {
   React.useMemo(() => {
