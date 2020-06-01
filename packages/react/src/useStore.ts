@@ -6,7 +6,7 @@ import {
   useRef,
 } from 'react'
 import { StoreClass, StoreGetter } from '@fleur/fleur'
-import { useFleurContext, useInternalFleurContext } from './useFleurContext'
+import { useInternalFleurContext } from './useFleurContext'
 
 type StoreToPropMapper = (getStore: StoreGetter) => any
 
