@@ -1,3 +1,7 @@
+### 3.3.0
+
+- [#183](https://github.com/fleur-js/fleur/pull/183) Reduce re-rendering when selected value if not changed
+
 ### 3.2.0
 
 - [#182](https://github.com/fleur-js/fleur/pull/182) Implement dependency injection
