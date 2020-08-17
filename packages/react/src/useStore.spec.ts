@@ -10,7 +10,7 @@ import * as React from 'react'
 import { renderHook, act } from '@testing-library/react-hooks'
 
 import { useStore } from './useStore'
-import { FleurContext } from './ComponentContextProvider'
+import { FleurContext } from './ComponentReactContext'
 
 describe('useStore', () => {
   // Action Identifier
