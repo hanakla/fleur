@@ -118,7 +118,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     canUseDOM && !synchronousUpdate
       ? bounce(handleStoreMutation, 10)
       : handleStoreMutation,
-    [handleStoreMutation],
+    [handleStoreMutation, synchronousUpdate],
   )
 
   useIsomorphicLayoutEffect(() => {
