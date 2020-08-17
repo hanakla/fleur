@@ -72,10 +72,12 @@ const isEqual = (prev: any, next: any) => {
 
 export const useStore = <Mapper extends StoreToPropMapper>(
   mapStoresToProps: Mapper,
-  checkEquality: (
-    prev: Readonly<ReturnType<Mapper>>,
-    next: Readonly<ReturnType<Mapper>>,
-  ) => boolean = isEqual,
+  checkEquality:
+    | ((
+        prev: Readonly<ReturnType<Mapper>>,
+        next: Readonly<ReturnType<Mapper>>,
+      ) => boolean)
+    | null = isEqual,
 ): ReturnType<Mapper> => {
   const { getStore } = useFleurContext()
   const referencedStores = useRef<Set<StoreClass>>(new Set())
@@ -105,7 +107,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
 
   const handleStoreMutation = useCallback(() => {
     const nextState = mapStoresToProps(getStoreInspector)
-    if (checkEquality(latestState.current!, nextState)) return
+    if (checkEquality?.(latestState.current!, nextState)) return
     latestState.current = nextState
     rerender({})
   }, [mapStoresToProps, getStoreInspector])
