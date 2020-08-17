@@ -2,12 +2,12 @@ import * as React from 'react'
 import { ComponentContext, AppContext } from '@fleur/fleur'
 import { unstable_batchedUpdates } from './utils/batchedUpdates'
 
-interface ComponentContextOption {
+export interface ComponentContextOption {
   batchedUpdate?: (cb: () => void) => void
   synchronousUpdate?: boolean
 }
 
-interface ContextValue {
+export interface ContextValue {
   synchronousUpdate: boolean
   context: ComponentContext
 }
