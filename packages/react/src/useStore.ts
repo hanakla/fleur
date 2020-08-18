@@ -110,7 +110,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     const nextState = mapStoresToProps(getStoreInspector)
     if (checkEquality(latestState.current!, nextState)) return
     latestState.current = nextState
-    rerender({})
+    rerender()
   }, [mapStoresToProps, getStoreInspector])
 
   const bouncedHandleStoreMutation = useCallback(
