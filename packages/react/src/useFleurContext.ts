@@ -1,8 +1,12 @@
 import { useContext } from 'react'
 
-import { ComponentContextProvider } from './ComponentContextProvider'
+import { ComponentReactContext } from './ComponentReactContext'
 
 export const useFleurContext = () => {
-  const context = useContext(ComponentContextProvider)
+  const { context } = useContext(ComponentReactContext)
   return context
+}
+
+export const useInternalFleurContext = () => {
+  return useContext(ComponentReactContext)
 }

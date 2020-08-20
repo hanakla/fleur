@@ -12,6 +12,7 @@ export const TestingFleurContext = ({
 }) => {
   return createElement(FleurContext, {
     value: (value as unknown) as AppContext,
+    options: { batchedUpdate: () => {}, synchronousUpdate: true },
     children,
   })
 }

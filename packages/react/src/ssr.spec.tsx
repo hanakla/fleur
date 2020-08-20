@@ -9,7 +9,7 @@ import * as ReactDOMServer from 'react-dom/server'
 import * as request from 'request-promise'
 
 import { useStore } from './useStore'
-import { FleurContext } from './ComponentContextProvider'
+import { FleurContext } from './ComponentReactContext'
 
 describe('Sever side rendering', () => {
   let server: Server

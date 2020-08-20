@@ -54,18 +54,26 @@ describe('connectToStores', () => {
 
   it('Should map stores to props', async () => {
     const context = app.createContext()
-    const element = createElementWithContext(context, Connected, {})
+    const element = createElementWithContext(context, Connected, {
+      anotherProp: 'anotherProp',
+    })
     const { root, update, unmount } = create(element)
     update(element)
 
-    expect(root.findByType(Receiver).props).toEqual({ count: 10 })
+    expect(root.findByType(Receiver).props).toMatchObject({
+      anotherProp: 'anotherProp',
+      count: 10,
+    })
 
     await act(async () => {
       await context.executeOperation(op)
       await new Promise(r => requestAnimationFrame(r))
     })
 
-    expect(root.findByType(Receiver).props).toEqual({ count: 20 })
+    expect(root.findByType(Receiver).props).toEqual({
+      anotherProp: 'anotherProp',
+      count: 20,
+    })
     unmount()
   })
 })

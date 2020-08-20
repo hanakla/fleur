@@ -6,7 +6,7 @@ import {
   useRef,
 } from 'react'
 import { StoreClass, StoreGetter } from '@fleur/fleur'
-import { useFleurContext } from './useFleurContext'
+import { useInternalFleurContext } from './useFleurContext'
 
 type StoreToPropMapper = (getStore: StoreGetter) => any
 
@@ -79,7 +79,10 @@ export const useStore = <Mapper extends StoreToPropMapper>(
       ) => boolean)
     | null = isEqual,
 ): ReturnType<Mapper> => {
-  const { getStore } = useFleurContext()
+  const {
+    context: { getStore },
+    synchronousUpdate,
+  } = useInternalFleurContext()
   const referencedStores = useRef<Set<StoreClass>>(new Set())
   const isMounted = useRef<boolean>(false)
   const [, rerender] = useReducer(s => s + 1, 0)
@@ -109,13 +112,15 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     const nextState = mapStoresToProps(getStoreInspector)
     if (checkEquality?.(latestState.current!, nextState)) return
     latestState.current = nextState
-    rerender({})
+    rerender()
   }, [mapStoresToProps, getStoreInspector])
 
   const bouncedHandleStoreMutation = useCallback(
     // Synchronous mapping on SSR
-    canUseDOM ? bounce(handleStoreMutation, 10) : handleStoreMutation,
-    [handleStoreMutation],
+    canUseDOM && !synchronousUpdate
+      ? bounce(handleStoreMutation, 10)
+      : handleStoreMutation,
+    [handleStoreMutation, synchronousUpdate],
   )
 
   useIsomorphicLayoutEffect(() => {
