@@ -37,7 +37,11 @@ export function actions<T extends ActionMap>(
         value: `${namePrefix}${separator}${key}`,
       })
     } else {
-      actions(`${namePrefix}${separator}${key}`, actionMap[key], '.')
+      actions(
+        `${namePrefix}${separator}${key}`,
+        actionMap[key] as ActionMap,
+        '.',
+      )
     }
   })
 

@@ -16,7 +16,7 @@ type ExcludeContextProp<P extends ContextProp> = Pick<
 
 export const withFleurContext = <Props extends ContextProp>(
   Component: React.ComponentType<Props>,
-): React.ComponentType<WithRef<ExcludeContextProp<Props>>> => {
+): React.ComponentType<ExcludeContextProp<WithRef<Props>>> => {
   return React.forwardRef((props: any, ref) => {
     const { getStore, executeOperation, depend } = useFleurContext()
 

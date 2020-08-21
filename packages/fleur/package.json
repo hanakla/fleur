@@ -22,7 +22,7 @@
     "tslib": "1.11.1",
     "tslint": "6.1.0",
     "tslint-config-prettier": "1.18.0",
-    "typescript": "3.7.4"
+    "typescript": "3.9.7"
   },
   "dependencies": {
     "immer": "^5.0.0",

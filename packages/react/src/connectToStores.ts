@@ -7,14 +7,14 @@ import { WithRef } from './WithRef'
 type StoreToPropMapper<P, T> = (getStore: StoreGetter, props: P) => T
 
 type ConnectedComponent<Props, MappedProps> = React.ComponentType<
-  WithRef<Pick<Props, Exclude<keyof Props, keyof MappedProps>>>
+  Pick<Props, Exclude<keyof Props, keyof MappedProps>> & {}
 >
 
 export const connectToStores = <Props, MappedProps = {}>(
   mapStoresToProps: StoreToPropMapper<Props, MappedProps>,
 ) => <ComponentProps extends object>(
   Component: React.ComponentType<ComponentProps>,
-): ConnectedComponent<ComponentProps, MappedProps> => {
+): ConnectedComponent<WithRef<ComponentProps>, MappedProps> => {
   return React.forwardRef((props: any, ref) => {
     const mappedProps = useStore(getStore => mapStoresToProps(getStore, props))
 
