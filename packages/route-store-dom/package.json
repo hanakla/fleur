@@ -24,7 +24,7 @@
   "devDependencies": {
     "@testing-library/react-hooks": "^3.2.1",
     "@types/history": "4.7.2",
-    "@types/invariant": "2.2.31",
+    "@types/invariant": "2.2.33",
     "@types/react-test-renderer": "16.9.2",
     "jest": "25.1.0",
     "react-test-renderer": "16.13.1",

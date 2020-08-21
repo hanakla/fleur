@@ -12,7 +12,7 @@
     "test": "jest --verbose"
   },
   "devDependencies": {
-    "@types/invariant": "2.2.31",
+    "@types/invariant": "2.2.33",
     "husky": "4.2.5",
     "jest": "25.1.0",
     "lint-staged": "10.0.8",
