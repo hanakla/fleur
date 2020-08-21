@@ -8,6 +8,7 @@ cache:
 
 node_js:
   - '10'
+  - '14'
 
 install:
   - npm i -g yarn
