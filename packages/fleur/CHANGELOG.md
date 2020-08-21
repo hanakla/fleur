@@ -1,3 +1,10 @@
+### 1.5.0
+
+- [#252](https://github.com/fleur-js/fleur/pull/252) Improved support for React renderers other than react-dom
+  - `FleurContext` now accepts `options` props
+    - `options.batchedUpdate: () => void` - batched update function defaults to `unstable_batchedUpdates` in `react-dom` or `react-native`
+    - `options.synchronousUpdate: boolean` - Enable un-batched synced update in Fleur's Store, defaults to `false`.
+
 ### 1.4.1
 
 - Fix uncaptured dispatch in `withReduxDevtools`
