@@ -1,6 +1,6 @@
 {
   "name": "@fleur/react",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "repository": "https://github.com/fleur-js/fleur/tree/master/packages/react",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

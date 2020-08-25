@@ -1,3 +1,8 @@
+### 4.0.0
+
+- [#183](https://github.com/fleur-js/fleur/pull/183) in v3.3.0 was breaking change for component update rule. So bump major version.
+- [#284](https://github.com/fleur-js/fleur/pull/284) Accept `null` in `useStore` at 2nd argument. It behaves always re-rendering each state update likes v3.2.0.
+
 ### 3.3.0
 
 - [#183](https://github.com/fleur-js/fleur/pull/183) Reduce re-rendering when selected value if not changed
