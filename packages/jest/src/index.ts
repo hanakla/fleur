@@ -1,4 +1,4 @@
-/// <reference path="./jest.d.ts" />
+/// <reference path="./jest.ts" />
 import * as matchers from './matchers'
 
 const jestExpect = (global as any).expect

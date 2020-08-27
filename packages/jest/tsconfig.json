@@ -14,5 +14,6 @@
     "jsx": "react",
     "outDir": "dist"
   },
+  "include": ["src/index.ts", "src/jest.ts"],
   "exclude": ["src/**/*.spec.ts", "test_lib/"]
 }
