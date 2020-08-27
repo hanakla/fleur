@@ -3,7 +3,7 @@ import { ActionIdentifier } from '@fleur/fleur'
 import { MockStore } from './mockStore'
 import { MockContextBase } from './MockContextBase'
 
-export class MockOperationContext extends MockContextBase {
+export class MockedOperationContext extends MockContextBase {
   public dispatches: { action: ActionIdentifier<any>; payload: any }[] = []
 
   public executeOperation = async <O extends Operation>(
@@ -39,6 +39,6 @@ export const mockOperationContext = ({
 }: {
   stores: readonly MockStore[]
   mocks: Map<any, any>
-}): MockOperationContext => {
-  return new MockOperationContext({ stores, mocks })
+}): MockedOperationContext => {
+  return new MockedOperationContext({ stores, mocks })
 }
