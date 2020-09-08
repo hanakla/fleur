@@ -16,6 +16,8 @@ export const withReduxDevTools = (
   context: AppContext,
   { enableTimeTravel = true }: Option = {},
 ): AppContext => {
+  // Ignore in SSR environment
+  if (typeof window === 'undefined') return context
   if (!(window as any).__REDUX_DEVTOOLS_EXTENSION__) return context
 
   const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect()
