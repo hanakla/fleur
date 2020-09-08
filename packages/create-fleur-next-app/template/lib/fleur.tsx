@@ -10,7 +10,8 @@ import {
 } from '@fleur/next'
 import { createContext } from '../domains'
 
-export type FleurNextAppContext = AppContext & { ctx: PageContext }
+type FleurNextAppContext = AppContext & { ctx: PageContext }
+export type { FleurNextAppContext as FleurAppContext }
 
 declare class ClassApp extends NextApp {
   static getInitialProps(
