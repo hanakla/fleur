@@ -1,3 +1,6 @@
+## 0.4.0
+- [#301](https://github.com/fleur-js/fleur/pull/301) `bindFleurContext` now returns appContext object
+
 ## 0.3.0
 
 - Update dependencies
