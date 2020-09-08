@@ -1,3 +1,7 @@
+### 1.6.0
+
+- [#301](https://github.com/fleur-js/fleur/pull/301) `withReduxDevTools()` now ignoring in Server-side 
+
 ### 1.5.0
 
 - [#252](https://github.com/fleur-js/fleur/pull/252) Improved support for React renderers other than react-dom

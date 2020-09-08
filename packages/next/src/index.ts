@@ -8,6 +8,12 @@ export interface PageContext extends NextPageContext {
   getStore: AppContext['getStore']
 }
 
+export interface FleurishNextAppContext extends NextAppContext {
+  executeOperation: AppContext['executeOperation']
+  getStore: AppContext['getStore']
+}
+
+/** Add `executeOperation` and `getStore` method in NextAppContext */
 export const bindFleurContext = (
   context: AppContext,
   nextContext: NextAppContext,
@@ -16,6 +22,8 @@ export const bindFleurContext = (
     context,
   )
   ;(nextContext.ctx as any).getStore = context.getStore.bind(context)
+
+  return nextContext as FleurishNextAppContext
 }
 
 export const serializeContext = (context: AppContext): string => {

@@ -1,6 +1,6 @@
 {
   "name": "@fleur/next",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "repository": "https://github.com/fleur-js/fleur/tree/master/packages/next",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -12,7 +12,7 @@
   "devDependencies": {
     "@types/serialize-javascript": "1.5.0",
     "next": "^9.5.2",
-    "typescript": "3.9.7"
+    "typescript": "4.0.2"
   },
   "peerDependencies": {
     "next": "^9.3.2"
