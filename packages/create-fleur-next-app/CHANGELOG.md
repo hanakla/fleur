@@ -1,3 +1,6 @@
+### 0.5.0
+- [#301](https://github.com/fleur-js/fleur/pull/301) Fix context creation each `getInitialProps` called.
+
 ### 0.4.1
 
 - [#238](https://github.com/fleur-js/fleur/pull/238) Update to use function custom `App` in create-fleur-next-app template
