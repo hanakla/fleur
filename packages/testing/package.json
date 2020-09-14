@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@fleur/react": "*",
-    "@testing-library/react": "9.4.1",
+    "@testing-library/react": "11.0.4",
     "jest": "25.1.0",
     "ts-jest": "25.2.1",
     "typescript": "3.9.7"
