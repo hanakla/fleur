@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matchers toDispatchAction Action matched but different payload 1`] = `
+"[2mexpect([22m[31mcontext[39m[2m).toDispatchAction([22m[32maction, payload[39m[2m)[22m
+Action is dispatched, but payload is different.
+[32m- Expected  - 1[39m
+[31m+ Actual    + 1[39m
+
+[2m  Object {[22m
+[32m-   \\"test\\": \\"ha?\\",[39m
+[31m+   \\"test\\": \\"hi\\",[39m
+[2m  }[22m"
+`;
+
+exports[`matchers toExecOperation Operation matched but different payload 1`] = `
+"[2mexpect([22m[31mcontext[39m[2m).toExecOperation([22m[32mop, ...args[39m[2m)[22m
+Operation is executed, but arguments is different.
+[32m- Expected  - 1[39m
+[31m+ Actual    + 1[39m
+
+[2m  Array [[22m
+[32m-   \\"ha?\\",[39m
+[31m+   \\"hi\\",[39m
+[2m  ][22m"
+`;
