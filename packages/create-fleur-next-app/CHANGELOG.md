@@ -1,3 +1,6 @@
+### 0.6.0
+- dfc48c4 Fix deprecated type using
+
 ### 0.5.0
 - [#301](https://github.com/fleur-js/fleur/pull/301) Fix context creation each `getInitialProps` called.
 
