@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useStore, useFleurContext } from '@fleur/react'
-import { PageContext } from '@fleur/next'
+import { FleurishNextPageContext } from '@fleur/next'
 import { NextPage } from 'next'
 import { AppSelectors, AppOps } from '../domains/App'
 
@@ -29,7 +29,7 @@ const Index: NextPage = ({}) => {
   )
 }
 
-Index.getInitialProps = async (ctx: PageContext) => {
+Index.getInitialProps = async (ctx: FleurishNextPageContext) => {
   await Promise.all([
     ctx.executeOperation(AppOps.asyncIncrement, (Math.random() * 1000) | 0),
     ctx.executeOperation(AppOps.settleAccessDate),
