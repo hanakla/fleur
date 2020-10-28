@@ -1,3 +1,18 @@
+### 4.0.1
+
+- ❗important BugFix❗ [#314](https://github.com/fleur-js/fleur/pull/314) Fix returning old select value when changes mapStoresToProps
+
+Fixed it!
+
+```ts
+// Let userId is "1" in first rendering, "2" in next rendering
+const { userId } = useParams()
+
+// Expect to return user(id: 1) in first rendering, it works correctly
+// 💥WTF💥 Expect to return user(id: 2) in next rendering, but returns user(id: 1)
+const user = useStore(getStore => UserSelector.byId(getStore, userId))
+```
+
 ### 4.0.0
 
 - [#183](https://github.com/fleur-js/fleur/pull/183) in v3.3.0 was breaking change for component update rule. So bump major version.
