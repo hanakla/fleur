@@ -22,8 +22,15 @@ describe('useStore', () => {
   })
 
   // Store
-  const TestStore = reducerStore<{ count: number }>('TestStore', () => ({
+  const TestStore = reducerStore<{
+    count: number
+    entities: Record<string, string>
+  }>('TestStore', () => ({
     count: 10,
+    entities: {
+      '1': 'Foo',
+      '2': 'Bar',
+    },
   })).listen(ident, (draft, { increase }) => (draft.count += increase))
 
   const Test2Store = reducerStore('Test2Store', () => ({ test2: 'hi' }))
@@ -61,6 +68,24 @@ describe('useStore', () => {
     })
 
     expect(result.current).toMatchObject({ count: 20 })
+    unmount()
+  })
+
+  it('Should map stores to state with variable selector', async () => {
+    const context = app.createContext()
+
+    let index: string = '1'
+    const { result, rerender, unmount } = renderHook(
+      () => useStore(getStore => getStore(TestStore).state.entities[index]),
+      { wrapper: wrapperFactory(context) },
+    )
+
+    expect(result.current).toBe('Foo')
+
+    index = '2'
+    rerender()
+
+    expect(result.current).toBe('Bar')
     unmount()
   })
 

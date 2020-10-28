@@ -83,6 +83,7 @@ export const useStore = <Mapper extends StoreToPropMapper>(
     context: { getStore },
     synchronousUpdate,
   } = useInternalFleurContext()
+
   const referencedStores = useRef<Set<StoreClass>>(new Set())
   const isMounted = useRef<boolean>(false)
   const [, rerender] = useReducer(s => s + 1, 0)
@@ -103,15 +104,19 @@ export const useStore = <Mapper extends StoreToPropMapper>(
   )
 
   const latestState = useRef<ReturnType<Mapper> | null>(null)
+  const latestSelector = useRef<Mapper>(mapStoresToProps)
 
-  if (!latestState.current) {
+  if (!latestState.current || latestSelector.current !== mapStoresToProps) {
     latestState.current = mapStoresToProps(getStoreInspector)
+    latestSelector.current = mapStoresToProps
   }
 
   const handleStoreMutation = useCallback(() => {
     const nextState = mapStoresToProps(getStoreInspector)
+
     if (checkEquality?.(latestState.current!, nextState)) return
     latestState.current = nextState
+
     rerender()
   }, [mapStoresToProps, getStoreInspector])
 
