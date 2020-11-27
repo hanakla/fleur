@@ -1,5 +1,5 @@
 import { StoreClass } from '@fleur/fleur'
-import immer, { Draft, createDraft, finishDraft } from 'immer'
+import immer, { Draft, createDraft, enableMapSet, finishDraft } from 'immer'
 import { MockStore, mockStore } from './mockStore'
 
 type ExtractState<T extends StoreClass<any>> = T extends StoreClass<infer R>
@@ -38,6 +38,8 @@ export class MockContextBase {
     stores: readonly MockStore[]
     mocks: Map<any, any>
   }) {
+    enableMapSet()
+
     this.mockStores = stores
     this.mockObjects = mocks
   }

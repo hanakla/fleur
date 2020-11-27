@@ -1,4 +1,4 @@
-import immer, { Draft } from 'immer'
+import immer, { Draft, enableMapSet } from 'immer'
 
 import { ActionIdentifier, ExtractPayloadType } from './Action'
 import { StoreContext } from './StoreContext'
@@ -30,7 +30,9 @@ export class Store<T = any> {
   protected requestId: number | null = null
   private listeners: Listener[] = []
 
-  constructor(protected context: StoreContext) {}
+  constructor(protected context: StoreContext) {
+    enableMapSet()
+  }
 
   public on(listener: Listener) {
     this.listeners.push(listener)
