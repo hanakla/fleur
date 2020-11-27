@@ -92,7 +92,7 @@ export class MockContextBase {
     }
 
     return new (this.constructor as any)({
-      stores: finishDraft(mockStores) as readonly MockStore[],
+      stores: finishDraft(mockStores),
       mocks: clonedMocks,
     })
   }
