@@ -61,5 +61,6 @@ jobs:
           cd - && cd packages/next
           yarn prepublishOnly
       - name: Benchmarking
+        run: |
           cd - && cd packages/fleur-benchmarks
           yarn test
