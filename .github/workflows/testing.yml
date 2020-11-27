@@ -33,34 +33,34 @@ jobs:
           yarn test --coverage --verbose
       - name: Testing @fluer/di
         run: |
-          cd - && cd packages/di
+          cd packages/di
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/react
         run: |
-          cd - && cd packages/react
+          cd packages/react
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/route-store-dom
         run: |
-          cd - && cd packages/route-store-dom
+          cd packages/route-store-dom
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/testing
         run: |
-          cd - && cd packages/testing
+          cd packages/testing
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing create-fleur-next-app
         run: |
-          cd - && cd packages/create-fleur-next-app
+          cd packages/create-fleur-next-app
           yarn prepublishOnly
           node ./bin/index test-app
       - name: Testing @fleur/next
         run: |
-          cd - && cd packages/next
+          cd packages/next
           yarn prepublishOnly
       - name: Benchmarking
         run: |
-          cd - && cd packages/fleur-benchmarks
+          cd packages/fleur-benchmarks
           yarn test
