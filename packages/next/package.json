@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@types/serialize-javascript": "1.5.0",
-    "next": "^9.5.2",
+    "next": "^9.5.4",
     "typescript": "4.0.2"
   },
   "peerDependencies": {
