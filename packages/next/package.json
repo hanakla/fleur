@@ -1,6 +1,6 @@
 {
   "name": "@fleur/next",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "repository": "https://github.com/fleur-js/fleur/tree/master/packages/next",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -18,7 +18,7 @@
     "next": "^9.3.2"
   },
   "dependencies": {
-    "@fleur/fleur": "^1.1.0",
+    "@fleur/fleur": "^2.0.0",
     "serialize-javascript": "4.0.0"
   },
   "sideEffects": false

@@ -1,3 +1,8 @@
+## 0.5.0
+
+- [#320](https://github.com/fleur-js/fleur/pull/320) Update to `@fleur/fleur@2.0.0`
+  - Probably not a breaking change (see: [`@fleur/fleur changelog`](https://github.com/fleur-js/fleur/blob/6f5c903079df855a1180d21a5e745594b5b9e7c2/packages/fleur/CHANGELOG.md))
+
 ## 0.4.0
 - [#301](https://github.com/fleur-js/fleur/pull/301) `bindFleurContext` now returns appContext object
 
