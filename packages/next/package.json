@@ -18,7 +18,7 @@
     "next": "^9.3.2"
   },
   "dependencies": {
-    "@fleur/fleur": "^1.1.0",
+    "@fleur/fleur": "^2.0.0",
     "serialize-javascript": "4.0.0"
   },
   "sideEffects": false
