@@ -1,0 +1,66 @@
+name: CI
+
+on: [push]
+
+jobs:
+  testing:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [10.x, 12.x, 11.x, 13.x, 14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js for use with actions
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache
+        uses: actions/cache@v1.0.0
+        with:
+          path: ~/.cache/yarn
+          key: ${{ matrix.os }}-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+          restore-keys: |
+            ${{ matrix.os }}-
+      - name: Install deps
+        run: yarn install
+      - name: Testing @fluer/fleur
+        run: |
+          cd packages/fleur
+          yarn prepublishOnly
+          yarn test --coverage --verbose
+      - name: Testing @fluer/di
+        run: |
+          cd packages/di
+          yarn prepublishOnly
+          yarn test --coverage --verbose
+      - name: Testing @fleur/react
+        run: |
+          cd packages/react
+          yarn prepublishOnly
+          yarn test --coverage --verbose
+      - name: Testing @fleur/route-store-dom
+        run: |
+          cd packages/route-store-dom
+          yarn prepublishOnly
+          yarn test --coverage --verbose
+      - name: Testing @fleur/testing
+        run: |
+          cd packages/testing
+          yarn prepublishOnly
+          yarn test --coverage --verbose
+      - name: Testing create-fleur-next-app
+        run: |
+          cd packages/create-fleur-next-app
+          yarn prepublishOnly
+          node ./bin/index test-app
+      - name: Testing @fleur/next
+        run: |
+          cd packages/next
+          yarn prepublishOnly
+      - name: Benchmarking
+        run: |
+          cd packages/fleur-benchmarks
+          yarn test

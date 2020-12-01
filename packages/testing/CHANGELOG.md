@@ -1,3 +1,9 @@
+### 4.0.0
+
+- [#317](https://github.com/fleur-js/fleur/pull/317) Update dependency `immer`
+  - BREAKING: Store state freeze by default, even in production mode
+  - BREAKING: Support `Map` and `Set` in Store state. immer's `enableMapSet` is enabled by default.
+
 ### 3.0.0
 
 - [#182](https://github.com/fleur-js/fleur/pull/182) Implement dependency injection
