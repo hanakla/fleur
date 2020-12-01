@@ -1,6 +1,6 @@
 {
   "name": "@fleur/fleur",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "homepage": "https://github.com/fleur-js/fleur/tree/master/packages/fleur",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

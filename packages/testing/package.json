@@ -1,6 +1,6 @@
 {
   "name": "@fleur/testing",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "homepage": "https://github.com/fleur-js/fleur/tree/master/packages/testing",
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
