@@ -57,7 +57,8 @@ jobs:
           yarn prepublishOnly
           node ./bin/index test-app
           cd test-app
-          yarn build
+          yarn install
+          yarn run build
       - name: Testing @fleur/next
         run: |
           cd packages/next
