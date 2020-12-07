@@ -17,7 +17,7 @@
     "jest": "25.1.0",
     "lint-staged": "10.0.8",
     "prettier": "1.19.1",
-    "rollup-plugin-typescript2": "0.25.2",
+    "rollup-plugin-typescript2": "0.29.0",
     "ts-jest": "26.3.0",
     "tslib": "2.0.1",
     "tslint": "6.1.3",
