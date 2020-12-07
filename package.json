@@ -15,7 +15,7 @@
     "tslint": "6.1.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.7.4",
-    "wsrun": "5.2.1"
+    "wsrun": "5.2.4"
   },
   "husky": {
     "hooks": {
