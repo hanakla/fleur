@@ -64,3 +64,41 @@ jobs:
         run: |
           cd packages/fleur-benchmarks
           yarn test
+
+on:
+  push:
+    branches:
+      - main
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: actions/cache@v1.0.0
+        with:
+          path: ~/.cache/yarn
+          key: yarn-cache-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+          restore-keys: |
+            yarn-cache-
+      - name: Install dependencies
+        run: yarn
+      - name: Testing
+        run: yarn test
+
+  publish-gpr:
+    if: ${{ github.event_name == 'push' && github.ref =='refs/heads/master' }}
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com/
+      - run: yarn
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
