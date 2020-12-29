@@ -4,19 +4,13 @@ export interface OperationDef {
   (_: OperationContext, ...args: any[]): Promise<void> | void
 }
 
-export type OperationType = Operation | AbortOperation
+export type OperationType = Operation | OperationDef
 
 export interface Operation extends OperationDef {
-  abort: AbortOperation & OperationAborter
-}
-
-export interface AbortOperation extends OperationDef {
-  readonly __abortOp: unique symbol
-}
-
-interface OperationAborter {
-  (context: OperationContext): void
-  of: (key: { key: string }) => AbortOperation
+  abort: {
+    (context: OperationContext): void
+    byKey: (key: { key: string }) => (context: OperationContext) => void
+  }
 }
 
 type DefToOperation<T extends OperationDef> = T & Operation
@@ -40,18 +34,15 @@ export const operations = <T extends { [name: string]: OperationDef }>(
 
 /** Make one Operation function */
 export const operation = <T extends OperationDef>(op: T): DefToOperation<T> => {
-  const opp: DefToOperation<T> = ((
-    context: OperationContext,
-    ...args: any[]
-  ) => {
+  const opp = ((context: OperationContext, ...args: any[]) => {
     return op(context, ...args)
   }) as DefToOperation<T>
 
   const abort = (context: InternalOperationContext) => {
-    return abort.of()(context)
+    return abort.byKey()(context)
   }
 
-  abort.of = ({ key }: { key?: string } = {}) => {
+  abort.byKey = ({ key }: { key?: string } = {}) => {
     return (context: InternalOperationContext) => {
       context
         .getExecuteMap(opp)
