@@ -2,7 +2,6 @@ import invariant from 'invariant'
 
 import { createAborter } from './Abort'
 import { ActionIdentifier, ExtractPayloadType } from './Action'
-import { ComponentContext } from './ComponentContext'
 import Dispatcher from './Dispatcher'
 import { Fleur } from './Fleur'
 import { InternalOperationContext } from './OperationContext'
@@ -22,7 +21,6 @@ export interface StoreGetter {
 export class AppContext {
   public readonly dispatcher: Dispatcher
   public readonly operationContext: InternalOperationContext
-  public readonly componentContext: ComponentContext
   public readonly storeContext: StoreContext
   public readonly stores: Map<string, Store<any>> = new Map()
   public readonly actionCallbackMap: Map<
@@ -67,18 +65,6 @@ export class AppContext {
       // Set later
       abort: null as any,
       abortable: null as any,
-    }
-
-    this.componentContext = {
-      executeOperation: (op, ...args) => {
-        self.executeOperation(op, ...args)
-      },
-      get getStore() {
-        return self.getStore
-      },
-      get depend() {
-        return self.depend
-      },
     }
   }
 

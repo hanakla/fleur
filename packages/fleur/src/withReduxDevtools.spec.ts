@@ -14,14 +14,7 @@ describe('withReduxDevtools', () => {
       const context = app.createContext()
       withReduxDevTools(context)
 
-      const { componentContext, operationContext } = context
-
-      console.log(context.dispatch === operationContext.dispatch)
-
-      // It's wrapped for ignoring return value
-      expect(componentContext.executeOperation).toBeInstanceOf(Function)
-      expect(componentContext.getStore).toBe(context.getStore)
-      expect(componentContext.depend).toBe(context.depend)
+      const { operationContext } = context
 
       expect(operationContext.executeOperation).toBe(context.executeOperation)
       expect(operationContext.getStore).toBe(context.getStore)

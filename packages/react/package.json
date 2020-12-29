@@ -17,7 +17,7 @@
     "prepublishOnly": "yarn clean-dist && yarn build"
   },
   "peerDependencies": {
-    "@fleur/fleur": ">= 1.0.0",
+    "@fleur/fleur": "2.x.x",
     "react": ">= 16.8.x",
     "react-dom": ">= 16.8.x"
   },

@@ -1,6 +1,17 @@
 import * as React from 'react'
-import { ComponentContext, AppContext } from '@fleur/fleur'
+import { AppContext, Operation, OperationArgs, StoreClass } from '@fleur/fleur'
 import { unstable_batchedUpdates } from './utils/batchedUpdates'
+
+export interface ComponentContext {
+  executeOperation<O extends Operation>(
+    operation: O,
+    ...args: OperationArgs<O>
+  ): void
+
+  getStore<T extends StoreClass>(StoreClass: T): InstanceType<T>
+
+  depend<T>(o: T): T
+}
 
 export interface ComponentContextOption {
   batchedUpdate?: (cb: () => void) => void
@@ -16,7 +27,7 @@ export interface ContextValue {
 const ComponentReactContext = React.createContext<ContextValue>(null as any)
 
 const FleurContext = ({
-  value,
+  value: context,
   children,
   options: {
     batchedUpdate = unstable_batchedUpdates,
@@ -28,14 +39,31 @@ const FleurContext = ({
   options?: ComponentContextOption
 }) => {
   React.useMemo(() => {
-    value.storeContext.injectBatch(batchedUpdate)
+    context.storeContext.injectBatch(batchedUpdate)
   }, [])
 
-  return React.createElement(
-    ComponentReactContext.Provider,
-    { value: { synchronousUpdate, context: value.componentContext } },
-    children,
+  const componentContext = React.useMemo(
+    (): ComponentContext => ({
+      executeOperation: (o, ...args) => {
+        context.executeOperation(o, ...args)
+      },
+      getStore: S => context.getStore(S),
+      depend: o => context.depend(o),
+    }),
+    [context],
   )
+
+  const props = React.useMemo(
+    (): { value: ContextValue } => ({
+      value: {
+        context: componentContext,
+        synchronousUpdate,
+      },
+    }),
+    [synchronousUpdate],
+  )
+
+  return React.createElement(ComponentReactContext.Provider, props, children)
 }
 
 export { ComponentReactContext, FleurContext }
