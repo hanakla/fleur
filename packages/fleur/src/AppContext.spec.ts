@@ -1,4 +1,9 @@
 import { Fleur } from './Fleur'
+import {
+  OperationContext,
+  OperationContextWithInternalAPI,
+} from './OperationContext'
+import { operation, OperationType } from './Operations'
 import { Store } from './Store'
 
 describe('AppContext', () => {

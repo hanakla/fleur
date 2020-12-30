@@ -18,6 +18,11 @@ export interface StoreGetter {
   <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
 }
 
+interface GetStore {
+  (storeName: string): Store
+  <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
+}
+
 export class AppContext {
   public readonly dispatcher: Dispatcher
   public readonly operationContext: InternalOperationContext
@@ -38,12 +43,6 @@ export class AppContext {
     this.app.stores.forEach(StoreClass => {
       this.initializeStore(StoreClass)
     })
-
-    this.getStore = this.getStore.bind(this)
-    this.executeOperation = this.executeOperation.bind(this)
-    this.dispatch = this.dispatch.bind(this)
-    this.depend = this.depend.bind(this)
-
     const self = this
     this.operationContext = {
       get executeOperation() {
@@ -92,15 +91,13 @@ export class AppContext {
     })
   }
 
-  public depend<T>(obj: T): T {
+  public depend = <T>(obj: T): T => {
     return obj
   }
 
-  public getStore(storeName: string): Store
-  public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
-  public getStore<T extends StoreClass<any>>(
-    StoreClass: T | string,
-  ): InstanceType<T> {
+  public getStore: GetStore = <T extends StoreClass>(
+    StoreClass: T,
+  ): InstanceType<T> => {
     const storeName =
       typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
 
@@ -114,10 +111,10 @@ export class AppContext {
     )
   }
 
-  public async executeOperation<O extends OperationType>(
+  public executeOperation = async <O extends OperationType>(
     operation: O,
     ...args: OperationArgs<O>
-  ): Promise<void> {
+  ): Promise<void> => {
     const mapOfOp =
       this.executeMap.get(operation) ??
       this.executeMap.set(operation, new Map()).get(operation)!
@@ -157,10 +154,10 @@ export class AppContext {
     }
   }
 
-  public dispatch<AI extends ActionIdentifier<any>>(
+  public dispatch = <AI extends ActionIdentifier<any>>(
     actionIdentifier: AI,
     payload: ExtractPayloadType<AI>,
-  ) {
+  ) => {
     this.dispatcher.dispatch(actionIdentifier, payload)
   }
 
