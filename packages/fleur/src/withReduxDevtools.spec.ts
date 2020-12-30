@@ -1,4 +1,4 @@
-import { Fleur } from './Fleur'
+import Fleur, { action, Operation, operation } from './'
 import { withReduxDevTools } from './withReduxDevtools'
 
 describe('withReduxDevtools', () => {
@@ -12,14 +12,29 @@ describe('withReduxDevtools', () => {
 
     it('Should passing methods', () => {
       const context = app.createContext()
+
+      const opSpy = jest.fn(context => context.dispatch(ac, {}))
+      const connectSpy = jest.fn()
+
+      const ac = action<{}>('test')
+      const op = operation(opSpy)
+
+      Object.defineProperty(window, '__REDUX_DEVTOOLS_EXTENSION__', {
+        get() {
+          return {
+            connect: () => ({ send: connectSpy, subscribe: () => {} }),
+          }
+        },
+      })
+
       withReduxDevTools(context)
+      context.executeOperation(op)
 
-      const { operationContext } = context
-
-      expect(operationContext.executeOperation).toBe(context.executeOperation)
-      expect(operationContext.getStore).toBe(context.getStore)
-      expect(operationContext.dispatch).toBe(context.dispatch)
-      expect(operationContext.depend).toBe(context.depend)
+      expect(opSpy).toBeCalled()
+      expect(connectSpy.mock.calls[0][0]).toMatchObject({
+        type: ac.name,
+        payload: {},
+      })
     })
   })
 })
