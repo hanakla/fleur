@@ -23,6 +23,6 @@ export interface OperationContext {
   abortable: (key?: { key?: string }) => void
 }
 
-export interface InternalOperationContext extends OperationContext {
+export interface OperationContextWithInternalAPI extends OperationContext {
   getExecuteMap: (op: Operation) => Map<string | undefined, Aborter> | undefined
 }
