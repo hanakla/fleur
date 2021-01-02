@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@fleur/fleur": "^2.0.0",
-    "serialize-javascript": "4.0.0"
+    "superjson": "^1.4.1"
   },
   "sideEffects": false
 }
