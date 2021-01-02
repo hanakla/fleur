@@ -17,6 +17,9 @@
     "typescript": "3.7.4",
     "wsrun": "5.2.4"
   },
+  "resolutions": {
+    "@types/react": "^16.9.4"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
