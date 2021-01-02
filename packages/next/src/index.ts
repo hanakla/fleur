@@ -3,10 +3,13 @@ import { AppContext as NextAppContext } from 'next/app'
 import { AppContext } from '@fleur/fleur'
 import serialize from 'serialize-javascript'
 
+/** @deprecated Use `FleurishNextPageContext` instead */
 export interface PageContext extends NextPageContext {
   executeOperation: AppContext['executeOperation']
   getStore: AppContext['getStore']
 }
+
+export type FleurishNextPageContext = PageContext
 
 export interface FleurishNextAppContext extends NextAppContext {
   executeOperation: AppContext['executeOperation']
