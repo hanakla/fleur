@@ -1,11 +1,5 @@
 import { createStore, combineReducers } from 'redux'
-import {
-  connect,
-  Provider,
-  batch,
-  useSelector,
-  shallowEqual,
-} from 'react-redux'
+import { Provider, batch, useSelector, shallowEqual } from 'react-redux'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
@@ -44,7 +38,7 @@ describe('react-redux', () => {
     }
 
     const div = document.createElement('div')
-    await new Promise(r =>
+    await new Promise<void>(r =>
       ReactDOM.render(
         <Provider store={store}>
           <Component />
@@ -101,7 +95,11 @@ describe('react-redux', () => {
       {},
     )
 
-    const store = createStore(combineReducers(reducers))
+    const store = createStore(
+      combineReducers<{
+        [name: string]: any
+      }>(reducers),
+    )
     const reducerKeys = Object.keys(reducers)
 
     const Component = () => {
@@ -116,7 +114,7 @@ describe('react-redux', () => {
     }
 
     const div = document.createElement('div')
-    await new Promise(r =>
+    await new Promise<void>(r =>
       ReactDOM.render(
         <Provider store={store}>
           <Component />
