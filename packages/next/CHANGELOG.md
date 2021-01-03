@@ -1,3 +1,5 @@
+# @fleur/next Changelog
+
 ## 1.0.0-beta.1
 
 - Update dependency `@fleur/fleur` to `^3.0.0`

@@ -1,3 +1,5 @@
+# @fleur/fleur Changelog
+
 ### 3.0.0-beta.1
 
 See [`@fleur/react@5.0.0` changelog](/packages/react/CHANGELOG.md)

@@ -1,3 +1,5 @@
+# @fleur/create-next-app Changelog
+
 ### 0.7.0
 
 - Change package name to `@fleur/create-next-app`
