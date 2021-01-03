@@ -1,6 +1,6 @@
 {
   "name": "@fleur/next",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "repository": "https://github.com/fleur-js/fleur/tree/master/packages/next",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

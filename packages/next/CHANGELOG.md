@@ -1,3 +1,7 @@
+## 0.8.0
+
+- expose `fleurContext` in App and Page context for serializing state in Page
+
 ## 0.7.0
 
 - Use to serialize state `superjson` instead of serialize-javascript
