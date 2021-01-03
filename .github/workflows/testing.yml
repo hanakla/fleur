@@ -26,12 +26,12 @@ jobs:
             ${{ matrix.os }}-
       - name: Install deps
         run: yarn install
-      - name: Testing @fluer/fleur
+      - name: Testing @fleur/fleur
         run: |
           cd packages/fleur
           yarn prepublishOnly
           yarn test --coverage --verbose
-      - name: Testing @fluer/di
+      - name: Testing @fleur/di
         run: |
           cd packages/di
           yarn prepublishOnly
@@ -41,19 +41,14 @@ jobs:
           cd packages/react
           yarn prepublishOnly
           yarn test --coverage --verbose
-      - name: Testing @fleur/route-store-dom
-        run: |
-          cd packages/route-store-dom
-          yarn prepublishOnly
-          yarn test --coverage --verbose
       - name: Testing @fleur/testing
         run: |
           cd packages/testing
           yarn prepublishOnly
           yarn test --coverage --verbose
-      - name: Testing create-fleur-next-app
+      - name: Testing @fleur/create-next-app
         run: |
-          cd packages/create-fleur-next-app
+          cd packages/create-next-app
           yarn prepublishOnly
           node ./bin/index test-app
           cd test-app

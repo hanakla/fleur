@@ -16,7 +16,7 @@ export const AppOps = operations({
     context.dispatch(AppActions.increment, { amount: 1 })
   },
   async asyncIncrement(context, amount: number) {
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       setTimeout(resolve, 1000)
     })
 
@@ -43,6 +43,6 @@ export const AppStore = reducerStore<State>('AppStore', () => ({
   )
 
 export const AppSelectors = {
-  getCount: selector(getState => getState(AppStore).count),
-  getAccessDate: selector(getState => getState(AppStore).accessDate),
+  getCount: selector((getState) => getState(AppStore).count),
+  getAccessDate: selector((getState) => getState(AppStore).accessDate),
 }

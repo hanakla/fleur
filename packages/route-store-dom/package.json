@@ -22,14 +22,11 @@
     "path-to-regexp": "^3.1.0"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^3.2.1",
+    "@testing-library/react-hooks": "^3.7.0",
     "@types/history": "4.7.2",
     "@types/invariant": "2.2.34",
     "@types/react-test-renderer": "17.0.0",
-    "jest": "25.1.0",
-    "react-test-renderer": "16.13.1",
-    "ts-jest": "25.2.1",
-    "typescript": "3.9.7"
+    "react-test-renderer": "17.0.1"
   },
   "sideEffects": false
 }

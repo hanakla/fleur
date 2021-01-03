@@ -26,14 +26,14 @@ const program = new Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-directory>')
   .usage(`${chalk.green`a`}`)
-  .action(name => {
+  .action((name) => {
     appName = name.trim()
   })
   .option('--use-npm')
   .parse(process.argv)
 
 const printValidationResults = (errors: string[] = []) => {
-  errors.forEach(error => console.log(`  ${chalk.red(error)}`))
+  errors.forEach((error) => console.log(`  ${chalk.red(error)}`))
 }
 
 async function run() {
@@ -76,7 +76,7 @@ async function run() {
   await cpy('**', appPath, {
     parents: true,
     cwd: path.join(__dirname, '../template'),
-    rename: name => {
+    rename: (name) => {
       if (name === 'gitignore') return '.gitignore'
       return name
     },
@@ -99,14 +99,14 @@ async function run() {
         ]
 
     for (let command of packageCommands) {
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         const [proc, args] = command
 
         spawn(proc, args, {
           stdio: 'inherit',
           cwd: appPath,
           env: { ...process.env },
-        }).on('close', code => {
+        }).on('close', (code) => {
           if (code !== 0) {
             reject(new Error('`yarn install` failed'))
             return

@@ -1,9 +1,9 @@
 {
-  "name": "create-fleur-next-app",
-  "version": "0.6.0",
+  "name": "@fleur/create-next-app",
+  "version": "0.7.0",
   "description": "Next.js app generator with Fleur",
   "main": "index.js",
-  "repository": "https://github.com/ra-gg/fleur/tree/master/packages/create-fleur-next-app",
+  "repository": "https://github.com/fleur-js/fleur/tree/master/packages/create-fleur-next-app",
   "author": "Mitsuka Hanakura<ragg.devpr@gmail.com>",
   "license": "MIT",
   "bin": {

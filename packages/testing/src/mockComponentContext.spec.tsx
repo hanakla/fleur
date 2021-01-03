@@ -4,7 +4,7 @@ import { mockStore } from './mockStore'
 import { reducerStore } from '@fleur/fleur'
 import { useFleurContext } from '@fleur/react'
 import { fireEvent, render } from '@testing-library/react'
-import { useCallback, createElement } from 'react'
+import React, { useCallback, createElement } from 'react'
 import { TestingFleurContext } from './TestingFleurContext'
 
 describe('mockComponentContext', () => {
@@ -52,16 +52,15 @@ describe('mockComponentContext', () => {
     const context = baseContext.derive()
 
     const component = render(
-      createElement(TestingFleurContext, {
-        value: context,
-        children: createElement(Component),
-      }),
+      <TestingFleurContext value={context}>
+        <Component />
+      </TestingFleurContext>,
     )
 
     expect(fireEvent.click(await component.findByTestId('button'))).toBe(true)
-    await new Promise(resolve => requestAnimationFrame(resolve))
+    await new Promise((resolve) => requestAnimationFrame(resolve))
 
-    expect(context.executes[0]).toMatchObject({
+    expect(context.mock.executes[0]).toMatchObject({
       op: increaseOp,
       args: [10],
     })

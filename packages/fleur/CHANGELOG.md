@@ -1,3 +1,48 @@
+# @fleur/fleur Changelog
+
+### 3.0.0-beta.1
+
+See [`@fleur/react@5.0.0` changelog](/packages/react/CHANGELOG.md)
+
+- [#333](https://github.com/fleur-js/fleur/pull/333) Introduce Operation Aborter
+- [#322](https://github.com/fleur-js/fleur/pull/322) Breaking change: Drop ES5 support (Support ES2018~)
+  - `@fleur/fleur` bundle very minified! Now it under 3kB(gzipped)!
+  - Before this change, fleur bundle is over 5kB(gzipped)
+- Breaking change: Drop old version Node.js support (v11, v13)
+  - Drop testing version matrix, not guaranteed to work
+- Breaking change: `appContext.componentContext` and `appContext.operationContext` now dropped.
+
+#### Operation Aborter
+
+Fleur's opration now supports Abort.
+
+Note: If you reference `context.abort.signal` on server side, must be import [abort-controller/polyfill](https://www.npmjs.com/package/abort-controller) before operation execute.
+
+
+```ts
+const Ops = operations({
+  someOp: async (context, ..args) => {
+    context.abortable() // Call .abortable() if operation is abortable.
+    // or `context.abortable(key: string)` for key specified operation abort.
+
+    await fetch('url', { signal: context.abort.signal })
+  }
+})
+
+// In React side
+import { Ops } from './ops'
+
+const Component = () => {
+  const { executeOperation } = useFleurContext()
+  
+  executeOperation(Ops.someOp.abort)
+  // or executeOperation(Ops.someOp.abort.byKey(key)) for key specified operation abort
+
+  ...
+}
+```
+
+
 ### 2.0.0
 
 - [#317](https://github.com/fleur-js/fleur/pull/317) Update dependency `immer`

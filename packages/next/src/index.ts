@@ -7,6 +7,7 @@ import superjson from 'superjson'
 export interface PageContext extends NextPageContext {
   executeOperation: AppContext['executeOperation']
   getStore: AppContext['getStore']
+  fleurContext: AppContext
 }
 
 export type FleurishNextPageContext = PageContext
@@ -14,6 +15,7 @@ export type FleurishNextPageContext = PageContext
 export interface FleurishNextAppContext extends NextAppContext {
   executeOperation: AppContext['executeOperation']
   getStore: AppContext['getStore']
+  fleurContext: AppContext
 }
 
 /** Add `executeOperation` and `getStore` method in NextAppContext */
@@ -21,10 +23,20 @@ export const bindFleurContext = (
   context: AppContext,
   nextContext: NextAppContext,
 ) => {
-  ;(nextContext.ctx as any).executeOperation = context.executeOperation.bind(
-    context,
-  )
-  ;(nextContext.ctx as any).getStore = context.getStore.bind(context)
+  // prettier-ignore
+  ;(nextContext as FleurishNextAppContext).executeOperation
+    = (nextContext.ctx as FleurishNextPageContext).executeOperation
+    = context.executeOperation.bind(context);
+
+  // prettier-ignore
+  ;(nextContext as FleurishNextAppContext).getStore
+    = (nextContext.ctx as FleurishNextPageContext).getStore
+    = context.getStore.bind(context);
+
+  // prettier-ignore
+  ;(nextContext as FleurishNextAppContext).fleurContext
+    = (nextContext.ctx as FleurishNextPageContext).fleurContext
+    = context
 
   return nextContext as FleurishNextAppContext
 }
@@ -33,6 +45,6 @@ export const serializeContext = (context: AppContext): string => {
   return superjson.stringify(context.dehydrate())
 }
 
-export const deserializeContext = (state: string) => {
-  return superjson.parse(state)
+export const deserializeContext = (state: string | null | undefined) => {
+  return state ? superjson.parse(state) : null
 }

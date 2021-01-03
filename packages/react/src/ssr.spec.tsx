@@ -1,12 +1,12 @@
 /** @jest-environment node */
 
 import Fleur, { action, listen, operation, Store } from '@fleur/fleur'
-import * as cheerio from 'cheerio'
-import * as express from 'express'
+import cheerio from 'cheerio'
+import express from 'express'
 import { Server } from 'http'
-import * as React from 'react'
-import * as ReactDOMServer from 'react-dom/server'
-import * as request from 'request-promise'
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import request from 'request-promise'
 
 import { useStore } from './useStore'
 import { FleurContext } from './ComponentReactContext'
@@ -49,7 +49,7 @@ describe('Sever side rendering', () => {
         const context = app.createContext()
 
         await context.executeOperation(increaseOp, {
-          increase: parseInt(req.query.amount, 10),
+          increase: parseInt(req.query.amount as string, 10),
         })
 
         res.write(
