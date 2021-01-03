@@ -1,9 +1,5 @@
 import { NextPageContext } from 'next'
-import {
-  AppContext as NextAppContext,
-  AppProps,
-  AppInitialProps,
-} from 'next/app'
+import { AppContext as NextAppContext } from 'next/app'
 import { AppContext } from '@fleur/fleur'
 import superjson from 'superjson'
 
@@ -20,20 +16,6 @@ export interface FleurishNextAppContext extends NextAppContext {
   executeOperation: AppContext['executeOperation']
   getStore: AppContext['getStore']
   fleurContext: AppContext
-}
-
-export type FleurNextAppContext = AppContext & { ctx: PageContext }
-// export type { FleurNextAppContext as FleurAppContext }
-
-declare class ClassApp extends NextApp {
-  static getInitialProps(
-    appContext: FleurNextAppContext,
-  ): Promise<AppInitialProps>
-}
-
-interface FunctionApp {
-  (props: AppProps): JSX.Element
-  getInitialProps(appContext: FleurNextAppContext): Promise<AppInitialProps>
 }
 
 /** Add `executeOperation` and `getStore` method in NextAppContext */
@@ -58,8 +40,6 @@ export const bindFleurContext = (
 
   return nextContext as FleurishNextAppContext
 }
-
-// export const appWithFleurContext = (App: )
 
 export const serializeContext = (context: AppContext): string => {
   return superjson.stringify(context.dehydrate())
