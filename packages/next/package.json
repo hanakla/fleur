@@ -10,15 +10,13 @@
     "prepublishOnly": "rm -rf ./lib && tsc --emitDeclarationOnly --declaration --outDir ./lib && tsc --outDir lib"
   },
   "devDependencies": {
-    "@types/serialize-javascript": "1.5.0",
-    "next": "10.0.3",
-    "typescript": "4.1.3"
+    "next": "10.0.4"
   },
   "peerDependencies": {
     "next": "^9.3.2"
   },
   "dependencies": {
-    "@fleur/fleur": "^2.0.0",
+    "@fleur/fleur": "^3.0.0",
     "superjson": "^1.4.1"
   },
   "sideEffects": false
