@@ -9,7 +9,7 @@ export type OperationType = Operation | OperationDef
 export interface Operation extends OperationDef {
   abort: {
     (context: OperationContext): void
-    byKey: (key: { key: string }) => (context: OperationContext) => void
+    byKey: (key?: string) => (context: OperationContext) => void
   }
 }
 
@@ -42,7 +42,7 @@ export const operation = <T extends OperationDef>(op: T): DefToOperation<T> => {
     return abort.byKey()(context)
   }
 
-  abort.byKey = ({ key }: { key?: string } = {}) => {
+  abort.byKey = (key?: string) => {
     return (context: InternalOperationContext) => {
       context
         .getExecuteMap(opp)
