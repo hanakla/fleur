@@ -110,7 +110,12 @@ export class MockContextBase {
 
     const context: OperationContext = {
       ...this,
-      get abort() {
+      abort: null as any,
+      abortable: () => {},
+    }
+
+    Object.defineProperty(context, 'abort', {
+      get() {
         console.warn(
           '@fleur/testing: context.abort is mocked implement currently, It might not be work.',
         )
@@ -123,8 +128,7 @@ export class MockContextBase {
           },
         }
       },
-      abortable: () => {},
-    }
+    })
 
     await Promise.resolve(operation(context, ...args))
     this.mock.executes.push({ op: operation, args })
