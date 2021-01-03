@@ -1,5 +1,6 @@
 ### 0.7.0
 
+- Change package name to `@fleur/create-next-app`
 - Support Next.js 10
 - Follow @fleur/next update
 

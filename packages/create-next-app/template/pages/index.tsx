@@ -7,7 +7,7 @@ import { AppSelectors, AppOps } from '../domains/App'
 const Index: NextPage = ({}) => {
   const { executeOperation } = useFleurContext()
 
-  const { count, accessDate } = useStore(getStore => ({
+  const { count, accessDate } = useStore((getStore) => ({
     count: AppSelectors.getCount(getStore),
     accessDate: AppSelectors.getAccessDate(getStore),
   }))

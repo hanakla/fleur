@@ -1,5 +1,5 @@
 {
-  "name": "create-fleur-next-app",
+  "name": "@fleur/create-next-app",
   "version": "0.7.0",
   "description": "Next.js app generator with Fleur",
   "main": "index.js",
