@@ -8,6 +8,10 @@ export default {
     typescript2: typescript(),
     terser: defaultBiliConfig.plugins.terser,
   },
+  externals: [
+    // keep relative require for switch ReactDOM / react-native
+    require.resolve('./src/utils/batchedUpdates.ts'),
+  ],
   babel: defaultBiliConfig.babel,
   bundleNodeModules: ['tslib'],
   output: {

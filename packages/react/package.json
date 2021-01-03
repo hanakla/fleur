@@ -11,8 +11,9 @@
     "test": "jest",
     "clean-dist": "rm -rf ./dist",
     "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build:react-native": "tsc --module CommonJS",
     "build:esm": "bili",
-    "build": "yarn build:declarations && yarn build:esm",
+    "build": "yarn build:declarations && yarn build:react-native && yarn build:esm",
     "prepublishOnly": "yarn clean-dist && yarn build"
   },
   "peerDependencies": {
