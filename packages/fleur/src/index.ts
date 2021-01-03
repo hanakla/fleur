@@ -5,7 +5,6 @@ export { StoreContext } from './StoreContext'
 export { OperationContext } from './OperationContext'
 export { action, actions, ActionsOf } from './Action'
 export { AppContext, StoreGetter } from './AppContext'
-export { ComponentContext } from './ComponentContext'
 export {
   operations,
   operation,

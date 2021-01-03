@@ -2,10 +2,9 @@ import invariant from 'invariant'
 
 import { createAborter } from './Abort'
 import { ActionIdentifier, ExtractPayloadType } from './Action'
-import { ComponentContext } from './ComponentContext'
 import Dispatcher from './Dispatcher'
 import { Fleur } from './Fleur'
-import { InternalOperationContext } from './OperationContext'
+import { OperationContextWithInternalAPI } from './OperationContext'
 import { OperationArgs, OperationType } from './Operations'
 import { Store, StoreClass } from './Store'
 import { StoreContext } from './StoreContext'
@@ -19,17 +18,20 @@ export interface StoreGetter {
   <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
 }
 
+interface GetStore {
+  (storeName: string): Store
+  <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
+}
+
 export class AppContext {
   public readonly dispatcher: Dispatcher
-  public readonly operationContext: InternalOperationContext
-  public readonly componentContext: ComponentContext
   public readonly storeContext: StoreContext
   public readonly stores: Map<string, Store<any>> = new Map()
   public readonly actionCallbackMap: Map<
     StoreClass,
     Map<ActionIdentifier<any>, ((payload: any) => void)[]>
   > = new Map()
-  private readonly executeMap: Map<
+  private readonly abortMap: Map<
     OperationType,
     Map<string | undefined, Aborter>
   > = new Map()
@@ -40,46 +42,6 @@ export class AppContext {
     this.app.stores.forEach(StoreClass => {
       this.initializeStore(StoreClass)
     })
-
-    this.getStore = this.getStore.bind(this)
-    this.executeOperation = this.executeOperation.bind(this)
-    this.dispatch = this.dispatch.bind(this)
-    this.depend = this.depend.bind(this)
-
-    const self = this
-    this.operationContext = {
-      get executeOperation() {
-        return self.executeOperation
-      },
-      get dispatch() {
-        return self.dispatch
-      },
-      get getStore() {
-        return self.getStore
-      },
-      get depend() {
-        return self.depend
-      },
-      getExecuteMap(op) {
-        return self.executeMap.get(op)
-      },
-
-      // Set later
-      abort: null as any,
-      abortable: null as any,
-    }
-
-    this.componentContext = {
-      executeOperation: (op, ...args) => {
-        self.executeOperation(op, ...args)
-      },
-      get getStore() {
-        return self.getStore
-      },
-      get depend() {
-        return self.depend
-      },
-    }
   }
 
   public dehydrate(): HydrateState {
@@ -106,15 +68,13 @@ export class AppContext {
     })
   }
 
-  public depend<T>(obj: T): T {
+  public depend = <T>(obj: T): T => {
     return obj
   }
 
-  public getStore(storeName: string): Store
-  public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
-  public getStore<T extends StoreClass<any>>(
-    StoreClass: T | string,
-  ): InstanceType<T> {
+  public getStore: GetStore = <T extends StoreClass>(
+    StoreClass: T,
+  ): InstanceType<T> => {
     const storeName =
       typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
 
@@ -128,13 +88,13 @@ export class AppContext {
     )
   }
 
-  public async executeOperation<O extends OperationType>(
+  public executeOperation = async <O extends OperationType>(
     operation: O,
     ...args: OperationArgs<O>
-  ): Promise<void> {
+  ): Promise<void> => {
     const mapOfOp =
-      this.executeMap.get(operation) ??
-      this.executeMap.set(operation, new Map()).get(operation)!
+      this.abortMap.get(operation) ??
+      this.abortMap.set(operation, new Map()).get(operation)!
 
     let key: string | undefined | null = null
     const aborter = createAborter()
@@ -153,10 +113,14 @@ export class AppContext {
       await Promise.resolve(
         operation(
           {
-            ...this.operationContext,
+            executeOperation: this.executeOperation,
+            dispatch: this.dispatch,
+            getStore: this.getStore,
+            depend: this.depend,
+            getExecuteMap: this.getAbortMap,
             abort: aborter.signal,
             abortable,
-          },
+          } as OperationContextWithInternalAPI,
           ...args,
         ),
       )
@@ -171,11 +135,15 @@ export class AppContext {
     }
   }
 
-  public dispatch<AI extends ActionIdentifier<any>>(
+  public dispatch = <AI extends ActionIdentifier<any>>(
     actionIdentifier: AI,
     payload: ExtractPayloadType<AI>,
-  ) {
+  ) => {
     this.dispatcher.dispatch(actionIdentifier, payload)
+  }
+
+  private getAbortMap = (op: OperationType) => {
+    return this.abortMap.get(op)
   }
 
   private initializeStore(storName: string): Store

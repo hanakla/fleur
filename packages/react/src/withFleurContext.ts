@@ -1,18 +1,16 @@
-import { ComponentContext } from '@fleur/fleur'
-import * as React from 'react'
+import React from 'react'
 
 import { WithRef } from './WithRef'
 import { useFleurContext } from './useFleurContext'
+import { ComponentFleurContext } from './ComponentReactContext'
 
 export interface ContextProp {
-  getStore: ComponentContext['getStore']
-  executeOperation: ComponentContext['executeOperation']
+  getStore: ComponentFleurContext['getStore']
+  executeOperation: ComponentFleurContext['executeOperation']
+  depend: ComponentFleurContext['depend']
 }
 
-type ExcludeContextProp<P extends ContextProp> = Pick<
-  P,
-  Exclude<keyof P, keyof ContextProp>
->
+type ExcludeContextProp<P extends ContextProp> = Omit<P, keyof ContextProp>
 
 export const withFleurContext = <Props extends ContextProp>(
   Component: React.ComponentType<Props>,

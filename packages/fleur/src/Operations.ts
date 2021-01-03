@@ -1,4 +1,7 @@
-import { InternalOperationContext, OperationContext } from './OperationContext'
+import {
+  OperationContextWithInternalAPI,
+  OperationContext,
+} from './OperationContext'
 
 export interface OperationDef {
   (_: OperationContext, ...args: any[]): Promise<void> | void
@@ -38,12 +41,12 @@ export const operation = <T extends OperationDef>(op: T): DefToOperation<T> => {
     return op(context, ...args)
   }) as DefToOperation<T>
 
-  const abort = (context: InternalOperationContext) => {
+  const abort = (context: OperationContextWithInternalAPI) => {
     return abort.byKey()(context)
   }
 
   abort.byKey = (key?: string) => {
-    return (context: InternalOperationContext) => {
+    return (context: OperationContextWithInternalAPI) => {
       context
         .getExecuteMap(opp)
         ?.get(key)

@@ -12,12 +12,11 @@
     "clean-dist": "rm -rf ./dist",
     "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
     "build:esm": "bili",
-    "build:commonjs": "tsc -m commonjs --outDir ./dist",
-    "build": "yarn build:declarations && yarn build:esm && yarn build:commonjs",
+    "build": "yarn build:declarations && yarn build:esm",
     "prepublishOnly": "yarn clean-dist && yarn build"
   },
   "peerDependencies": {
-    "@fleur/fleur": ">= 1.0.0",
+    "@fleur/fleur": "2.x.x",
     "react": ">= 16.8.x",
     "react-dom": ">= 16.8.x"
   },
