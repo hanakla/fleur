@@ -2,7 +2,7 @@ import * as React from 'react'
 import { AppContext, Operation, OperationArgs, StoreClass } from '@fleur/fleur'
 import { unstable_batchedUpdates } from './utils/batchedUpdates'
 
-export interface ComponentContext {
+export interface ComponentFleurContext {
   executeOperation<O extends Operation>(
     operation: O,
     ...args: OperationArgs<O>
@@ -20,7 +20,7 @@ export interface ComponentContextOption {
 
 export interface ContextValue {
   synchronousUpdate: boolean
-  context: ComponentContext
+  context: ComponentFleurContext
 }
 
 // `null as any` - ignore out of context case
@@ -43,7 +43,7 @@ const FleurContext = ({
   }, [])
 
   const componentContext = React.useMemo(
-    (): ComponentContext => ({
+    (): ComponentFleurContext => ({
       executeOperation: (o, ...args) => {
         context.executeOperation(o, ...args)
       },
