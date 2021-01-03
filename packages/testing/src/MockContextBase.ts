@@ -1,4 +1,9 @@
-import { ActionIdentifier, Operation, StoreClass } from '@fleur/fleur'
+import {
+  ActionIdentifier,
+  Operation,
+  OperationArgs,
+  StoreClass,
+} from '@fleur/fleur'
 import immer, { Draft, createDraft, enableMapSet, finishDraft } from 'immer'
 import { MockStore, mockStore } from './mockStore'
 
@@ -94,6 +99,14 @@ export class MockContextBase {
           }
         })
     })
+  }
+
+  public executeOperation = async <O extends Operation>(
+    operation: O,
+    ...args: OperationArgs<O>
+  ): Promise<void> => {
+    await Promise.resolve(operation(this as any, ...args))
+    this.mock.executes.push({ op: operation, args })
   }
 
   public derive(modifier?: DeriveController): this {
