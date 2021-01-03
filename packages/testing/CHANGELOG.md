@@ -1,6 +1,6 @@
 ### 4.1.0
 
-- Update `@fleur/fleur` peerDependency to `@3.x.x`
+- Update `@fleur/fleur` peerDependency to `^3.x.x || ^2.0.0`
 - Feature: Accept `Fleur` instance in mockFleurContext()
   ```ts
   const App = new Fleur({ stores: [SomeStore] })

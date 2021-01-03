@@ -11,7 +11,7 @@
     "test": "jest --verbose"
   },
   "peerDependencies": {
-    "@fleur/fleur": "3.x.x"
+    "@fleur/fleur": "^3.0.0 || ^2.0.0"
   },
   "devDependencies": {
     "@fleur/react": "*",
