@@ -15,9 +15,10 @@
   },
   "devDependencies": {
     "@fleur/react": "*",
-    "@testing-library/react": "11.2.2",
+    "@testing-library/react": "^11.2.2",
     "cross-env": "7.0.3",
-    "react": "17.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "tslint": "6.1.3"
   },
   "dependencies": {
