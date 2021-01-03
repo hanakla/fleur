@@ -22,6 +22,9 @@ describe('mockFleurContext', () => {
       const mock = mockFleurContext({
         stores: [mockStore(Store), mockStore(Store2)],
       })
+
+      expect(mock.mockStores[0].StoreClass).toBe(Store)
+      expect(mock.mockStores[1].StoreClass).toBe(Store2)
     })
   })
 })

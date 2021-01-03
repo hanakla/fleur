@@ -53,12 +53,12 @@ describe('mockOperationContext', () => {
     const context = baseContext.derive()
     await context.executeOperation(increaseOp, 100)
 
-    expect(context.dispatches[0]).toMatchObject({
+    expect(context.mock.dispatches[0]).toMatchObject({
       action: resetAction,
       payload: {},
     })
 
-    expect(context.dispatches[1]).toMatchObject({
+    expect(context.mock.dispatches[1]).toMatchObject({
       action: increaseAction,
       payload: { increase: 100 },
     })
