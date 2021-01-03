@@ -45,6 +45,6 @@ export const serializeContext = (context: AppContext): string => {
   return superjson.stringify(context.dehydrate())
 }
 
-export const deserializeContext = (state: string) => {
-  return superjson.parse(state)
+export const deserializeContext = (state: string | null | undefined) => {
+  return state ? superjson.parse(state) : null
 }
