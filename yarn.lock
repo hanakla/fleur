@@ -1219,6 +1219,19 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@fleur/fleur@*":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@fleur/fleur/-/fleur-2.0.0.tgz#e92a0b8d05037c84573065c0c564ce46cf929933"
+  integrity sha512-MuYFpB1jqkAZKGXm15oq31Q3dpwLn7zeDoIv+xC0krVMeSZnHfdcqzYJ8ScI7rsfrwQ0G2TYG3Zq0+v/eMCtjw==
+  dependencies:
+    immer "^8.0.0"
+    invariant "^2.2.4"
+
+"@fleur/react@*":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@fleur/react/-/react-4.0.1.tgz#fb5068d4dc7d84439222811c836e8e66f0f39ef8"
+  integrity sha512-8r+G9aK2bk6ckyNRfIUPxGMEPsxPl1EKkQqtjZAnnKoH4LGy6lHUPA3QZZBC3+Eb9i9hHyjgfQ42bydkvnJLXw==
+
 "@hapi/accept@5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.1.tgz#068553e867f0f63225a506ed74e899441af53e10"
@@ -8674,10 +8687,10 @@ react-test-renderer@17.0.1:
     react-shallow-renderer "^16.13.1"
     scheduler "^0.20.1"
 
-react@^16.13.0, react@^16.13.1:
-  version "16.13.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.13.0.tgz#d046eabcdf64e457bbeed1e792e235e1b9934cf7"
-  integrity sha512-TSavZz2iSLkq5/oiE7gnFzmURKZMltmi193rm5HEoUDAXpzT9Kzw6oNZnGoai/4+fUnm7FqS5dwgUL34TujcWQ==
+react@^16.13.1:
+  version "16.14.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
+  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
