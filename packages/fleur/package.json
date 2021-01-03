@@ -8,8 +8,12 @@
   "author": "Ragg<ragg.devpr@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "rm -rf ./dist && tsc --emitDeclarationOnly --declaration --outDir ./dist && bili",
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "clean-dist": "rm -rf ./dist",
+    "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build:esm": "bili",
+    "build": "yarn build:declarations && yarn build:esm",
+    "prepublishOnly": "yarn clean-dist && yarn build"
   },
   "devDependencies": {
     "@types/invariant": "2.2.34",
