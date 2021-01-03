@@ -1,11 +1,11 @@
-import { Operation, OperationArgs } from './Operations'
+import { OperationArgs, OperationType } from './Operations'
 import { StoreClass } from './Store'
 
 export interface ComponentContext {
-  executeOperation<O extends Operation>(
+  executeOperation<O extends OperationType>(
     operation: O,
     ...args: OperationArgs<O>
-  ): void | undefined
+  ): void
 
   getStore<T extends StoreClass>(StoreClass: T): InstanceType<T>
 

@@ -1,10 +1,11 @@
 import { ActionIdentifier } from './Action'
-import { Operation, OperationArgs } from './Operations'
+import { OperationArgs, Operation, OperationType } from './Operations'
 import { StoreClass } from './Store'
 import { ExtractPayloadType } from './Action'
+import { Aborter, AborterSignal } from './Abort'
 
 export interface OperationContext {
-  executeOperation<O extends Operation>(
+  executeOperation<O extends OperationType>(
     operator: O,
     ...args: OperationArgs<O>
   ): Promise<void>
@@ -17,4 +18,11 @@ export interface OperationContext {
   ): void
 
   depend<T>(o: T): T
+
+  abort: AborterSignal
+  abortable: (key?: { key?: string }) => void
+}
+
+export interface InternalOperationContext extends OperationContext {
+  getExecuteMap: (op: Operation) => Map<string | undefined, Aborter> | undefined
 }
