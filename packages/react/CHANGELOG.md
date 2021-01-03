@@ -1,3 +1,16 @@
+### 5.0.0-beta.1
+
+See [`@fleur/fleur@3.0.0` changelog](/packages/fleur/CHANGELOG.md)
+
+- Breaking change: Drop ES5 support (Support ES2018~)
+  - `@fleur/react` bundle minified! Now it under 1.2kB(gzipped)!
+  - Before this change, @fleur/react bundle is over 2kB(gzipped)
+- [#322](https://github.com/fleur-js/fleur/pull/322) Breaking change: Drop old version Node.js support (v11, v13)
+  - Drop testing version matrix, not guaranteed to work 
+- Internal refactoring (Follow `@fleur/fleur@3.0.0`)
+  - ComponentContext now build / cached in Hooks not AppContext
+- Bugfix: Expose `depend` props type for `withFleurContext`
+
 ### 4.0.1
 
 - ❗important BugFix❗ [#314](https://github.com/fleur-js/fleur/pull/314) Fix returning old select value when changes mapStoresToProps

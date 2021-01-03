@@ -1,5 +1,10 @@
+## 1.0.0-beta.1
+
+- Update dependency `@fleur/fleur` to `^3.0.0`
+
 ## 0.8.0
 
+- Support Next.js 10
 - expose `fleurContext` in App and Page context for serializing state in Page
 
 ## 0.7.0

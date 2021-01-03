@@ -1,3 +1,8 @@
+### 0.7.0
+
+- Support Next.js 10
+- Follow @fleur/next update
+
 ### 0.6.0
 - dfc48c4 Fix deprecated type using
 
