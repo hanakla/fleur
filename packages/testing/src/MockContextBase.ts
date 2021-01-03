@@ -89,6 +89,7 @@ export class MockContextBase {
     const clonedMocks = new Map(this.mockObjects)
 
     const mockStores = createDraft(cloneStores)
+
     const deriveStore: StoreDeriver = (StoreClass, modifier) => {
       const mock = mockStores.find(entry => entry.name === StoreClass.storeName)
 
@@ -109,9 +110,7 @@ export class MockContextBase {
       clonedMocks.set(source, mock)
     }
 
-    if (modifier) {
-      modifier({ deriveStore, injectDep })
-    }
+    modifier?.({ deriveStore, injectDep })
 
     return new (this.constructor as any)({
       stores: finishDraft(mockStores),
