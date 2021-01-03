@@ -1,4 +1,4 @@
-import { StoreClass } from '@fleur/fleur'
+import { ActionIdentifier, StoreClass } from '@fleur/fleur'
 import immer, { Draft, createDraft, enableMapSet, finishDraft } from 'immer'
 import { MockStore, mockStore } from './mockStore'
 
@@ -30,6 +30,7 @@ interface DeriveController {
 export class MockContextBase {
   public mockStores: readonly MockStore[] = []
   public mockObjects: Map<any, any> = new Map()
+  public dispatches: { action: ActionIdentifier<any>; payload: any }[] = []
 
   constructor({
     stores,
@@ -60,6 +61,25 @@ export class MockContextBase {
 
   public depend = <T>(source: T): T => {
     return this.mockObjects.has(source) ? this.mockObjects.get(source) : source
+  }
+
+  public dispatch = <AI extends ActionIdentifier<any>>(
+    action: AI,
+    payload: ReturnType<AI>,
+  ): void => {
+    this.dispatches.push({ action, payload })
+    this.mockStores.forEach(({ store }) => {
+      Object.keys(store)
+        .filter(
+          key =>
+            (store as any)[key] != null && (store as any)[key].__fleurHandler,
+        )
+        .forEach(key => {
+          if ((store as any)[key].__action === action) {
+            ;(store as any)[key].producer(payload)
+          }
+        })
+    })
   }
 
   public derive(modifier?: DeriveController): this {
