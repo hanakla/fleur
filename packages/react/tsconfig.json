@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "target": "ES2016",
+    "target": "ES2018",
     "module": "ES2015",
     "moduleResolution": "node",
     "jsx": "react",
