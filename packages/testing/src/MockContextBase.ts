@@ -30,7 +30,15 @@ interface DeriveController {
 export class MockContextBase {
   public mockStores: readonly MockStore[] = []
   public mockObjects: Map<any, any> = new Map()
-  public dispatches: { action: ActionIdentifier<any>; payload: any }[] = []
+
+  public mock: {
+    dispatches: { action: ActionIdentifier<any>; payload: any }[]
+  } = { dispatches: [] }
+
+  /** @deprecated use `context.mock.dispatches instead */
+  public get dispatches() {
+    return this.mock.dispatches
+  }
 
   constructor({
     stores,
@@ -67,7 +75,7 @@ export class MockContextBase {
     action: AI,
     payload: ReturnType<AI>,
   ): void => {
-    this.dispatches.push({ action, payload })
+    this.mock.dispatches.push({ action, payload })
     this.mockStores.forEach(({ store }) => {
       Object.keys(store)
         .filter(
