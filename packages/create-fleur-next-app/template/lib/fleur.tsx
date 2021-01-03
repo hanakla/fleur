@@ -6,22 +6,19 @@ import {
   bindFleurContext,
   serializeContext,
   deserializeContext,
-  PageContext,
+  FleurishNextAppContext,
 } from '@fleur/next'
 import { createContext } from '../domains'
 
-type FleurNextAppContext = AppContext & { ctx: PageContext }
-export type { FleurNextAppContext as FleurAppContext }
-
 declare class ClassApp extends NextApp {
   static getInitialProps(
-    appContext: FleurNextAppContext,
+    appContext: FleurishNextAppContext,
   ): Promise<AppInitialProps>
 }
 
 interface FunctionApp {
   (props: AppProps): JSX.Element
-  getInitialProps(appContext: FleurNextAppContext): Promise<AppInitialProps>
+  getInitialProps(appContext: FleurishNextAppContext): Promise<AppInitialProps>
 }
 
 const FLEUR_CONTEXT_KEY = '__FLEUR_CONTEXT__'

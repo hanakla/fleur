@@ -1,11 +1,12 @@
+import { FleurishNextAppContext } from '@fleur/next'
 import App, { AppProps } from 'next/app'
-import { appWithFleurContext, FleurAppContext } from '../lib/fleur'
+import { appWithFleurContext } from '../lib/fleur'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
 }
 
-MyApp.getInitialProps = async (appContext: FleurAppContext) => {
+MyApp.getInitialProps = async (appContext: FleurishNextAppContext) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(appContext)
 
