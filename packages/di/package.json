@@ -10,10 +10,5 @@
     "prepublishOnly": "rm -rf ./{typings,lib} && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib",
     "test": "jest --verbose"
   },
-  "devDependencies": {
-    "jest": "25.1.0",
-    "ts-jest": "25.2.1",
-    "typescript": "3.9.7"
-  },
   "sideEffects": false
 }

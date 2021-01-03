@@ -4,8 +4,8 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/setup.ts'],
   globals: {
     'ts-jest': {
-      tsConfigFile: 'tsconfig.json',
-      typeCheck: false,
+      tsConfig: 'tsconfig.json',
+      isolatedModules: true,
     },
   },
 }

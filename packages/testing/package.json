@@ -11,14 +11,12 @@
     "test": "jest --verbose"
   },
   "peerDependencies": {
-    "@fleur/fleur": ">= 1.0.0"
+    "@fleur/fleur": "3.x.x"
   },
   "devDependencies": {
     "@fleur/react": "*",
-    "@testing-library/react": "11.1.2",
-    "jest": "25.1.0",
-    "ts-jest": "25.2.1",
-    "typescript": "3.9.7"
+    "@testing-library/react": "11.2.2",
+    "react": "17.0.1"
   },
   "dependencies": {
     "immer": "^8.0.0"
