@@ -1,9 +1,5 @@
 import { AppContext } from './AppContext'
 import { Fleur } from './Fleur'
-import {
-  OperationContext,
-  OperationContextWithInternalAPI,
-} from './OperationContext'
 import { operation, OperationType } from './Operations'
 import { Store } from './Store'
 
@@ -142,11 +138,11 @@ describe('AppContext', () => {
         const abortSpy = jest.fn()
         const abortedSpy = jest.fn()
 
-        const op = operation(async context => {
+        const op = operation(async (context) => {
           context.abortable()
 
           context.abort.onabort = abortSpy
-          await new Promise(resolve => setTimeout(resolve, 1000))
+          await new Promise((resolve) => setTimeout(resolve, 1000))
           if (context.abort.aborted) return
           abortedSpy()
         })
@@ -162,10 +158,10 @@ describe('AppContext', () => {
         const completedSpy = jest.fn()
 
         const op = operation(async (context, key: string) => {
-          context.abortable({ key })
+          context.abortable(key)
 
           context.abort.onabort = () => abortSpy()
-          await new Promise(resolve => setTimeout(resolve, 1000))
+          await new Promise((resolve) => setTimeout(resolve, 1000))
           if (context.abort.aborted) return
           completedSpy(key)
         })
@@ -175,7 +171,7 @@ describe('AppContext', () => {
         context.executeOperation(op, 'ccc')
         context.executeOperation(op.abort.byKey('aaa'))
         context.executeOperation(op.abort.byKey('bbb'))
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await new Promise((resolve) => setTimeout(resolve, 1000))
         expect(abortSpy).toBeCalledTimes(2)
         expect(completedSpy).toBeCalledTimes(1)
         expect(completedSpy).toBeCalledWith('ccc')

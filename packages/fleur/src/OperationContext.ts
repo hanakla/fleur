@@ -20,7 +20,7 @@ export interface OperationContext {
   depend<T>(o: T): T
 
   abort: AborterSignal
-  abortable: (key?: { key?: string }) => void
+  abortable: (key?: string) => void
 }
 
 export interface OperationContextWithInternalAPI extends OperationContext {

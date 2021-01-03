@@ -39,7 +39,7 @@ export class AppContext {
   constructor(private app: Fleur) {
     this.dispatcher = new Dispatcher()
     this.storeContext = new StoreContext()
-    this.app.stores.forEach(StoreClass => {
+    this.app.stores.forEach((StoreClass) => {
       this.initializeStore(StoreClass)
     })
   }
@@ -55,7 +55,7 @@ export class AppContext {
   }
 
   public rehydrate(state: HydrateState) {
-    this.app.stores.forEach(StoreClass => {
+    this.app.stores.forEach((StoreClass) => {
       if (!state.stores[StoreClass.storeName]) return
 
       if (!this.stores.has(StoreClass.storeName)) {
@@ -100,7 +100,7 @@ export class AppContext {
     const aborter = createAborter()
 
     try {
-      const abortable = ({ key: ident }: { key?: string } = {}) => {
+      const abortable = (ident?: string) => {
         if (mapOfOp.has(ident)) {
           throw new Error(
             'Fleur: Can not call abortable() twice in your Operation',
@@ -117,10 +117,10 @@ export class AppContext {
             dispatch: this.dispatch,
             getStore: this.getStore,
             depend: this.depend,
-            getExecuteMap: this.getAbortMap,
             abort: aborter.signal,
             abortable,
-          } as OperationContextWithInternalAPI,
+            ...{ getExecuteMap: this.getAbortMap },
+          },
           ...args,
         ),
       )
@@ -169,10 +169,10 @@ export class AppContext {
 
     Object.keys(store)
       .filter(
-        key =>
+        (key) =>
           (store as any)[key] != null && (store as any)[key].__fleurHandler,
       )
-      .forEach(key => {
+      .forEach((key) => {
         const actionIdentifier = (store as any)[key].__action
         const actionCallbacks = actionCallbackMap.get(actionIdentifier) || []
 
@@ -182,7 +182,7 @@ export class AppContext {
 
     this.actionCallbackMap.set(StoreConstructor, actionCallbackMap)
 
-    this.dispatcher.listen(action => {
+    this.dispatcher.listen((action) => {
       const actionCallbackMap = this.actionCallbackMap.get(StoreConstructor)!
       const handlers = actionCallbackMap.get(action.type)
       if (handlers) {
