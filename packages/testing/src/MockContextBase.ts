@@ -2,6 +2,7 @@ import {
   ActionIdentifier,
   Operation,
   OperationArgs,
+  OperationContext,
   StoreClass,
 } from '@fleur/fleur'
 import immer, { Draft, createDraft, enableMapSet, finishDraft } from 'immer'
@@ -105,7 +106,27 @@ export class MockContextBase {
     operation: O,
     ...args: OperationArgs<O>
   ): Promise<void> => {
-    await Promise.resolve(operation(this as any, ...args))
+    const controller = new AbortController()
+
+    const context: OperationContext = {
+      ...this,
+      get abort() {
+        console.warn(
+          '@fleur/testing: context.abort is mocked implement currently, It might not be work.',
+        )
+
+        return {
+          aborted: false,
+          onabort: null,
+          get signal() {
+            return controller.signal
+          },
+        }
+      },
+      abortable: () => {},
+    }
+
+    await Promise.resolve(operation(context, ...args))
     this.mock.executes.push({ op: operation, args })
   }
 
