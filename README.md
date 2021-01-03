@@ -16,7 +16,6 @@ Social hashtag: #fleurjs
 - Next.js supported with [`create-fleur-next-app`](./packages/create-fleur-next-app)
 - **Completely** Server-side rendering support
 - Support React Hooks in `@fleur/react`
-- Dynamic import (`import()`) support in `@fleur/route-store-dom` w/o any code transformer
 
 ## Packages
 

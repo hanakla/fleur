@@ -1,5 +1,5 @@
-# DEPRECATED: Currently, not checked to works correctly
-# Please waiting newer Router release...
+# DEPRECATED: @fleur/route-store-dom is Abandoned
+# Please use [`@fleur/froute`](https://github.com/fleur-js/froute) instead
 
 # @fleur/route-store-dom [![npm version](https://badge.fury.io/js/%40fleur%2Froute-store-dom.svg)](https://www.npmjs.com/package/@fleur/fleur-route-store-dom) [![travis](https://travis-ci.org/fleur-js/fleur.svg?branch=master)](https://travis-ci.org/fleur-js/fleur) ![minifiedgzip](https://badgen.net/bundlephobia/minzip/@fleur/route-store-dom)
 

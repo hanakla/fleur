@@ -1,13 +1,15 @@
 import invariant from 'invariant'
 
+import { createAborter } from './Abort'
 import { ActionIdentifier, ExtractPayloadType } from './Action'
 import { ComponentContext } from './ComponentContext'
 import Dispatcher from './Dispatcher'
 import { Fleur } from './Fleur'
-import { OperationContext } from './OperationContext'
-import { Operation, OperationArgs } from './Operations'
+import { InternalOperationContext } from './OperationContext'
+import { OperationArgs, OperationType } from './Operations'
 import { Store, StoreClass } from './Store'
 import { StoreContext } from './StoreContext'
+import { Aborter } from './Abort'
 
 export interface HydrateState {
   stores: { [storeName: string]: object }
@@ -19,13 +21,17 @@ export interface StoreGetter {
 
 export class AppContext {
   public readonly dispatcher: Dispatcher
-  public readonly operationContext: OperationContext
+  public readonly operationContext: InternalOperationContext
   public readonly componentContext: ComponentContext
   public readonly storeContext: StoreContext
   public readonly stores: Map<string, Store<any>> = new Map()
   public readonly actionCallbackMap: Map<
     StoreClass,
     Map<ActionIdentifier<any>, ((payload: any) => void)[]>
+  > = new Map()
+  private readonly executeMap: Map<
+    OperationType,
+    Map<string | undefined, Aborter>
   > = new Map()
 
   constructor(private app: Fleur) {
@@ -54,6 +60,13 @@ export class AppContext {
       get depend() {
         return self.depend
       },
+      getExecuteMap(op) {
+        return self.executeMap.get(op)
+      },
+
+      // Set later
+      abort: null as any,
+      abortable: null as any,
     }
 
     this.componentContext = {
@@ -115,11 +128,47 @@ export class AppContext {
     )
   }
 
-  public async executeOperation<O extends Operation>(
+  public async executeOperation<O extends OperationType>(
     operation: O,
     ...args: OperationArgs<O>
   ): Promise<void> {
-    await Promise.resolve(operation(this.operationContext, ...args))
+    const mapOfOp =
+      this.executeMap.get(operation) ??
+      this.executeMap.set(operation, new Map()).get(operation)!
+
+    let key: string | undefined | null = null
+    const aborter = createAborter()
+
+    try {
+      const abortable = ({ key: ident }: { key?: string } = {}) => {
+        if (mapOfOp.has(ident)) {
+          throw new Error(
+            'Fleur: Can not call abortable() twice in your Operation',
+          )
+        }
+
+        mapOfOp.set(ident, aborter)
+      }
+
+      await Promise.resolve(
+        operation(
+          {
+            ...this.operationContext,
+            abort: aborter.signal,
+            abortable,
+          },
+          ...args,
+        ),
+      )
+    } catch (e) {
+      throw e
+    } finally {
+      aborter.destroy()
+
+      if (key !== null) {
+        mapOfOp.delete(key)
+      }
+    }
   }
 
   public dispatch<AI extends ActionIdentifier<any>>(

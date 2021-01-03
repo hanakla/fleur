@@ -99,7 +99,7 @@ async function run() {
         ]
 
     for (let command of packageCommands) {
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         const [proc, args] = command
 
         spawn(proc, args, {

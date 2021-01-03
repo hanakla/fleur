@@ -1,7 +1,6 @@
 import { Fleur } from './Fleur'
-import { operation } from './Operations'
+import { operation, OperationType } from './Operations'
 import { ComponentContext } from './ComponentContext'
-import { OperationContext } from './OperationContext'
 import { AppContext } from './AppContext'
 
 describe('ComponentContext', () => {
@@ -16,8 +15,17 @@ describe('ComponentContext', () => {
 
   it('#executeOperation should receive arguments', () => {
     const spy = jest.fn()
-    componentContext.executeOperation(spy, 'a', 'b')
-    expect(spy).toBeCalledWith(context.operationContext, 'a', 'b')
+    componentContext.executeOperation(
+      (spy as unknown) as OperationType,
+      'a',
+      'b',
+    )
+
+    const call = spy.mock.calls[0]
+    expect(call[0].executeOperation).toBe(context.executeOperation)
+    expect(call[0].getStore).toBe(context.getStore)
+    expect(call[1]).toBe('a')
+    expect(call[2]).toBe('b')
   })
 
   it('#executeOperation should not return value', () => {

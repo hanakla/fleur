@@ -4,7 +4,6 @@ import { MockContextBase } from './MockContextBase'
 import { mockStoreContext } from './mockStoreContext'
 
 export class MockedComponentContext extends MockContextBase {
-  public executes: { op: Operation; args: any }[] = []
   protected componentContext: this = this
   protected storeContext = mockStoreContext()
 
@@ -12,7 +11,7 @@ export class MockedComponentContext extends MockContextBase {
     operation: O,
     ...args: OperationArgs<O>
   ): Promise<void> => {
-    this.executes.push({ op: operation, args })
+    this.mock.executes.push({ op: operation, args })
   }
 }
 

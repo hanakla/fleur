@@ -61,7 +61,7 @@ describe('mockComponentContext', () => {
     expect(fireEvent.click(await component.findByTestId('button'))).toBe(true)
     await new Promise(resolve => requestAnimationFrame(resolve))
 
-    expect(context.executes[0]).toMatchObject({
+    expect(context.mock.executes[0]).toMatchObject({
       op: increaseOp,
       args: [10],
     })
