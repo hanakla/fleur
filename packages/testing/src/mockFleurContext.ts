@@ -1,7 +1,8 @@
-import { MockStore } from './mockStore'
+import { mockStore, MockStore } from './mockStore'
 import { mockComponentContext } from './mockComponentContext'
 import { mockOperationContext } from './mockOperationContext'
 import { MockContextBase } from './MockContextBase'
+import Fleur from '@fleur/fleur'
 
 export class MockedFleurContext extends MockContextBase {
   public mockComponentContext() {
@@ -19,12 +20,23 @@ export class MockedFleurContext extends MockContextBase {
   }
 }
 
-export const mockFleurContext = ({
-  stores,
-  mocks = new Map(),
-}: {
-  stores: MockStore[]
-  mocks?: Map<any, any>
-}) => {
-  return new MockedFleurContext({ stores, mocks })
+export const mockFleurContext = (
+  options:
+    | {
+        stores: MockStore[]
+        mocks?: Map<any, any>
+      }
+    | Fleur,
+) => {
+  if (options instanceof Fleur) {
+    return new MockedFleurContext({
+      stores: [...options.stores].map(([_, Store]) => mockStore(Store)),
+      mocks: new Map(),
+    })
+  }
+
+  return new MockedFleurContext({
+    stores: options.stores,
+    mocks: options.mocks,
+  })
 }
