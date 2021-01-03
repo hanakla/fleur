@@ -51,9 +51,9 @@ jobs:
           cd packages/testing
           yarn prepublishOnly
           yarn test --coverage --verbose
-      - name: Testing create-fleur-next-app
+      - name: Testing @fleur/create-next-app
         run: |
-          cd packages/create-fleur-next-app
+          cd packages/create-next-app
           yarn prepublishOnly
           node ./bin/index test-app
           cd test-app
