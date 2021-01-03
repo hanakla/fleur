@@ -1,4 +1,4 @@
-import { ActionIdentifier, StoreClass } from '@fleur/fleur'
+import { ActionIdentifier, Operation, StoreClass } from '@fleur/fleur'
 import immer, { Draft, createDraft, enableMapSet, finishDraft } from 'immer'
 import { MockStore, mockStore } from './mockStore'
 
@@ -28,16 +28,22 @@ interface DeriveController {
 }
 
 export class MockContextBase {
-  public mockStores: readonly MockStore[] = []
-  public mockObjects: Map<any, any> = new Map()
+  public readonly mockStores: readonly MockStore[] = []
+  public readonly mockObjects: Map<any, any> = new Map()
 
-  public mock: {
+  public readonly mock: {
     dispatches: { action: ActionIdentifier<any>; payload: any }[]
-  } = { dispatches: [] }
+    executes: { op: Operation; args: any }[]
+  } = { dispatches: [], executes: [] }
 
   /** @deprecated use `context.mock.dispatches instead */
   public get dispatches() {
     return this.mock.dispatches
+  }
+
+  /** @deprecated use `context.mock.executes instead */
+  public get executes() {
+    return this.mock.executes
   }
 
   constructor({
