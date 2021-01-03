@@ -37,6 +37,6 @@ export const mockFleurContext = (
 
   return new MockedFleurContext({
     stores: options.stores,
-    mocks: options.mocks,
+    mocks: options.mocks ?? new Map(),
   })
 }
