@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { AppContext, Operation, OperationArgs, StoreClass } from '@fleur/fleur'
 import { unstable_batchedUpdates } from './utils/batchedUpdates'
 

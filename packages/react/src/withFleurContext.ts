@@ -2,7 +2,7 @@ import React from 'react'
 
 import { WithRef } from './WithRef'
 import { useFleurContext } from './useFleurContext'
-import { ComponentFleurContext } from 'ComponentReactContext'
+import { ComponentFleurContext } from './ComponentReactContext'
 
 export interface ContextProp {
   getStore: ComponentFleurContext['getStore']
