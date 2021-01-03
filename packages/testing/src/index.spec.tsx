@@ -1,8 +1,7 @@
 import * as React from 'react'
-import { action, operation, reducerStore, selector } from '@fleur/fleur'
+import Fleur, { action, operation, reducerStore, selector } from '@fleur/fleur'
 import { useStore, useFleurContext } from '@fleur/react'
 import { mockFleurContext } from './mockFleurContext'
-import { mockStore } from './mockStore'
 import { useCallback, useEffect } from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import { TestingFleurContext } from './TestingFleurContext'
@@ -46,11 +45,14 @@ describe('@fleur/testing integration tests', () => {
   const getCount = selector(getState => getState(CounterStore).count)
 
   //
+  // App.ts
+  //
+  const App = new Fleur({ stores: [CounterStore] })
+
+  //
   // spec/mocks/AppContextMock.ts
   //
-  const mockContext = mockFleurContext({
-    stores: [mockStore(CounterStore, {})],
-  })
+  const mockContext = mockFleurContext(App)
 
   //
   // Operations.spec.ts
