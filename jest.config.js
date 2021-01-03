@@ -1,8 +1,8 @@
+/** @typedef {import('ts-jest/dist/types')} */
+/** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   rootDir: '.',
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
+  preset: 'ts-jest',
   testRegex: 'src/.*\\.spec\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   globals: {
