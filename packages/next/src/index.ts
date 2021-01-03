@@ -1,12 +1,15 @@
 import { NextPageContext } from 'next'
 import { AppContext as NextAppContext } from 'next/app'
 import { AppContext } from '@fleur/fleur'
-import serialize from 'serialize-javascript'
+import superjson from 'superjson'
 
+/** @deprecated Use `FleurishNextPageContext` instead */
 export interface PageContext extends NextPageContext {
   executeOperation: AppContext['executeOperation']
   getStore: AppContext['getStore']
 }
+
+export type FleurishNextPageContext = PageContext
 
 export interface FleurishNextAppContext extends NextAppContext {
   executeOperation: AppContext['executeOperation']
@@ -27,9 +30,9 @@ export const bindFleurContext = (
 }
 
 export const serializeContext = (context: AppContext): string => {
-  return serialize(context.dehydrate())
+  return superjson.stringify(context.dehydrate())
 }
 
 export const deserializeContext = (state: string) => {
-  return eval(`(${state})`)
+  return superjson.parse(state)
 }

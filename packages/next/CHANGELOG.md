@@ -1,3 +1,11 @@
+## 0.7.0
+
+- Use to serialize state `superjson` instead of serialize-javascript
+
+## 0.6.0
+
+- Adjusting context type name
+
 ## 0.5.0
 
 - [#320](https://github.com/fleur-js/fleur/pull/320) Update to `@fleur/fleur@2.0.0`

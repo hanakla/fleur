@@ -1,8 +1,6 @@
-const { join } = require('path')
-
 module.exports = {
   ...require('../../jest.config'),
-  moduleFileExtensions: ['ts', 'js'],
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
   setupFilesAfterEnv: ['<rootDir>/src/setup.ts'],
   globals: {
     'ts-jest': {
