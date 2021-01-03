@@ -45,7 +45,7 @@ export const operation = <T extends OperationDef>(op: T): DefToOperation<T> => {
     return abort.byKey()(context)
   }
 
-  abort.byKey = ({ key }: { key?: string } = {}) => {
+  abort.byKey = (key?: string) => {
     return (context: OperationContextWithInternalAPI) => {
       context
         .getExecuteMap(opp)
