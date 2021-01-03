@@ -22,7 +22,7 @@ Social hashtag: #fleurjs
 - [@fleur/fleur](./packages/fleur) - Basic flux-flow framework
 - [@fleur/react](./packages/react) - Fleur react connector
 - [@fleur/testing](./packages/testing) - Fleur Test helpers
-- [create-fleur-next-app](./packages/create-fleur-next-app) - Create Next.js app with Fleur
+- [@fleur/create-next-app](./packages/create-next-app) - Create Next.js app with Fleur
 - [@fleur/next](./packages/next) - Next.js integration helpers
 - [@fleur/di](./packages/di) - Library independency DI function
 - [@fleur/route-store-dom](./packages/route-store-dom) - Fleur DOM router
