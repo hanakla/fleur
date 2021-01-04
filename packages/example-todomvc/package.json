@@ -10,7 +10,7 @@
     "@fleur/fleur": "*",
     "@fleur/react": "*",
     "@fleur/route-store-dom": "*",
-    "axios": "0.20.0",
+    "axios": "0.21.1",
     "classnames": "^2.1.5",
     "director": "^1.2.0",
     "react": "^16.13.1",
