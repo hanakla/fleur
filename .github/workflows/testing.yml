@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-
       - name: Install deps
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Building packages
         run: yarn build
       - name: Testing @fleur/fleur
