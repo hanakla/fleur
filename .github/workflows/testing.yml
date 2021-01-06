@@ -58,7 +58,11 @@ jobs:
         run: |
           cd packages/next
           yarn prepublishOnly
-      - name: Benchmarking
+      - name: Benchmarking (Performance)
         run: |
           cd packages/fleur-benchmarks
           yarn test
+      - name: Benchmarking (Bundle size)
+        run: |
+          cd packages/fleur-benchmarks
+          yarn build
