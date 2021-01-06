@@ -18,8 +18,8 @@
   },
   "peerDependencies": {
     "@fleur/fleur": "3.x.x",
-    "react": ">= 16.8.x",
-    "react-dom": ">= 16.8.x"
+    "react": "^16.8.0 || ^17",
+    "react-dom": "^16.8.0 || ^17"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^3.7.0",
