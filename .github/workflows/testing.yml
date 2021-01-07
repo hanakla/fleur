@@ -54,6 +54,12 @@ jobs:
       - name: Testing @fleur/next
         run: |
           cd packages/next
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: |
+            yarn.lock
+            packages/fleur-benchmarks
       - name: Benchmarking (Performance)
         run: |
           cd packages/fleur-benchmarks
@@ -62,7 +68,3 @@ jobs:
         run: |
           cd packages/fleur-benchmarks
           yarn build
-      - uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-          path: ./
