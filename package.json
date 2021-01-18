@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/jest": "26.0.19",
+    "@types/jest": "26.0.20",
     "bili": "5.0.5",
     "cross-env": "7.0.3",
     "husky": "4.3.6",
