@@ -1,6 +1,12 @@
 import { NextPageContext } from 'next'
 import { AppContext as NextAppContext } from 'next/app'
-import { AppContext } from '@fleur/fleur'
+import {
+  action,
+  actions,
+  AppContext,
+  operations,
+  StoreClass,
+} from '@fleur/fleur'
 import superjson from 'superjson'
 
 /** @deprecated Use `FleurishNextPageContext` instead */
@@ -17,6 +23,53 @@ export interface FleurishNextAppContext extends NextAppContext {
   getStore: AppContext['getStore']
   fleurContext: AppContext
 }
+
+const __internalRehydrateAction = action<{ storeName: string; state: any }>(
+  '@fleur/next--internalRehydrate',
+)
+
+export const withSSPDistributer = (context: AppContext) => {
+  const { dispatch } = context
+
+  context.dispatch = (ident, payload) => {
+    if (ident !== __internalRehydrateAction) {
+      dispatch(ident, payload)
+      return
+    }
+
+    // Only dispatch to target Store
+    const { storeName, state } = payload
+    const store = context.getStore(storeName as string)
+    const Store = store.constructor as StoreClass<any>
+
+    const listeners =
+      context.actionCallbackMap
+        .get(Store)
+        ?.get(NextJsActions.rehydrateServerSideProps) ?? []
+
+    listeners.forEach((fn) => fn(state))
+  }
+
+  return context
+}
+
+export const NextJsOps = operations({
+  rehydrateServerSideProps: (
+    { dispatch },
+    { stores }: { stores: Record<string, any> },
+  ) => {
+    Object.keys(stores).forEach((storeName: string) => {
+      dispatch(__internalRehydrateAction, {
+        storeName,
+        state: stores[storeName],
+      })
+    })
+  },
+})
+
+export const NextJsActions = actions('@fleur/next/actions', {
+  rehydrateServerSideProps: action<any>(),
+})
 
 /** Add `executeOperation` and `getStore` method in NextAppContext */
 export const bindFleurContext = (
