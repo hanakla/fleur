@@ -122,7 +122,7 @@ describe('AppContext', () => {
       expect(call[0].abort).toBeInstanceOf(Object)
       expect(call[0].abort.aborted).toBe(false)
       expect(call[0].abort.signal).toBeInstanceOf(AbortSignal)
-      expect(call[0].abortable).toBeInstanceOf(Function)
+      expect(call[0].acceptAbort).toBeInstanceOf(Function)
       expect(call[1]).toBe('a')
       expect(call[2]).toBe('b')
     })

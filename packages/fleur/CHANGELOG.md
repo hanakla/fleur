@@ -18,8 +18,8 @@ It safes on server side. (`context.abort.signal` is returns undefined if AbortCo
 ```ts
 const Ops = operations({
   someOp: async (context, ..args) => {
-    context.abortable() // Call .abortable() if operation is abortable.
-    // or `context.abortable(key: string)` for key specified operation abort.
+    context.acceptAbort() // Call .acceptAbort() if operation is acceptAbort.
+    // or `context.acceptAbort(key: string)` for key specified operation abort.
 
     await fetch('url', { signal: context.abort.signal })
   }
