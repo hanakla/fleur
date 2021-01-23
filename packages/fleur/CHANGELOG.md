@@ -1,13 +1,13 @@
 # @fleur/fleur Changelog
 
-## 3.0.0-beta.2
+## 3.0.0
 
 See [`@fleur/react@5.0.0` changelog](/packages/react/CHANGELOG.md)
 
 ### New features
 
 - [#333](https://github.com/fleur-js/fleur/pull/333) Introduce Operation Aborter
-- [#365](https://github.com/fleur-js/fleur/pull/365) Add AppContext#getListenersOfStore method
+- [#365](https://github.com/fleur-js/fleur/pull/365) Add `AppContext#getListenersOfStore` method
   - for Next.js serverSideProps rehydration
 
 #### Operation Aborter
@@ -32,7 +32,7 @@ const Component = () => {
   const { executeOperation } = useFleurContext()
   
   executeOperation(Ops.someOp.abort)
-  // or executeOperation(Ops.someOp.abort.byKey(key)) for key specified operation abort
+  // or `executeOperation(Ops.someOp.abort.byKey(key))` for key specified operation abort
 
   ...
 }
