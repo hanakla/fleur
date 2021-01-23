@@ -76,12 +76,12 @@ export const bindFleurContext = (
   // prettier-ignore
   ;(nextContext as FleurishNextAppContext).executeOperation
     = (nextContext.ctx as FleurishNextPageContext).executeOperation
-    = context.executeOperation.bind(context);
+    = context.executeOperation;
 
   // prettier-ignore
   ;(nextContext as FleurishNextAppContext).getStore
     = (nextContext.ctx as FleurishNextPageContext).getStore
-    = context.getStore.bind(context);
+    = context.getStore;
 
   // prettier-ignore
   ;(nextContext as FleurishNextAppContext).fleurContext
