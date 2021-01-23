@@ -22,6 +22,6 @@
     "tslint": "6.1.3"
   },
   "dependencies": {
-    "immer": "^8.0.0"
+    "immer": "^8.0.1"
   }
 }
