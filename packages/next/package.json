@@ -15,10 +15,10 @@
     "next": "10.0.4"
   },
   "peerDependencies": {
+    "@fleur/fleur": "^3.0.0-beta.1",
     "next": "^9.3.2"
   },
   "dependencies": {
-    "@fleur/fleur": "^3.0.0-beta.1",
     "superjson": "^1.4.1"
   },
   "sideEffects": false
