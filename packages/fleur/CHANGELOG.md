@@ -38,7 +38,6 @@ const Component = () => {
 }
 ```
 
-
 ### Breaking changes
 
 - [#322](https://github.com/fleur-js/fleur/pull/322) Drop ES5 support (Support ES2018~)
@@ -49,6 +48,10 @@ const Component = () => {
 - `appContext.componentContext` and `appContext.operationContext` now dropped.
 - [#365](https://github.com/fleur-js/fleur/pull/365) Make private `AppContext#actionCallbackMap`
   - It was unintentionally public
+
+### misc
+
+- [#364](https://github.com/fleur-js/fleur/pull/364) \[security\] Update immer.js
 
 ## 2.0.0
 
