@@ -1,12 +1,6 @@
 import { NextPageContext } from 'next'
 import { AppContext as NextAppContext } from 'next/app'
-import {
-  action,
-  actions,
-  AppContext,
-  operations,
-  StoreClass,
-} from '@fleur/fleur'
+import { action, actions, AppContext, operations } from '@fleur/fleur'
 import superjson from 'superjson'
 
 export interface FleurishNextPageContext extends NextPageContext {
@@ -36,12 +30,10 @@ export const withSSPDistributer = (context: AppContext) => {
 
     // Only dispatch to target Store
     const { storeName, state } = payload
-    const store = context.getStore(storeName as string)
-    const Store = store.constructor as StoreClass<any>
 
     const listeners =
-      context.actionCallbackMap
-        .get(Store)
+      context
+        .getListenersOfStore(storeName)
         ?.get(NextJsActions.rehydrateServerSideProps) ?? []
 
     listeners.forEach((fn) => fn(state))
