@@ -20,13 +20,14 @@ export interface StoreGetter {
 interface GetStore {
   (storeName: string): Store
   <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
+  (StoreClass: StoreClass<any> | string): Store<any>
 }
 
 export class AppContext {
   public readonly dispatcher: Dispatcher
   public readonly storeContext: StoreContext
   public readonly stores: Map<string, Store<any>> = new Map()
-  public readonly actionCallbackMap: Map<
+  private readonly actionCallbackMap: Map<
     StoreClass,
     Map<ActionIdentifier<any>, ((payload: any) => void)[]>
   > = new Map()
@@ -71,11 +72,9 @@ export class AppContext {
     return obj
   }
 
-  public getStore: GetStore = <T extends StoreClass>(
-    StoreClass: T,
-  ): InstanceType<T> => {
+  public getStore: GetStore = (StoreClazz: string | StoreClass) => {
     const storeName =
-      typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
+      typeof StoreClazz === 'string' ? StoreClazz : StoreClazz.storeName
 
     if (process.env.NODE_ENV !== 'production') {
       const storeRegistered = this.app.stores.has(storeName)
@@ -99,7 +98,7 @@ export class AppContext {
     const aborter = createAborter()
 
     try {
-      const abortable = (ident?: string) => {
+      const acceptAbort = (ident?: string) => {
         if (mapOfOp.has(ident)) {
           throw new Error(
             'Fleur: Can not call abortable() twice in your Operation',
@@ -117,7 +116,7 @@ export class AppContext {
             getStore: this.getStore,
             depend: this.depend,
             abort: aborter.signal,
-            abortable,
+            acceptAbort,
             ...{ getExecuteMap: this.getAbortMap },
           },
           ...args,
@@ -143,6 +142,15 @@ export class AppContext {
 
   private getAbortMap = (op: OperationType) => {
     return this.abortMap.get(op)
+  }
+
+  public getListenersOfStore = <S extends string | StoreClass<any>>(
+    store: S,
+  ):
+    | ReadonlyMap<ActionIdentifier<any>, ((payload: any) => void)[]>
+    | undefined => {
+    const Store = this.getStore(store).constructor as StoreClass<any>
+    return this.actionCallbackMap.get(Store)
   }
 
   private initializeStore(storName: string): Store

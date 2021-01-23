@@ -10,9 +10,9 @@
   "scripts": {
     "test": "jest --verbose",
     "clean-dist": "rm -rf ./dist",
-    "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
     "build:esm": "bili",
-    "build": "yarn build:declarations && yarn build:esm",
+    "build": "run-p build:*",
     "prepublishOnly": "yarn clean-dist && yarn build"
   },
   "devDependencies": {
