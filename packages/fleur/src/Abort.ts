@@ -7,7 +7,7 @@ export interface Aborter {
 export interface AborterSignal {
   readonly aborted: boolean
   onabort: (() => void) | null
-  readonly signal: AbortSignal
+  readonly signal: AbortSignal | undefined
 }
 
 export const createAborter = (): Aborter => {
@@ -16,12 +16,18 @@ export const createAborter = (): Aborter => {
   let aborted = false
 
   let signal: AborterSignal = {
-    onabort: null as (() => void) | null,
-    get aborted() { return aborted },
+    onabort: null,
+    get aborted() {
+      return aborted
+    },
     get signal() {
+      if (typeof AbortController === 'undefined') {
+        return undefined
+      }
+
       controller ??= new AbortController()
       return controller.signal
-    }
+    },
   }
 
   return {
@@ -32,8 +38,8 @@ export const createAborter = (): Aborter => {
     },
     signal,
     destroy: () => {
-      controller = null;
-      (signal as any) = null
-    }
+      controller = null
+      ;(signal as any) = null
+    },
   }
 }
