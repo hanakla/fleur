@@ -4,13 +4,38 @@
 
 See [`@fleur/react@5.0.0` changelog](/packages/react/CHANGELOG.md)
 
+#### New features
+
 - [#333](https://github.com/fleur-js/fleur/pull/333) Introduce Operation Aborter
-- [#322](https://github.com/fleur-js/fleur/pull/322) Breaking change: Drop ES5 support (Support ES2018~)
+  ```ts
+  /* In operation caller */
+  executeOperation(op)
+
+  expecuteOperation(op.abort) // Abort latest execution
+  expecuteOperation(op.abort.byKey('key')) // Abort by key
+
+  /* in Operation */
+  operation(({ acceptAbort, abort }, ...args) => {
+    context.acceptAbort() // Accept abort
+    context.acceptAbort('key') // Accept abort by key
+
+    // Use AbortSignal from abort.signal
+    fetch('', { signal: abort.signal })
+  })
+  ```
+- [#365](https://github.com/fleur-js/fleur/pull/365) Add AppContext#getListenersOfStore method
+  - for Next.js serverSideProps rehydration
+
+#### Breaking changes
+
+- [#322](https://github.com/fleur-js/fleur/pull/322) Drop ES5 support (Support ES2018~)
   - `@fleur/fleur` bundle very minified! Now it under 3kB(gzipped)!
   - Before this change, fleur bundle is over 5kB(gzipped)
-- Breaking change: Drop old version Node.js support (v11, v13)
+- Drop old version Node.js support (v11, v13)
   - Drop testing version matrix, not guaranteed to work
-- Breaking change: `appContext.componentContext` and `appContext.operationContext` now dropped.
+- `appContext.componentContext` and `appContext.operationContext` now dropped.
+- [#365](https://github.com/fleur-js/fleur/pull/365) Make private `AppContext#actionCallbackMap`
+  - It was unintentionally public
 
 #### Operation Aborter
 
