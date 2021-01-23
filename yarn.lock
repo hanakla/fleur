@@ -1192,14 +1192,6 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
 
-"@fleur/fleur@*":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@fleur/fleur/-/fleur-2.0.0.tgz#e92a0b8d05037c84573065c0c564ce46cf929933"
-  integrity sha512-MuYFpB1jqkAZKGXm15oq31Q3dpwLn7zeDoIv+xC0krVMeSZnHfdcqzYJ8ScI7rsfrwQ0G2TYG3Zq0+v/eMCtjw==
-  dependencies:
-    immer "^8.0.0"
-    invariant "^2.2.4"
-
 "@fleur/react@*":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@fleur/react/-/react-4.0.1.tgz#fb5068d4dc7d84439222811c836e8e66f0f39ef8"
@@ -5552,7 +5544,7 @@ ignore@^4.0.3:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-immer@^8.0.0, immer@^8.0.1:
+immer@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
   integrity sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
