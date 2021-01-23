@@ -9,14 +9,11 @@ import {
 } from '@fleur/fleur'
 import superjson from 'superjson'
 
-/** @deprecated Use `FleurishNextPageContext` instead */
-export interface PageContext extends NextPageContext {
+export interface FleurishNextPageContext extends NextPageContext {
   executeOperation: AppContext['executeOperation']
   getStore: AppContext['getStore']
   fleurContext: AppContext
 }
-
-export type FleurishNextPageContext = PageContext
 
 export interface FleurishNextAppContext extends NextAppContext {
   executeOperation: AppContext['executeOperation']
