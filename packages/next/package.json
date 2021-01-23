@@ -7,7 +7,9 @@
   "author": "Mitsuka Hanakura<ragg.devpr@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "rm -rf ./lib && tsc --emitDeclarationOnly --declaration --outDir ./lib && tsc --outDir lib"
+    "clean:dist": "rm -rf ./lib",
+    "build": "tsc --declaration --outDir ./lib",
+    "prepublishOnly": "yarn clean:dist && yarn build"
   },
   "devDependencies": {
     "next": "10.0.4"
