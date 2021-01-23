@@ -139,7 +139,7 @@ describe('AppContext', () => {
         const abortedSpy = jest.fn()
 
         const op = operation(async (context) => {
-          context.abortable()
+          context.acceptAbort()
 
           context.abort.onabort = abortSpy
           await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -158,7 +158,7 @@ describe('AppContext', () => {
         const completedSpy = jest.fn()
 
         const op = operation(async (context, key: string) => {
-          context.abortable(key)
+          context.acceptAbort(key)
 
           context.abort.onabort = () => abortSpy()
           await new Promise((resolve) => setTimeout(resolve, 1000))

@@ -98,7 +98,7 @@ export class AppContext {
     const aborter = createAborter()
 
     try {
-      const abortable = (ident?: string) => {
+      const acceptAbort = (ident?: string) => {
         if (mapOfOp.has(ident)) {
           throw new Error(
             'Fleur: Can not call abortable() twice in your Operation',
@@ -116,7 +116,7 @@ export class AppContext {
             getStore: this.getStore,
             depend: this.depend,
             abort: aborter.signal,
-            abortable,
+            acceptAbort,
             ...{ getExecuteMap: this.getAbortMap },
           },
           ...args,
