@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "ncc build src/index.ts -o bin",
-    "example": "ts-node -T src/index.ts example",
+    "example": "rm -rf ./example; ts-node -T src/index.ts example",
     "prepublishOnly": "ncc build src/index.ts -o ./bin --minify --no-cache --no-source-map-register"
   },
   "devDependencies": {
