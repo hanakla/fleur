@@ -111,7 +111,7 @@ export class MockContextBase {
     const context: OperationContext = {
       ...this,
       abort: null as any,
-      abortable: () => {},
+      acceptAbort: () => {},
     }
 
     Object.defineProperty(context, 'abort', {
