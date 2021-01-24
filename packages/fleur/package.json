@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/invariant": "2.2.34",
     "rollup-plugin-typescript2": "0.29.0",
-    "tslib": "2.0.3"
+    "tslib": "2.1.0"
   },
   "dependencies": {
     "immer": "^8.0.1",
