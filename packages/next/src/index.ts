@@ -1,4 +1,9 @@
-import { NextPageContext } from 'next'
+import {
+  GetServerSidePropsContext,
+  GetStaticPropsContext,
+  NextPageContext,
+} from 'next'
+import { ComponentType } from 'react'
 import { AppContext as NextAppContext } from 'next/app'
 import { action, actions, AppContext, operations } from '@fleur/fleur'
 import superjson from 'superjson'
@@ -9,10 +14,24 @@ export interface FleurishNextPageContext extends NextPageContext {
   fleurContext: AppContext
 }
 
+export type FleurishNextPage<P = {}, IP = P> = ComponentType<P & IP> & {
+  getInitialProps?(context: FleurishNextPageContext): IP | Promise<IP>
+}
+
 export interface FleurishNextAppContext extends NextAppContext {
   executeOperation: AppContext['executeOperation']
   getStore: AppContext['getStore']
   fleurContext: AppContext
+}
+
+export interface FleurishGetServerSidePropsContext
+  extends GetServerSidePropsContext {
+  executeOperation: AppContext['executeOperation']
+  getStore: AppContext['getStore']
+}
+export interface FleurishGetStaticPropsContext extends GetStaticPropsContext {
+  executeOperation: AppContext['executeOperation']
+  getStore: AppContext['getStore']
 }
 
 const __internalRehydrateAction = action<{ storeName: string; state: any }>(
