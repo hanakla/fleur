@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "ncc build src/index.ts -o bin",
-    "example": "ts-node -T src/index.ts example",
+    "example": "rm -rf ./example; ts-node -T src/index.ts example",
     "prepublishOnly": "ncc build src/index.ts -o ./bin --minify --no-cache --no-source-map-register"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "chalk": "3.0.0",
-    "commander": "6.2.1",
+    "commander": "7.0.0",
     "cpy": "8.1.1",
     "validate-npm-package-name": "3.0.0"
   }
