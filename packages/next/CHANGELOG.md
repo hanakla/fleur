@@ -1,8 +1,17 @@
 # @fleur/next Changelog
 
-## 1.0.0-beta.1
+## 1.0.0
+
+### Breakings
+
+- [#365](https://github.com/fleur-js/fleur/pull/365) Remove deprecated type `PageContext`
+  - Use `FleurishNextPageContext` instead.
+
+### Updates
 
 - Update dependency `@fleur/fleur` to `^3.0.0`
+- Add `FleurishNextPage`, `FleurishGetServerSidePropsContext` and `FleurishGetStaticPropsContext` type
+- [#365](https://github.com/fleur-js/fleur/pull/365) Add `NextJsActions`, `NextJsOps` and `withSSPDistributer` middleware for Next.js Server side props rehydration support
 
 ## 0.8.0
 

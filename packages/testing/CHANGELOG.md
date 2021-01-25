@@ -1,5 +1,9 @@
 # @fleur/testing Changelog
 
+### 4.1.1
+
+- Fix type error to `@fleur/fleur`
+
 ### 4.1.0
 
 - Update `@fleur/fleur` peerDependency to `^3.x.x || ^2.0.0`

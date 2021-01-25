@@ -1,6 +1,6 @@
 {
   "name": "@fleur/fleur",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0",
   "homepage": "https://github.com/fleur-js/fleur/tree/master/packages/fleur",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -10,9 +10,9 @@
   "scripts": {
     "test": "jest --verbose",
     "clean-dist": "rm -rf ./dist",
-    "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
     "build:esm": "bili",
-    "build": "yarn build:declarations && yarn build:esm",
+    "build": "run-p build:*",
     "prepublishOnly": "yarn clean-dist && yarn build"
   },
   "devDependencies": {
@@ -21,7 +21,7 @@
     "tslib": "2.0.3"
   },
   "dependencies": {
-    "immer": "^8.0.0",
+    "immer": "^8.0.1",
     "invariant": "^2.2.4"
   },
   "sideEffects": false

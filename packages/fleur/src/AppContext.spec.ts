@@ -122,7 +122,7 @@ describe('AppContext', () => {
       expect(call[0].abort).toBeInstanceOf(Object)
       expect(call[0].abort.aborted).toBe(false)
       expect(call[0].abort.signal).toBeInstanceOf(AbortSignal)
-      expect(call[0].abortable).toBeInstanceOf(Function)
+      expect(call[0].acceptAbort).toBeInstanceOf(Function)
       expect(call[1]).toBe('a')
       expect(call[2]).toBe('b')
     })
@@ -139,7 +139,7 @@ describe('AppContext', () => {
         const abortedSpy = jest.fn()
 
         const op = operation(async (context) => {
-          context.abortable()
+          context.acceptAbort()
 
           context.abort.onabort = abortSpy
           await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -158,7 +158,7 @@ describe('AppContext', () => {
         const completedSpy = jest.fn()
 
         const op = operation(async (context, key: string) => {
-          context.abortable(key)
+          context.acceptAbort(key)
 
           context.abort.onabort = () => abortSpy()
           await new Promise((resolve) => setTimeout(resolve, 1000))

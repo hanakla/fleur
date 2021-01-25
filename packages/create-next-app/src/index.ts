@@ -88,7 +88,7 @@ async function run() {
   writeFileSync(packageJsonPath, JSON.stringify(appPackageJson, null, '  '))
 
   {
-    const packageCommands: [string, string[]][] = program.useNpm
+    const packageCommands: [string, string[]][] = program.opts().useNpm
       ? [
           ['npm', ['install', ...APP_DEPS]],
           ['npm', ['install', '-D', ...APP_DEV_DEPS]],
