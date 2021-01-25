@@ -1,6 +1,6 @@
 import Fleur, { action, operation, reducerStore } from '@fleur/fleur'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { useStore, FleurContext } from '@fleur/react'
 
 jest.setTimeout(10000)
@@ -13,20 +13,20 @@ describe('benchmark', () => {
     const selectCounter = jest.fn()
 
     const incrementAction = action()
-    const incrementOperation = operation(ctx => {
+    const incrementOperation = operation((ctx) => {
       ctx.dispatch(incrementAction, {})
     })
 
     const TestStore = reducerStore('TestStore', () => ({ count: 0 })).listen(
       incrementAction,
-      draft => {
+      (draft) => {
         callCounter()
         draft.count++
       },
     )
 
     const Component = () => {
-      const count = useStore(getStore => {
+      const count = useStore((getStore) => {
         selectCounter()
         return getStore(TestStore).state.count
       })
@@ -44,7 +44,7 @@ describe('benchmark', () => {
     context.getStore(TestStore)
     const div = document.createElement('div')
 
-    await new Promise<void>(r => {
+    await new Promise<void>((r) => {
       ReactDOM.render(
         <FleurContext value={context}>
           <Component />
@@ -58,7 +58,7 @@ describe('benchmark', () => {
     for (let count = 1; count < numOfDispatches + 1; count++) {
       await context.executeOperation(incrementOperation)
     }
-    await new Promise(r => requestAnimationFrame(r))
+    await new Promise((r) => requestAnimationFrame(r))
 
     expect(div.innerHTML).toBe(`<div>${numOfDispatches}</div>`)
     expect(callCounter.mock.calls.length).toBe(numOfDispatches)
@@ -78,14 +78,14 @@ describe('benchmark', () => {
     const selectCounter = jest.fn()
 
     const incrementAction = action()
-    const incrementOperation = operation(ctx => {
+    const incrementOperation = operation((ctx) => {
       ctx.dispatch(incrementAction, {})
     })
 
     const stores = Array.from(Array(numOfStores)).map((_, idx) => {
       return reducerStore(`TestStore${idx}`, () => ({ count: 0 })).listen(
         incrementAction,
-        draft => {
+        (draft) => {
           storeCallCounter()
           draft.count++
         },
@@ -93,7 +93,7 @@ describe('benchmark', () => {
     })
 
     const Component = () => {
-      const sum = useStore(getStore => {
+      const sum = useStore((getStore) => {
         selectCounter()
         return stores.reduce((accum, s) => accum + getStore(s).state.count, 0)
       })
@@ -107,7 +107,7 @@ describe('benchmark', () => {
     const context = app.createContext()
 
     const div = document.createElement('div')
-    await new Promise<void>(r =>
+    await new Promise<void>((r) =>
       ReactDOM.render(
         <FleurContext value={context}>
           <Component />
@@ -119,7 +119,7 @@ describe('benchmark', () => {
 
     console.time(`[fleur] Update ${numOfStores} stores once`)
     await context.executeOperation(incrementOperation)
-    await new Promise(r => requestAnimationFrame(r))
+    await new Promise((r) => requestAnimationFrame(r))
 
     expect(div.innerHTML).toBe(`${numOfStores}`)
     expect(storeCallCounter.mock.calls.length).toBe(numOfStores)

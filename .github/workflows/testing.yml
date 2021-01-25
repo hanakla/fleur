@@ -25,31 +25,28 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-
       - name: Install deps
-        run: yarn install
+        run: yarn install --frozen-lockfile
+      - name: Building packages
+        run: yarn build
       - name: Testing @fleur/fleur
         run: |
           cd packages/fleur
-          yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/di
         run: |
           cd packages/di
-          yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/react
         run: |
           cd packages/react
-          yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/testing
         run: |
           cd packages/testing
-          yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/create-next-app
         run: |
           cd packages/create-next-app
-          yarn prepublishOnly
           node ./bin/index test-app
           cd test-app
           yarn install
@@ -57,8 +54,11 @@ jobs:
       - name: Testing @fleur/next
         run: |
           cd packages/next
-          yarn prepublishOnly
-      - name: Benchmarking
+      - name: Benchmarking (Performance)
         run: |
           cd packages/fleur-benchmarks
           yarn test
+      - name: Benchmarking (Bundle size)
+        run: |
+          cd packages/fleur-benchmarks
+          yarn build

@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux'
 import { Provider, batch, useSelector, shallowEqual } from 'react-redux'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 jest.setTimeout(10000)
 
@@ -38,7 +38,7 @@ describe('react-redux', () => {
     }
 
     const div = document.createElement('div')
-    await new Promise<void>(r =>
+    await new Promise<void>((r) =>
       ReactDOM.render(
         <Provider store={store}>
           <Component />
@@ -52,7 +52,7 @@ describe('react-redux', () => {
     for (let count = 1; count < numOfDispatches + 1; count++) {
       store.dispatch({ type: 'INCREMENT' })
     }
-    await new Promise(r => requestAnimationFrame(r))
+    await new Promise((r) => requestAnimationFrame(r))
 
     expect(div.innerHTML).toBe(`<div>${numOfDispatches}</div>`)
     expect(callCounter.mock.calls.length).toBe(numOfDispatches)
@@ -114,7 +114,7 @@ describe('react-redux', () => {
     }
 
     const div = document.createElement('div')
-    await new Promise<void>(r =>
+    await new Promise<void>((r) =>
       ReactDOM.render(
         <Provider store={store}>
           <Component />
@@ -126,7 +126,7 @@ describe('react-redux', () => {
 
     console.time(`[react-redux] Update ${numOfStores} stores once`)
     batch(() => store.dispatch({ type: 'INCREMENT' }))
-    await new Promise(r => requestAnimationFrame(r))
+    await new Promise((r) => requestAnimationFrame(r))
 
     expect(div.innerHTML).toBe(`${numOfStores}`)
     expect(callCounter.mock.calls.length).toBe(numOfStores)

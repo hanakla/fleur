@@ -4,19 +4,29 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build:redux": "parcel build --experimental-scope-hoisting --log-level 3 --public-url \"./\" -d bundle-size/dist bundle-size/react-redux.html",
+    "build:fleur": "parcel build --experimental-scope-hoisting --log-level 3 --public-url \"./\" -d bundle-size/dist bundle-size/fleur.html",
+    "build": "yarn build:redux && yarn build:fleur"
   },
   "devDependencies": {
-    "@fleur/fleur": "*",
-    "@fleur/react": "*",
     "@types/react-redux": "^7.1.15",
     "@types/redux": "^3.6.0",
     "jest": "26.6.3",
+    "parcel": "^1.12.4"
+  },
+  "dependencies": {
+    "@fleur/fleur": "*",
+    "@fleur/react": "*",
+    "@reduxjs/toolkit": "^1.5.0",
+    "fluxible": "^1.4.0",
+    "fluxible-addons-react": "0.2.16",
+    "react": "*",
+    "react-dom": "*",
     "react-redux": "7.2.2",
     "redux": "4.0.5"
   },
-  "dependencies": {
-    "fluxible": "^1.4.0",
-    "fluxible-addons-react": "0.2.16"
-  }
+  "browserslist": [
+    "since 2020"
+  ]
 }

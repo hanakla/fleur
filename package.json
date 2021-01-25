@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "wsrun --exclude-missing --serial -c prepublishOnly"
+    "build": "wsrun -ms -c prepublishOnly"
   },
   "workspaces": [
     "packages/*"
