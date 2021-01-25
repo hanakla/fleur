@@ -22,7 +22,7 @@
     "path-to-regexp": "^3.1.0"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^5.0.0",
+    "@testing-library/react-hooks": "^5.0.3",
     "@types/history": "4.7.2",
     "@types/invariant": "2.2.34",
     "@types/react-test-renderer": "17.0.0",
