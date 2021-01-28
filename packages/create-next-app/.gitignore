@@ -3,4 +3,4 @@ node_modules/
 /template/.next/
 /template/next-env.d.ts
 /template/yarn.lock
-/example
+/test-build
