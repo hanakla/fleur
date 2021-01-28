@@ -31,7 +31,7 @@ Deploy the example using [Vercel](https://vercel.com):
 
 ## How to use
 
-Execute [`@fleur/create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Execute [`@fleur/create-next-app`](hhttps://github.com/fleur-js/fleur/tree/main/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
 
 ```bash
 npx @fleur/create-next-app <your-app-name> --use-npm
