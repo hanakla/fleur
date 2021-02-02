@@ -88,7 +88,10 @@ export function appWithFleur<P>(
 
       return {
         ...appProps,
-        pageProps,
+        pageProps: {
+          __FLEUR_STATE__: serializeContext(fleurContext),
+          ...pageProps,
+        },
       }
     }
   }
