@@ -62,7 +62,7 @@ export function appWithFleur<P>(
   }: AppProps & P) => {
     const fleurContext = useMemo(
       () => getOrCreateFleurContext(deserializeContext(__FLEUR_STATE__)),
-      [__FLEUR_STATE__]
+      [],
     )
 
     useFleurRehydration(fleurContext, __FLEUR_STATE__)
