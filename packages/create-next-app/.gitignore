@@ -1,6 +1,6 @@
 node_modules/
 /bin
-/template/.next/
-/template/next-env.d.ts
-/template/yarn.lock
+/example/.next/
+/example/next-env.d.ts
+/example/yarn.lock
 /test-build
