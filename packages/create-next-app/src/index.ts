@@ -66,18 +66,25 @@ async function run() {
     console.log()
     console.log(chalk.red(`Project directory \`${appName}\` already exists`))
     console.log(
-      chalk.red('Please remove it or specify another project-directpry'),
+      chalk.red('Please remove it or specify another project-directory'),
     )
     console.log()
 
     process.exit(1)
   }
 
-  await cpy('**', appPath, {
+  await cpy(['**', '../src/gitignore-default'], appPath, {
     parents: true,
-    cwd: path.join(__dirname, '../template'),
+    dot: true,
+    cwd: path.join(__dirname, '../example'),
+    transform: (entry) => {
+      if (entry === '../src/gitignore-default') {
+        return '.gitignore'
+      }
+      return entry
+    },
     rename: (name) => {
-      if (name === 'gitignore') return '.gitignore'
+      if (name === 'gitignore-default') return '.gitignore'
       return name
     },
   })
@@ -121,8 +128,8 @@ async function run() {
   console.log(`${chalk.green('Success!')} Created ${appName} at ${appPath}`)
 }
 
-run().catch(() => {
+run().catch((e) => {
   console.log()
-  console.log(chalk.red('Installation failed.'))
+  console.log(chalk.red('Installation failed: '), e)
   console.log()
 })
