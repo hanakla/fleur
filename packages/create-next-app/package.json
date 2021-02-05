@@ -1,6 +1,6 @@
 {
   "name": "@fleur/create-next-app",
-  "version": "1.0.0-dev.1",
+  "version": "1.0.0",
   "description": "Next.js app generator with Fleur",
   "main": "index.js",
   "repository": "https://github.com/fleur-js/fleur/tree/master/packages/create-fleur-next-app",

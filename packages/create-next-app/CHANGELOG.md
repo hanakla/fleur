@@ -1,5 +1,13 @@
 # @fleur/create-next-app Changelog
 
+### 1.0.0
+
+Major release
+
+- Replace template by vercel/next.js#20695
+- Support `getServerSideProps` and `getStaticProps`
+- Support Automatic static render
+
 ### 0.7.0
 
 - Change package name to `@fleur/create-next-app`
