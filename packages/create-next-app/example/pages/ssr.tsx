@@ -11,7 +11,7 @@ export const SSR: FleurishNextPage<Props> = () => {
 
 export default SSR
 
-export const getServerSideProps = getServerSidePropsWithFleur(
+export const getServerSideProps = getServerSidePropsWithFleur<Props>(
   async (context) => {
     await context.executeOperation(TimerOps.increment)
     await context.executeOperation(TimerOps.tick, {
@@ -20,5 +20,5 @@ export const getServerSideProps = getServerSidePropsWithFleur(
     })
 
     return { props: {} }
-  }
+  },
 )

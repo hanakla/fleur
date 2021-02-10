@@ -120,16 +120,14 @@ const useFleurRehydration = (
   isFirstRendering.current = false
 }
 
-export const getServerSidePropsWithFleur = <
-  GSSP extends (
+export const getServerSidePropsWithFleur = <P extends object = any>(
+  getServerSideProps: (
     context: FleurishGetServerSidePropsContext,
-  ) => Promise<GetServerSidePropsResult<any>>
->(
-  getServerSideProps: GSSP,
+  ) => Promise<GetServerSidePropsResult<P>>,
 ) => {
   return async (
     context: FleurishGetServerSidePropsContext,
-  ): Promise<ReturnType<GSSP>> => {
+  ): Promise<GetServerSidePropsResult<P>> => {
     const fleurCtx = getOrCreateFleurContext()
     context.executeOperation = fleurCtx.executeOperation
     context.getStore = fleurCtx.getStore
@@ -147,16 +145,14 @@ export const getServerSidePropsWithFleur = <
   }
 }
 
-export const getStaticPropsWithFleur = <
-  GSP extends (
+export const getStaticPropsWithFleur = <P extends object = any>(
+  getStaticProps: (
     context: FleurishGetStaticPropsContext,
-  ) => Promise<GetStaticPropsResult<any>>
->(
-  getStaticProps: GSP,
+  ) => Promise<GetStaticPropsResult<P>>,
 ) => {
   return async (
     context: FleurishGetStaticPropsContext,
-  ): Promise<ReturnType<GSP>> => {
+  ): Promise<GetServerSidePropsResult<P>> => {
     const fleurCtx = getOrCreateFleurContext()
     context.executeOperation = fleurCtx.executeOperation
     context.getStore = fleurCtx.getStore
