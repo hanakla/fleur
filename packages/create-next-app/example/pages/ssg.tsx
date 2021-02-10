@@ -11,14 +11,16 @@ export const SSG: FleurishNextPage<Props> = () => {
 
 export default SSG
 
-export const getStaticProps = getStaticPropsWithFleur(async (context) => {
-  await context.executeOperation(TimerOps.increment)
-  await context.executeOperation(TimerOps.tick, {
-    light: false,
-    lastUpdate: Date.now(),
-  })
+export const getStaticProps = getStaticPropsWithFleur<Props>(
+  async (context) => {
+    await context.executeOperation(TimerOps.increment)
+    await context.executeOperation(TimerOps.tick, {
+      light: false,
+      lastUpdate: Date.now(),
+    })
 
-  return {
-    props: {},
-  }
-})
+    return {
+      props: {},
+    }
+  },
+)
