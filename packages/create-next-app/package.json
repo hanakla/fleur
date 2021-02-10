@@ -7,7 +7,7 @@
   "author": "Mitsuka Hanakura<ragg.devpr@gmail.com>",
   "license": "MIT",
   "bin": {
-    "create-fleur-next-app": "bin/index.js"
+    "create-next-app": "bin/index.js"
   },
   "scripts": {
     "build": "ncc build src/index.ts -o bin",
