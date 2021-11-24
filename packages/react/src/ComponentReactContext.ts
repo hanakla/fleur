@@ -4,13 +4,14 @@ import { unstable_batchedUpdates } from './utils/batchedUpdates'
 
 export interface ComponentFleurContext {
   executeOperation<O extends Operation>(
+    this: void,
     operation: O,
     ...args: OperationArgs<O>
   ): void
 
-  getStore<T extends StoreClass>(StoreClass: T): InstanceType<T>
+  getStore<T extends StoreClass>(this: void, StoreClass: T): InstanceType<T>
 
-  depend<T>(o: T): T
+  depend<T>(this: void, o: T): T
 }
 
 export interface ComponentContextOption {
