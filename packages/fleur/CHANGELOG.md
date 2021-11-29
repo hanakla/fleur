@@ -1,5 +1,9 @@
 # @fleur/fleur Changelog
 
+## 3.0.1
+
+- [#496](https://github.com/fleur-js/fleur/pull/496) Annotate this type for typescript-eslint/unbound-method (Fix #447)
+
 ## 3.0.0
 
 See [`@fleur/react@5.0.0` changelog](/packages/react/CHANGELOG.md)
@@ -61,7 +65,7 @@ const Component = () => {
 
 ## 1.6.0
 
-- [#301](https://github.com/fleur-js/fleur/pull/301) `withReduxDevTools()` now ignoring in Server-side 
+- [#301](https://github.com/fleur-js/fleur/pull/301) `withReduxDevTools()` now ignoring in Server-side
 
 ## 1.5.0
 
