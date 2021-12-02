@@ -1,6 +1,6 @@
 # @fleur/react Changelog
 
-### 5.0.1
+### 5.0.2
 
 - [#496](https://github.com/fleur-js/fleur/pull/496) Annotate this type for typescript-eslint/unbound-method (Fix #447)
 
