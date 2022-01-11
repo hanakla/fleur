@@ -1,14 +1,14 @@
+/** @typedef {import('ts-jest/dist/types')} */
+/** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   rootDir: '.',
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest/preprocessor',
-  },
+  preset: 'ts-jest',
   testRegex: 'src/.*\\.spec\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   globals: {
     'ts-jest': {
-      tsConfigFile: 'tsconfig.test.json',
-      typeCheck: false,
+      tsConfig: 'tsconfig.test.json',
+      isolatedModules: true,
     },
   },
   testURL: 'http://localhost/',

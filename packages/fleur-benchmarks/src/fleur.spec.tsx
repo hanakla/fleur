@@ -1,13 +1,7 @@
-import Fleur, {
-  action,
-  listen,
-  operation,
-  Store,
-  reducerStore,
-} from '@fleur/fleur'
+import Fleur, { action, operation, reducerStore } from '@fleur/fleur'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { createElementWithContext, useStore, FleurContext } from '@fleur/react'
+import { useStore, FleurContext } from '@fleur/react'
 
 jest.setTimeout(10000)
 
@@ -49,9 +43,16 @@ describe('benchmark', () => {
     const context = app.createContext()
     context.getStore(TestStore)
     const div = document.createElement('div')
-    await new Promise(r =>
-      ReactDOM.render(createElementWithContext(context, Component, {}), div, r),
-    )
+
+    await new Promise<void>(r => {
+      ReactDOM.render(
+        <FleurContext value={context}>
+          <Component />
+        </FleurContext>,
+        div,
+        r,
+      )
+    })
 
     console.time(`[fleur] dispatch ${numOfDispatches} actions`)
     for (let count = 1; count < numOfDispatches + 1; count++) {
@@ -106,7 +107,7 @@ describe('benchmark', () => {
     const context = app.createContext()
 
     const div = document.createElement('div')
-    await new Promise(r =>
+    await new Promise<void>(r =>
       ReactDOM.render(
         <FleurContext value={context}>
           <Component />

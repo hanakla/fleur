@@ -1,13 +1,13 @@
 import invariant from 'invariant'
 
+import { createAborter } from './Abort'
 import { ActionIdentifier, ExtractPayloadType } from './Action'
-import { ComponentContext } from './ComponentContext'
 import Dispatcher from './Dispatcher'
 import { Fleur } from './Fleur'
-import { OperationContext } from './OperationContext'
-import { Operation, OperationArgs } from './Operations'
+import { OperationArgs, OperationType } from './Operations'
 import { Store, StoreClass } from './Store'
 import { StoreContext } from './StoreContext'
+import { Aborter } from './Abort'
 
 export interface HydrateState {
   stores: { [storeName: string]: object }
@@ -17,56 +17,31 @@ export interface StoreGetter {
   <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
 }
 
+interface GetStore {
+  (storeName: string): Store
+  <T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
+  (StoreClass: StoreClass<any> | string): Store<any>
+}
+
 export class AppContext {
   public readonly dispatcher: Dispatcher
-  public readonly operationContext: OperationContext
-  public readonly componentContext: ComponentContext
   public readonly storeContext: StoreContext
   public readonly stores: Map<string, Store<any>> = new Map()
-  public readonly actionCallbackMap: Map<
+  private readonly actionCallbackMap: Map<
     StoreClass,
     Map<ActionIdentifier<any>, ((payload: any) => void)[]>
+  > = new Map()
+  private readonly abortMap: Map<
+    OperationType,
+    Map<string | undefined, Aborter>
   > = new Map()
 
   constructor(private app: Fleur) {
     this.dispatcher = new Dispatcher()
     this.storeContext = new StoreContext()
-    this.app.stores.forEach(StoreClass => {
+    this.app.stores.forEach((StoreClass) => {
       this.initializeStore(StoreClass)
     })
-
-    this.getStore = this.getStore.bind(this)
-    this.executeOperation = this.executeOperation.bind(this)
-    this.dispatch = this.dispatch.bind(this)
-    this.depend = this.depend.bind(this)
-
-    const self = this
-    this.operationContext = {
-      get executeOperation() {
-        return self.executeOperation
-      },
-      get dispatch() {
-        return self.dispatch
-      },
-      get getStore() {
-        return self.getStore
-      },
-      get depend() {
-        return self.depend
-      },
-    }
-
-    this.componentContext = {
-      executeOperation: (op, ...args) => {
-        self.executeOperation(op, ...args)
-      },
-      get getStore() {
-        return self.getStore
-      },
-      get depend() {
-        return self.depend
-      },
-    }
   }
 
   public dehydrate(): HydrateState {
@@ -80,7 +55,7 @@ export class AppContext {
   }
 
   public rehydrate(state: HydrateState) {
-    this.app.stores.forEach(StoreClass => {
+    this.app.stores.forEach((StoreClass) => {
       if (!state.stores[StoreClass.storeName]) return
 
       if (!this.stores.has(StoreClass.storeName)) {
@@ -93,17 +68,13 @@ export class AppContext {
     })
   }
 
-  public depend<T>(obj: T): T {
+  public depend = <T>(obj: T): T => {
     return obj
   }
 
-  public getStore(storeName: string): Store
-  public getStore<T extends StoreClass<any>>(StoreClass: T): InstanceType<T>
-  public getStore<T extends StoreClass<any>>(
-    StoreClass: T | string,
-  ): InstanceType<T> {
+  public getStore: GetStore = (StoreClazz: string | StoreClass) => {
     const storeName =
-      typeof StoreClass === 'string' ? StoreClass : StoreClass.storeName
+      typeof StoreClazz === 'string' ? StoreClazz : StoreClazz.storeName
 
     if (process.env.NODE_ENV !== 'production') {
       const storeRegistered = this.app.stores.has(storeName)
@@ -115,18 +86,71 @@ export class AppContext {
     )
   }
 
-  public async executeOperation<O extends Operation>(
+  public executeOperation = async <O extends OperationType>(
     operation: O,
     ...args: OperationArgs<O>
-  ): Promise<void> {
-    await Promise.resolve(operation(this.operationContext, ...args))
+  ): Promise<void> => {
+    const mapOfOp =
+      this.abortMap.get(operation) ??
+      this.abortMap.set(operation, new Map()).get(operation)!
+
+    let key: string | undefined | null = null
+    const aborter = createAborter()
+
+    try {
+      const acceptAbort = (ident?: string) => {
+        if (mapOfOp.has(ident)) {
+          throw new Error(
+            'Fleur: Can not call abortable() twice in your Operation',
+          )
+        }
+
+        mapOfOp.set(ident, aborter)
+      }
+
+      await Promise.resolve(
+        operation(
+          {
+            executeOperation: this.executeOperation,
+            dispatch: this.dispatch,
+            getStore: this.getStore,
+            depend: this.depend,
+            abort: aborter.signal,
+            acceptAbort,
+            ...{ getExecuteMap: this.getAbortMap },
+          },
+          ...args,
+        ),
+      )
+    } catch (e) {
+      throw e
+    } finally {
+      aborter.destroy()
+
+      if (key !== null) {
+        mapOfOp.delete(key)
+      }
+    }
   }
 
-  public dispatch<AI extends ActionIdentifier<any>>(
+  public dispatch = <AI extends ActionIdentifier<any>>(
     actionIdentifier: AI,
     payload: ExtractPayloadType<AI>,
-  ) {
+  ) => {
     this.dispatcher.dispatch(actionIdentifier, payload)
+  }
+
+  private getAbortMap = (op: OperationType) => {
+    return this.abortMap.get(op)
+  }
+
+  public getListenersOfStore = <S extends string | StoreClass<any>>(
+    store: S,
+  ):
+    | ReadonlyMap<ActionIdentifier<any>, ((payload: any) => void)[]>
+    | undefined => {
+    const Store = this.getStore(store).constructor as StoreClass<any>
+    return this.actionCallbackMap.get(Store)
   }
 
   private initializeStore(storName: string): Store
@@ -152,10 +176,10 @@ export class AppContext {
 
     Object.keys(store)
       .filter(
-        key =>
+        (key) =>
           (store as any)[key] != null && (store as any)[key].__fleurHandler,
       )
-      .forEach(key => {
+      .forEach((key) => {
         const actionIdentifier = (store as any)[key].__action
         const actionCallbacks = actionCallbackMap.get(actionIdentifier) || []
 
@@ -165,7 +189,7 @@ export class AppContext {
 
     this.actionCallbackMap.set(StoreConstructor, actionCallbackMap)
 
-    this.dispatcher.listen(action => {
+    this.dispatcher.listen((action) => {
       const actionCallbackMap = this.actionCallbackMap.get(StoreConstructor)!
       const handlers = actionCallbackMap.get(action.type)
       if (handlers) {

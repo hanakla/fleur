@@ -17,13 +17,12 @@ describe('withFleurContext', () => {
       createElementWithContext(context, Wrapped, { prop: 'prop string' }),
     )
 
-    expect(root.findByType(Receiver).props).toEqual({
-      depend: context.componentContext.depend,
-      executeOperation: context.componentContext.executeOperation,
-      getStore: context.componentContext.getStore,
-      prop: 'prop string',
-    })
+    const { props } = root.findByType(Receiver)
 
+    expect(props.depend).toBeInstanceOf(Function)
+    expect(props.executeOperation).toBeInstanceOf(Function)
+    expect(props.getStore).toBeInstanceOf(Function)
+    expect(props.prop).toBe('prop string')
     unmount()
   })
 })

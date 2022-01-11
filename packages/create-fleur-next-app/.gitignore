@@ -1,6 +1,0 @@
-node_modules/
-/bin
-/template/.next/
-/template/next-env.d.ts
-/template/yarn.lock
-/example

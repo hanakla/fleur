@@ -1,3 +1,31 @@
+# @fleur/next Changelog
+
+## 1.0.0
+
+### Breakings
+
+- [#365](https://github.com/fleur-js/fleur/pull/365) Remove deprecated type `PageContext`
+  - Use `FleurishNextPageContext` instead.
+
+### Updates
+
+- Update dependency `@fleur/fleur` to `^3.0.0`
+- Add `FleurishNextPage`, `FleurishGetServerSidePropsContext` and `FleurishGetStaticPropsContext` type
+- [#365](https://github.com/fleur-js/fleur/pull/365) Add `NextJsActions`, `NextJsOps` and `withSSPDistributer` middleware for Next.js Server side props rehydration support
+
+## 0.8.0
+
+- Support Next.js 10
+- expose `fleurContext` in App and Page context for serializing state in Page
+
+## 0.7.0
+
+- Use to serialize state `superjson` instead of serialize-javascript
+
+## 0.6.0
+
+- Adjusting context type name
+
 ## 0.5.0
 
 - [#320](https://github.com/fleur-js/fleur/pull/320) Update to `@fleur/fleur@2.0.0`

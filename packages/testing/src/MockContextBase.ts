@@ -1,4 +1,10 @@
-import { StoreClass } from '@fleur/fleur'
+import {
+  ActionIdentifier,
+  Operation,
+  OperationArgs,
+  OperationContext,
+  StoreClass,
+} from '@fleur/fleur'
 import immer, { Draft, createDraft, enableMapSet, finishDraft } from 'immer'
 import { MockStore, mockStore } from './mockStore'
 
@@ -28,8 +34,23 @@ interface DeriveController {
 }
 
 export class MockContextBase {
-  public mockStores: readonly MockStore[] = []
-  public mockObjects: Map<any, any> = new Map()
+  public readonly mockStores: readonly MockStore[] = []
+  public readonly mockObjects: Map<any, any> = new Map()
+
+  public readonly mock: {
+    dispatches: { action: ActionIdentifier<any>; payload: any }[]
+    executes: { op: Operation; args: any }[]
+  } = { dispatches: [], executes: [] }
+
+  /** @deprecated use `context.mock.dispatches instead */
+  public get dispatches() {
+    return this.mock.dispatches
+  }
+
+  /** @deprecated use `context.mock.executes instead */
+  public get executes() {
+    return this.mock.executes
+  }
 
   constructor({
     stores,
@@ -62,6 +83,57 @@ export class MockContextBase {
     return this.mockObjects.has(source) ? this.mockObjects.get(source) : source
   }
 
+  public dispatch = <AI extends ActionIdentifier<any>>(
+    action: AI,
+    payload: ReturnType<AI>,
+  ): void => {
+    this.mock.dispatches.push({ action, payload })
+    this.mockStores.forEach(({ store }) => {
+      Object.keys(store)
+        .filter(
+          key =>
+            (store as any)[key] != null && (store as any)[key].__fleurHandler,
+        )
+        .forEach(key => {
+          if ((store as any)[key].__action === action) {
+            ;(store as any)[key].producer(payload)
+          }
+        })
+    })
+  }
+
+  public executeOperation = async <O extends Operation>(
+    operation: O,
+    ...args: OperationArgs<O>
+  ): Promise<void> => {
+    const controller = new AbortController()
+
+    const context: OperationContext = {
+      ...this,
+      abort: null as any,
+      acceptAbort: () => {},
+    }
+
+    Object.defineProperty(context, 'abort', {
+      get() {
+        console.warn(
+          '@fleur/testing: context.abort is mocked implement currently, It might not be work.',
+        )
+
+        return {
+          aborted: false,
+          onabort: null,
+          get signal() {
+            return controller.signal
+          },
+        }
+      },
+    })
+
+    await Promise.resolve(operation(context, ...args))
+    this.mock.executes.push({ op: operation, args })
+  }
+
   public derive(modifier?: DeriveController): this {
     const cloneStores = this.mockStores.map(entry =>
       mockStore(entry.StoreClass, entry.store.state),
@@ -69,6 +141,7 @@ export class MockContextBase {
     const clonedMocks = new Map(this.mockObjects)
 
     const mockStores = createDraft(cloneStores)
+
     const deriveStore: StoreDeriver = (StoreClass, modifier) => {
       const mock = mockStores.find(entry => entry.name === StoreClass.storeName)
 
@@ -89,9 +162,7 @@ export class MockContextBase {
       clonedMocks.set(source, mock)
     }
 
-    if (modifier) {
-      modifier({ deriveStore, injectDep })
-    }
+    modifier?.({ deriveStore, injectDep })
 
     return new (this.constructor as any)({
       stores: finishDraft(mockStores),

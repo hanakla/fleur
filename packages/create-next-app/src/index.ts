@@ -26,14 +26,14 @@ const program = new Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-directory>')
   .usage(`${chalk.green`a`}`)
-  .action(name => {
+  .action((name) => {
     appName = name.trim()
   })
   .option('--use-npm')
   .parse(process.argv)
 
 const printValidationResults = (errors: string[] = []) => {
-  errors.forEach(error => console.log(`  ${chalk.red(error)}`))
+  errors.forEach((error) => console.log(`  ${chalk.red(error)}`))
 }
 
 async function run() {
@@ -66,18 +66,25 @@ async function run() {
     console.log()
     console.log(chalk.red(`Project directory \`${appName}\` already exists`))
     console.log(
-      chalk.red('Please remove it or specify another project-directpry'),
+      chalk.red('Please remove it or specify another project-directory'),
     )
     console.log()
 
     process.exit(1)
   }
 
-  await cpy('**', appPath, {
+  await cpy(['**', '../src/gitignore-default'], appPath, {
     parents: true,
-    cwd: path.join(__dirname, '../template'),
-    rename: name => {
-      if (name === 'gitignore') return '.gitignore'
+    dot: true,
+    cwd: path.join(__dirname, '../example'),
+    transform: (entry) => {
+      if (entry === '../src/gitignore-default') {
+        return '.gitignore'
+      }
+      return entry
+    },
+    rename: (name) => {
+      if (name === 'gitignore-default') return '.gitignore'
       return name
     },
   })
@@ -88,7 +95,7 @@ async function run() {
   writeFileSync(packageJsonPath, JSON.stringify(appPackageJson, null, '  '))
 
   {
-    const packageCommands: [string, string[]][] = program.useNpm
+    const packageCommands: [string, string[]][] = program.opts().useNpm
       ? [
           ['npm', ['install', ...APP_DEPS]],
           ['npm', ['install', '-D', ...APP_DEV_DEPS]],
@@ -99,14 +106,14 @@ async function run() {
         ]
 
     for (let command of packageCommands) {
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         const [proc, args] = command
 
         spawn(proc, args, {
           stdio: 'inherit',
           cwd: appPath,
           env: { ...process.env },
-        }).on('close', code => {
+        }).on('close', (code) => {
           if (code !== 0) {
             reject(new Error('`yarn install` failed'))
             return
@@ -121,8 +128,8 @@ async function run() {
   console.log(`${chalk.green('Success!')} Created ${appName} at ${appPath}`)
 }
 
-run().catch(() => {
+run().catch((e) => {
   console.log()
-  console.log(chalk.red('Installation failed.'))
+  console.log(chalk.red('Installation failed: '), e)
   console.log()
 })

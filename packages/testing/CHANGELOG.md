@@ -1,3 +1,23 @@
+# @fleur/testing Changelog
+
+### 4.1.1
+
+- Fix type error to `@fleur/fleur`
+
+### 4.1.0
+
+- Update `@fleur/fleur` peerDependency to `^3.x.x || ^2.0.0`
+- Feature: Accept `Fleur` instance in mockFleurContext()
+  ```ts
+  const App = new Fleur({ stores: [SomeStore] })
+  // Now got
+  const mockContext = mockFleurContext(App)
+  ```
+- Feature: `mockContext.dispatch` and `mockContext.executeOperation` can called from any mockContext.
+- Refactor: Backward compat: `.dispatches` and `.executes` moved into `mockContext.mock`
+- Deprecated: `mockOperationContext.dispatches` is deprecated.
+- Deprecated:` mockComponentContext.executes` is deprecated.
+
 ### 4.0.0
 
 - [#317](https://github.com/fleur-js/fleur/pull/317) Update dependency `immer`
