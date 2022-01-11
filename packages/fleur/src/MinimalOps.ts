@@ -5,7 +5,7 @@ import {
   OperationContextWithInternalAPI,
 } from './OperationContext'
 import { StoreContext } from './StoreContext'
-import { Operation, OperationArgs, OperationDef } from './Operations'
+import { Operation, OperationArgs } from './Operations'
 
 interface MinimalOperationDef<S> {
   (_: OperationContext & { state: S }, ...args: any[]): Promise<void> | void
@@ -35,7 +35,7 @@ export const minOps = <
   }
 
   const ops: any = {}
-  Object.keys(domain.ops).forEach(key => {
+  Object.keys(domain.ops).forEach((key) => {
     const op = (context: OperationContext, ...args: any[]) => {
       const store = context.getStore(MinStore)
       const draft = createDraft(store.state)
@@ -56,10 +56,7 @@ export const minOps = <
 
     abort.byKey = (key?: string) => {
       return (context: OperationContextWithInternalAPI) => {
-        context
-          .getExecuteMap(op)
-          ?.get(key)
-          ?.abort()
+        context.getExecuteMap(op)?.get(key)?.abort()
       }
     }
 
