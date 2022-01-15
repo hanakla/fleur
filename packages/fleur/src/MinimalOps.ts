@@ -13,23 +13,23 @@ import {
   OperationContextWithInternalAPI,
 } from './OperationContext'
 import { StoreContext } from './StoreContext'
-import { DefToOperation, Operation, OperationArgs } from './Operations'
+import { DefToOperation, Operation } from './Operations'
 
-type MinOpContext<S> = OperationContext & {
-  state: S
-  updateImmediately: (proc: (state: S) => void) => void
-}
 export interface MinimalOperationDef<S> {
-  (_: MinOpContext<S>, ...args: any[]): Promise<void> | void
+  (
+    _: OperationContext & {
+      state: S
+      updateImmediately: (proc: (state: S) => void) => void
+    },
+    ...args: any[]
+  ): Promise<void> | void
 }
 
 type MinOpDefToOperation<T extends MinimalOperationDef<any>> = T extends (
-  _: MinOpContext<any>,
+  _: OperationContext,
   ...args: infer R
 ) => void | Promise<void>
-  ? DefToOperation<
-      (_: OperationContext, ...args: OperationArgs<T>) => Promise<void> | void
-    >
+  ? DefToOperation<(_: OperationContext, ...args: R[]) => Promise<void> | void>
   : never
 
 /**
