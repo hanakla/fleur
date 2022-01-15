@@ -99,13 +99,13 @@ export const minOps = <
         if (hasDraftOnBegin) return
 
         const nextState = finishDraft(draft) as S
+        store._draft = null
 
         // Skip committing when operation is aborted but finishing draft for prevent memory leak
         if (context.abort.aborted) return
 
         if (!gotError && store._state !== nextState) {
           store._state = nextState
-          store._draft = null
           store.emitChange()
         }
       }
