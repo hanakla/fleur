@@ -127,7 +127,7 @@ export const getServerSidePropsWithFleur = <P extends object = any>(
 ) => {
   return async (
     context: FleurishGetServerSidePropsContext,
-  ): Promise<GetServerSidePropsResult<P>> => {
+  ): Promise<GetServerSidePropsResult<P & FleurSSProps>> => {
     const fleurCtx = getOrCreateFleurContext()
     context.executeOperation = fleurCtx.executeOperation
     context.getStore = fleurCtx.getStore
@@ -137,7 +137,10 @@ export const getServerSidePropsWithFleur = <P extends object = any>(
     if ('props' in result) {
       return {
         ...result,
-        props: { ...result.props, __FLEUR_STATE__: serializeContext(fleurCtx) },
+        props: {
+          ...(await result.props),
+          __FLEUR_STATE__: serializeContext(fleurCtx),
+        },
       }
     }
 
@@ -152,7 +155,7 @@ export const getStaticPropsWithFleur = <P extends object = any>(
 ) => {
   return async (
     context: FleurishGetStaticPropsContext,
-  ): Promise<GetServerSidePropsResult<P>> => {
+  ): Promise<GetServerSidePropsResult<P & FleurSSProps>> => {
     const fleurCtx = getOrCreateFleurContext()
     context.executeOperation = fleurCtx.executeOperation
     context.getStore = fleurCtx.getStore
