@@ -16,7 +16,7 @@ export interface Operation extends OperationDef {
   }
 }
 
-type DefToOperation<T extends OperationDef> = T & Operation
+export type DefToOperation<T extends OperationDef> = T & Operation
 
 export type OperationArgs<T> = T extends (_: any, ...args: infer A) => any
   ? A
@@ -28,7 +28,7 @@ export const operations = <T extends { [name: string]: OperationDef }>(
 ): { [K in keyof T]: DefToOperation<T[K]> } => {
   const ops: any = {}
 
-  Object.keys(operations).forEach(key => {
+  Object.keys(operations).forEach((key) => {
     ops[key] = operation(operations[key])
   })
 
@@ -47,10 +47,7 @@ export const operation = <T extends OperationDef>(op: T): DefToOperation<T> => {
 
   abort.byKey = (key?: string) => {
     return (context: OperationContextWithInternalAPI) => {
-      context
-        .getExecuteMap(opp)
-        ?.get(key)
-        ?.abort()
+      context.getExecuteMap(opp)?.get(key)?.abort()
     }
   }
 
