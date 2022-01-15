@@ -11,6 +11,7 @@ export {
   OperationDef as Operation,
   OperationArgs,
 } from './Operations'
+export { minOps } from './MinimalOps'
 export { selector } from './selector'
 export { selectorWithStore } from './selectorWithStore'
 export { withReduxDevTools } from './withReduxDevtools'

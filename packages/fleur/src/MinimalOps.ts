@@ -38,7 +38,7 @@ type MinOpDefToOperation<T extends MinimalOperationDef<any>> = T extends (
  */
 export const minOps = <
   T extends { [action: string]: MinimalOperationDef<S> },
-  S extends any
+  S extends object
 >(
   name: string,
   domain: {
