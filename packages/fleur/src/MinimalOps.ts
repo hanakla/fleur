@@ -15,18 +15,17 @@ import {
 import { StoreContext } from './StoreContext'
 import { DefToOperation, Operation } from './Operations'
 
+type MinOpContext<S> = OperationContext & {
+  state: S
+  updateImmediately: (proc: (state: S) => void) => void
+}
+
 export interface MinimalOperationDef<S> {
-  (
-    _: OperationContext & {
-      state: S
-      updateImmediately: (proc: (state: S) => void) => void
-    },
-    ...args: any[]
-  ): Promise<void> | void
+  (_: MinOpContext<S>, ...args: any[]): Promise<void> | void
 }
 
 type MinOpDefToOperation<T extends MinimalOperationDef<any>> = T extends (
-  _: OperationContext,
+  _: MinOpContext<any>,
   ...args: infer R
 ) => void | Promise<void>
   ? DefToOperation<(_: OperationContext, ...args: R[]) => Promise<void> | void>
