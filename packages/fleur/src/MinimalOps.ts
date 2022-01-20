@@ -15,7 +15,7 @@ import {
 import { StoreContext } from './StoreContext'
 import { DefToOperation, Operation } from './Operations'
 
-type MinOpContext<S> = OperationContext & {
+export type MinOpContext<S> = OperationContext & {
   state: S
   updateImmediately: (proc: (state: S) => void) => void
 }
