@@ -1,3 +1,4 @@
+import { action } from './Action'
 import { Fleur } from './Fleur'
 import { minOps } from './MinimalOps'
 
@@ -82,5 +83,33 @@ describe('MinimalOps', () => {
     await ctx.executeOperation(testOps.abortable.abort)
 
     expect(ctx.getStore(TestStore).state.text).toBe('hi')
+  })
+
+  it('listen external actions', async () => {
+    const ident = action<{ next: string }>()
+
+    const [ExtraStore, externalOps] = minOps('external', {
+      ops: {
+        dispatch(x) {
+          x.dispatch(ident, { next: 'ok' })
+        },
+      },
+      initialState: () => ({}),
+    })
+
+    const [Store] = minOps('test', {
+      ops: {},
+      listens: (on) => [
+        on(ident, (state, { next }) => {
+          state.text = next
+        }),
+      ],
+      initialState: () => ({ text: '' }),
+    })
+
+    const ctx = new Fleur({ stores: [ExtraStore, Store] }).createContext()
+    await ctx.executeOperation(externalOps.dispatch)
+
+    expect(ctx.getStore(Store).state.text).toBe('ok')
   })
 })

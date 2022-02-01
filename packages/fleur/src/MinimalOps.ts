@@ -7,13 +7,19 @@ import {
   finishDraft,
   produceWithPatches,
 } from 'immer'
-import { Store, StoreClass } from './Store'
+import { listen, Store, StoreClass } from './Store'
 import {
   OperationContext,
   OperationContextWithInternalAPI,
 } from './OperationContext'
 import { StoreContext } from './StoreContext'
-import { DefToOperation, Operation } from './Operations'
+import { DefToOperation, Operation, OperationArgs } from './Operations'
+import { action, ActionIdentifier, ExtractPayloadType } from './Action'
+
+export interface MinimalOperationContext<S> extends OperationContext {
+  state: S
+  updateImmediately: (proc: (state: S) => void) => void
+}
 
 export type MinOpContext<S> = OperationContext & {
   state: S
@@ -21,15 +27,19 @@ export type MinOpContext<S> = OperationContext & {
 }
 
 export interface MinimalOperationDef<S> {
-  (_: MinOpContext<S>, ...args: any[]): Promise<void> | void
+  (_: MinimalOperationContext<S>, ...args: any): Promise<void> | void
 }
 
-type MinOpDefToOperation<T extends MinimalOperationDef<any>> = T extends (
-  _: MinOpContext<any>,
-  ...args: infer R
-) => void | Promise<void>
-  ? DefToOperation<(_: OperationContext, ...args: R[]) => Promise<void> | void>
-  : never
+type MinOpDefToOperation<T extends MinimalOperationDef<any>> = DefToOperation<
+  (_: OperationContext, ...args: OperationArgs<T>) => Promise<void> | void
+>
+
+type ListenerRegister<S> = <T extends ActionIdentifier<any>>(
+  ident: T,
+  producer: (draft: S, payload: ExtractPayloadType<T>) => void,
+) => void
+
+// type Ext
 
 /**
  * Create fleur minimal ops
@@ -43,6 +53,7 @@ export const minOps = <
   name: string,
   domain: {
     ops: T
+    listens?: (lx: ListenerRegister<S>) => void
     initialState: () => S
   },
 ): [StoreClass<S>, { [K in keyof T]: MinOpDefToOperation<T[K]> }] => {
@@ -57,6 +68,7 @@ export const minOps = <
       super(ctx)
       this._state = domain.initialState()
 
+      // Expose latest state in draft
       Object.defineProperty(this, 'state', {
         get() {
           return this._draft ? (current(this._draft) as S) : this._state
@@ -65,6 +77,27 @@ export const minOps = <
           this._state = s
         },
       })
+
+      // Register action handlers
+      let idx = 0
+      domain.listens?.((ident, handler) => {
+        ;(this as any)[`__handler${idx++}_${ident.name}`] = listen(
+          ident,
+          (payload) => {
+            this.updateWith((d) => handler(d as S, payload))
+          },
+        )
+      })
+    }
+
+    protected updateWith(producer: (draft: Draft<S>) => void): void {
+      if (this._draft) {
+        throw new Error(
+          'Call `updateWith` in execute operation, It will happens race condition',
+        )
+      }
+
+      super.updateWith(producer)
     }
   }
 
