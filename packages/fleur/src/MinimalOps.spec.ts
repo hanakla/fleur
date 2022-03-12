@@ -9,43 +9,41 @@ describe('MinimalOps', () => {
   }
 
   const [TestStore, testOps] = minOps('Test', {
+    initialState: (): State => ({
+      text: 'hi',
+      canvas: null,
+    }),
     ops: {
-      setText: ({ state }, text: string) => {
-        state.text = text
+      setText: ({ commit }, text: string) => {
+        commit({ text })
       },
       async checkImmediateUpdate(
-        { state, updateImmediately },
+        { getState, commit },
         spy: (state: any) => void,
       ) {
-        updateImmediately((s) => {
-          s.text = 'AAAA'
-        })
+        commit({ text: 'AAAA' })
 
-        spy(state) // expect to { text: 'AAAA' }
+        spy(getState()) // expect to { text: 'AAAA' }
         await new Promise((r) => setTimeout(r, 100))
 
-        state.text = 'BBBB'
+        commit({ text: 'BBBB' })
       },
       async chainedOp1(x) {
-        x.state.text = 'CHAINING'
+        x.commit({ text: 'CHAINING' })
         await x.executeOperation(testOps.chainedOp2)
-        if (x.state.text !== 'COMPLETED') throw new Error('🐶')
+        if (x.getState().text !== 'COMPLETED') throw new Error('🐶')
       },
       chainedOp2(x) {
         if (x.state.text !== 'CHAINING') throw new Error('😂')
-        x.state.text = 'COMPLETED'
+        x.commit({ text: 'COMPLETED' })
       },
       async abortable(x) {
         x.acceptAbort()
 
         await new Promise((r) => setTimeout(r, 100))
-        x.state.text = 'WOPP'
+        x.commit({ text: 'WOPP' })
       },
     },
-    initialState: (): State => ({
-      text: 'hi',
-      canvas: null,
-    }),
   })
 
   const app = new Fleur({ stores: [TestStore] })
@@ -58,7 +56,7 @@ describe('MinimalOps', () => {
     expect(ctx.getStore(TestStore).state).toMatchObject({ text: 'next' })
   })
 
-  it('updateImmediately', async () => {
+  it('commit', async () => {
     const ctx = app.createContext()
     const spy = jest.fn()
     const p = ctx.executeOperation(testOps.checkImmediateUpdate, spy)

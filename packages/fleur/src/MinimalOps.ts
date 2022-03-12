@@ -1,12 +1,4 @@
-import {
-  applyPatches,
-  createDraft,
-  current,
-  Draft,
-  enablePatches,
-  finishDraft,
-  produceWithPatches,
-} from 'immer'
+import immer, { Draft, enablePatches, finishDraft } from 'immer'
 import { listen, Store, StoreClass } from './Store'
 import {
   OperationContext,
@@ -14,20 +6,17 @@ import {
 } from './OperationContext'
 import { StoreContext } from './StoreContext'
 import { DefToOperation, Operation, OperationArgs } from './Operations'
-import { action, ActionIdentifier, ExtractPayloadType } from './Action'
-
-export interface MinimalOperationContext<S> extends OperationContext {
-  state: S
-  updateImmediately: (proc: (state: S) => void) => void
-}
+import { ActionIdentifier, ExtractPayloadType } from './Action'
+import { ObjectPatcher, patchObject, proxyDeepFreeze } from './utils'
 
 export type MinOpContext<S> = OperationContext & {
   state: S
-  updateImmediately: (proc: (state: S) => void) => void
+  getState: () => S
+  commit: (patcher: ObjectPatcher<S>) => void
 }
 
 export interface MinimalOperationDef<S> {
-  (_: MinimalOperationContext<S>, ...args: any): Promise<void> | void
+  (_: MinOpContext<S>, ...args: any): Promise<void> | void
 }
 
 type MinOpDefToOperation<T extends MinimalOperationDef<any>> = DefToOperation<
@@ -61,22 +50,10 @@ export const minOps = <
 
   const MinStore = class extends Store<S> {
     public static storeName = name
-    public _state: S
-    public _draft: Draft<S> | null = null
 
     constructor(ctx: StoreContext) {
       super(ctx)
-      this._state = domain.initialState()
-
-      // Expose latest state in draft
-      Object.defineProperty(this, 'state', {
-        get() {
-          return this._draft ? (current(this._draft) as S) : this._state
-        },
-        set(s: S) {
-          this._state = s
-        },
-      })
+      this.state = domain.initialState()
 
       // Register action handlers
       let idx = 0
@@ -89,58 +66,28 @@ export const minOps = <
         )
       })
     }
-
-    protected updateWith(producer: (draft: Draft<S>) => void): void {
-      if (this._draft) {
-        throw new Error(
-          'Call `updateWith` in execute operation, It will happens race condition',
-        )
-      }
-
-      super.updateWith(producer)
-    }
   }
 
   const ops: any = {}
   Object.keys(domain.ops).forEach((key) => {
     const op = async (context: OperationContext, ...args: any[]) => {
       const store = context.getStore(MinStore)
-      const hasDraftOnBegin = store._draft != null
-      const draft = store._draft ?? createDraft(store.state)
-      store._draft = draft
 
-      const updateImmediately = (proc: (state: S) => void) => {
-        const [nextState, patches] = produceWithPatches(store.state, (d) =>
-          proc(d as S),
-        )
-        store._state = nextState
-        applyPatches(draft, patches)
+      const commit = (patcher: ObjectPatcher<S>) => {
+        store.state = immer(store.state, (draft) => {
+          patchObject(draft as any, patcher)
+        })
+        store.emitChange()
       }
 
-      let gotError = false
-      try {
-        await domain.ops[key](
-          { ...context, state: draft as S, updateImmediately },
-          ...args,
-        )
-      } catch (e) {
-        gotError = true
-        throw e
-      } finally {
-        // Skip committing when operation called from another operation
-        if (hasDraftOnBegin) return
-
-        const nextState = finishDraft(draft) as S
-        store._draft = null
-
-        // Skip committing when operation is aborted but finishing draft for prevent memory leak
-        if (context.abort.aborted) return
-
-        if (!gotError && store._state !== nextState) {
-          store._state = nextState
-          store.emitChange()
-        }
+      const getState = () => {
+        return proxyDeepFreeze(store.state)
       }
+
+      await domain.ops[key](
+        { ...context, commit, state: proxyDeepFreeze(store.state), getState },
+        ...args,
+      )
     }
 
     const abort = (context: OperationContextWithInternalAPI) => {
