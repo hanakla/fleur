@@ -1,4 +1,4 @@
-import immer, { Draft, enablePatches, finishDraft } from 'immer'
+import immer from 'immer'
 import { listen, Store, StoreClass } from './Store'
 import {
   OperationContext,
@@ -46,8 +46,6 @@ export const minOps = <
     initialState: () => S
   },
 ): [StoreClass<S>, { [K in keyof T]: MinOpDefToOperation<T[K]> }] => {
-  enablePatches()
-
   const MinStore = class extends Store<S> {
     public static storeName = name
 
