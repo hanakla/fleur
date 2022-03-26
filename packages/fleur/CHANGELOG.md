@@ -1,5 +1,52 @@
 # @fleur/fleur Changelog
 
+## 3.1.0
+
+### New features
+
+- [#484](https://github.com/fleur-js/fleur/pull/484) Feature: `minOps` introduced!
+
+```ts
+import { minOps } from '@fluer/fleur'
+
+export const [SomeStore, someOps] = minOps('SomeDomain', {
+  // Define initial store state.
+  initialState: (): State => ({
+    fetching: false
+    entities: {},
+  }),
+  ops: {
+    async fetchEntity(x, id: string) {
+      // Update store state via `x.commit`.
+      // No more need to define extra actions.
+      // It's shallow merged to state.
+      x.commit({ fetching: true})
+
+      const data = await (await fetch(`/api/entities/${id}`)).json()
+
+      // Or update state with function for deeply set.
+      x.commit((draft) => {
+        draft.fetching = true
+        draft.entities[data.id] = data
+      })
+    },
+    async someAction(x) {
+      // Get the state at the start of the operation can be obtained.
+      x.state
+
+      // Get the latest state with `x.getState()`.
+      x.getState()
+    },
+  },
+  /** Can be listened to another domain actions */
+  listens: (on) => [
+    on(anotherDomainActions.action, (draft, payload) => {
+      draft.entities = {}
+    }),
+  ],
+})
+```
+
 ## 3.0.1
 
 - [#496](https://github.com/fleur-js/fleur/pull/496) Annotate this type for typescript-eslint/unbound-method (Fix #447)
@@ -34,7 +81,7 @@ import { Ops } from './ops'
 
 const Component = () => {
   const { executeOperation } = useFleurContext()
-  
+
   executeOperation(Ops.someOp.abort)
   // or `executeOperation(Ops.someOp.abort.byKey(key))` for key specified operation abort
 
