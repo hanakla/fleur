@@ -6,7 +6,7 @@ import {
 } from './OperationContext'
 import { StoreContext } from './StoreContext'
 import { DefToOperation, Operation, OperationArgs } from './Operations'
-import { ActionIdentifier, ExtractPayloadType } from './Action'
+import { action, ActionIdentifier, ExtractPayloadType } from './Action'
 import { ObjectPatcher, patchObject, proxyDeepFreeze } from './utils'
 
 export type MinOpContext<S> = OperationContext & {
@@ -27,8 +27,6 @@ type ListenerRegister<S> = <T extends ActionIdentifier<any>>(
   ident: T,
   producer: (draft: S, payload: ExtractPayloadType<T>) => void,
 ) => void
-
-// type Ext
 
 /**
  * Create fleur minimal ops
@@ -68,6 +66,10 @@ export const minOps = <
 
   const ops: any = {}
   Object.keys(domain.ops).forEach((key) => {
+    const internalAction = action<any>(
+      `@fleur/minOps--${name}-${key}:nextState`,
+    )
+
     const op = async (context: OperationContext, ...args: any[]) => {
       const store = context.getStore(MinStore)
 
@@ -75,6 +77,9 @@ export const minOps = <
         store.state = immer(store.state, (draft) => {
           patchObject(draft as any, patcher)
         })
+
+        // dispatch for Redux devtools
+        context.dispatch(internalAction, store.state)
         store.emitChange()
       }
 
