@@ -90,6 +90,7 @@ export class AppContext {
     operation: O,
     ...args: OperationArgs<O>
   ): Promise<void> => {
+    const finals: Array<() => void> = []
     const mapOfOp =
       this.abortMap.get(operation) ??
       this.abortMap.set(operation, new Map()).get(operation)!
@@ -117,6 +118,7 @@ export class AppContext {
             depend: this.depend,
             abort: aborter.signal,
             acceptAbort,
+            finally: (cb) => finals.push(cb),
             ...{ getExecuteMap: this.getAbortMap },
           },
           ...args,
@@ -130,6 +132,8 @@ export class AppContext {
       if (key !== null) {
         mapOfOp.delete(key)
       }
+
+      finals.forEach((cb) => cb)
     }
   }
 

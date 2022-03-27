@@ -21,6 +21,8 @@ export interface OperationContext {
 
   depend<T>(this: void, o: T): T
 
+  finally: (cb: () => void) => void
+
   abort: AborterSignal
   acceptAbort: (key?: string) => void
 }
