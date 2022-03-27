@@ -1,11 +1,11 @@
 import { ActionIdentifier } from './Action'
-import { OperationArgs, Operation, OperationType } from './Operations'
+import { OperationArgs, Operation, AnyOperationDef } from './Operations'
 import { StoreClass } from './Store'
 import { ExtractPayloadType } from './Action'
 import { Aborter, AborterSignal } from './Abort'
 
 export interface OperationContext {
-  executeOperation<O extends OperationType>(
+  executeOperation<O extends AnyOperationDef>(
     this: void,
     operator: O,
     ...args: OperationArgs<O>

@@ -4,7 +4,7 @@ import { createAborter } from './Abort'
 import { ActionIdentifier, ExtractPayloadType } from './Action'
 import Dispatcher from './Dispatcher'
 import { Fleur } from './Fleur'
-import { OperationArgs, OperationType } from './Operations'
+import { OperationArgs, AnyOperationDef } from './Operations'
 import { Store, StoreClass } from './Store'
 import { StoreContext } from './StoreContext'
 import { Aborter } from './Abort'
@@ -32,7 +32,7 @@ export class AppContext {
     Map<ActionIdentifier<any>, ((payload: any) => void)[]>
   > = new Map()
   private readonly abortMap: Map<
-    OperationType,
+    AnyOperationDef,
     Map<string | undefined, Aborter>
   > = new Map()
 
@@ -86,7 +86,7 @@ export class AppContext {
     )
   }
 
-  public executeOperation = async <O extends OperationType>(
+  public executeOperation = async <O extends AnyOperationDef>(
     operation: O,
     ...args: OperationArgs<O>
   ): Promise<void> => {
@@ -144,7 +144,7 @@ export class AppContext {
     this.dispatcher.dispatch(actionIdentifier, payload)
   }
 
-  private getAbortMap = (op: OperationType) => {
+  private getAbortMap = (op: AnyOperationDef) => {
     return this.abortMap.get(op)
   }
 

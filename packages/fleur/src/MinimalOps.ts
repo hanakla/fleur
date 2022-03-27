@@ -5,7 +5,7 @@ import {
   OperationContextWithInternalAPI,
 } from './OperationContext'
 import { StoreContext } from './StoreContext'
-import { DefToOperation, Operation, OperationArgs } from './Operations'
+import { DefToOperation, OperationArgs } from './Operations'
 import { action, ActionIdentifier, ExtractPayloadType } from './Action'
 import { ObjectPatcher, patchObject, proxyDeepFreeze } from './utils'
 
@@ -15,11 +15,13 @@ export type MinOpContext<S> = OperationContext & {
   commit: (patcher: ObjectPatcher<S>) => void
 }
 
-export interface MinimalOperationDef<S> {
+export interface AnyMinimalOperationDef<S> {
   (_: MinOpContext<S>, ...args: any): Promise<void> | void
 }
 
-type MinOpDefToOperation<T extends MinimalOperationDef<any>> = DefToOperation<
+type MinOpDefToOperation<
+  T extends AnyMinimalOperationDef<any>
+> = DefToOperation<
   (_: OperationContext, ...args: OperationArgs<T>) => Promise<void> | void
 >
 
@@ -34,7 +36,7 @@ type ListenerRegister<S> = <T extends ActionIdentifier<any>>(
  * * It has side-effects of calling `enablePatches()` of immer.
  */
 export const minOps = <
-  T extends { [action: string]: MinimalOperationDef<S> },
+  T extends { [action: string]: AnyMinimalOperationDef<S> },
   S extends object
 >(
   name: string,
@@ -99,10 +101,7 @@ export const minOps = <
 
     abort.byKey = (key?: string) => {
       return (context: OperationContextWithInternalAPI) => {
-        context
-          .getExecuteMap(op as Operation)
-          ?.get(key)
-          ?.abort()
+        context.getExecuteMap(op)?.get(key)?.abort()
       }
     }
 
