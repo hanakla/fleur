@@ -5,22 +5,25 @@ import { minOps } from './MinimalOps'
 describe('MinimalOps', () => {
   type State = {
     text: string
+    records: { name: string }[]
     canvas: CanvasRenderingContext2D | null
   }
 
   const [TestStore, testOps] = minOps('Test', {
     initialState: (): State => ({
       text: 'hi',
+      records: [
+        { name: 'blossom' },
+        { name: 'bubbles' },
+        { name: 'buttercup' },
+      ],
       canvas: null,
     }),
     ops: {
       setText: ({ commit }, text: string) => {
         commit({ text })
       },
-      async checkImmediateUpdate(
-        { getState, commit },
-        spy: (state: any) => void,
-      ) {
+      async checkCommit({ getState, commit }, spy: (state: any) => void) {
         commit({ text: 'AAAA' })
 
         spy(getState()) // expect to { text: 'AAAA' }
@@ -59,10 +62,17 @@ describe('MinimalOps', () => {
   it('commit', async () => {
     const ctx = app.createContext()
     const spy = jest.fn()
-    const p = ctx.executeOperation(testOps.checkImmediateUpdate, spy)
+    const p = ctx.executeOperation(testOps.checkCommit, spy)
     expect(ctx.getStore(TestStore).state.text).toBe('AAAA')
     expect(spy.mock.calls[0][0]).toEqual(
-      expect.objectContaining({ text: 'AAAA' }),
+      expect.objectContaining({
+        text: 'AAAA',
+        records: [
+          { name: 'blossom' },
+          { name: 'bubbles' },
+          { name: 'buttercup' },
+        ],
+      }),
     )
 
     await p

@@ -7,7 +7,7 @@ import {
 import { StoreContext } from './StoreContext'
 import { DefToOperation, OperationArgs } from './Operations'
 import { action, ActionIdentifier, ExtractPayloadType } from './Action'
-import { ObjectPatcher, patchObject, proxyDeepFreeze } from './utils'
+import { ObjectPatcher, patchObject } from './utils'
 
 export type MinOpContext<S> = OperationContext & {
   state: S
@@ -86,11 +86,12 @@ export const minOps = <
       }
 
       const getState = () => {
-        return proxyDeepFreeze(store.state)
+        // TODO: proxyDeepFreeze(store.state)
+        return store.state
       }
 
       await domain.ops[key](
-        { ...context, commit, state: proxyDeepFreeze(store.state), getState },
+        { ...context, commit, state: store.state, getState },
         ...args,
       )
     }
