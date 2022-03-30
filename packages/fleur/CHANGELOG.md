@@ -5,6 +5,9 @@
 ### New features
 
 - [#484](https://github.com/fleur-js/fleur/pull/484) Feature: `minOps` introduced!
+- [#484](https://github.com/fleur-js/fleur/pull/484) Feature: Add `context.finally` method
+
+#### minOps
 
 ```ts
 import { minOps } from '@fluer/fleur'
@@ -51,6 +54,25 @@ export const [SomeStore, someOps] = minOps('SomeDomain', {
       draft.entities = {}
     }),
   ],
+})
+```
+
+#### context.finally
+
+```ts
+minOps('SomeDomain', {
+  initialState: (): State => ({...}),
+  ops: {
+    async fetchData(x, id: string) {
+      const db = await openDB()
+
+      // Look this! `db.close()` called after finish this operation.
+      // It is called even if an exception occurs within the operation.
+      x.finally(() => db.close())
+
+      const data = await db.getItem()
+    },
+  },
 })
 ```
 
