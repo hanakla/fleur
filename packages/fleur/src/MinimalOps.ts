@@ -10,9 +10,17 @@ import { action, ActionIdentifier, ExtractPayloadType } from './Action'
 import { ObjectPatcher, patchObject } from './utils'
 
 export type MinOpContext<S> = OperationContext & {
-  state: S
-  getState: () => S
+  /** Store state */
+  state: DeepReadonly<S>
+  /** Get latest store state */
+  getState: () => DeepReadonly<S>
+  /** Commit state changes into store */
   commit: (patcher: ObjectPatcher<S>) => void
+  /**
+   * Type only! Unwrap DeepReadonly<T> to T, no effects in runtime
+   * @param t Part of freezed state or freezed state
+   */
+  unwrapReadonly<T extends FreezedStateMark>(t: T): UnwrapDeepReadonly<T>
 }
 
 export interface AnyMinimalOperationDef<S> {
@@ -29,6 +37,39 @@ type ListenerRegister<S> = <T extends ActionIdentifier<any>>(
   ident: T,
   producer: (draft: S, payload: ExtractPayloadType<T>) => void,
 ) => void
+
+// prettier-ignore
+// type IsReadonly<T, K extends keyof T> =
+//   ((a: { readonly [P in K]: T[K] }) => void) extends (a: { [P in K]: T[K] }) => void
+//   ? true
+//   : false
+
+declare const FreezeMark: unique symbol
+type FreezedStateMark = typeof FreezeMark
+
+// prettier-ignore
+type DeepReadonly<T>  =
+T extends string | number | boolean | symbol | undefined | null | bigint ? T
+  : T extends (...args: any[]) => unknown ? T
+  : T extends ReadonlyArray<infer V> ? ReadonlyArray<V> & FreezedStateMark
+  : T extends ReadonlyMap<infer K, infer V> ? ReadonlyMap<K, V>  & FreezedStateMark
+  : T extends ReadonlySet<infer V> ? ReadonlySet<V>  & FreezedStateMark
+  : T extends object ? { readonly [K in keyof T]: DeepReadonly<T[K]> } & FreezedStateMark
+  : never
+
+// prettier-ignore
+type UnwrapDeepReadonly<T> =
+  T extends FreezedStateMark & infer R ? UnwrapDeepReadonly<R>
+  : T extends string | number | boolean | symbol | undefined | null | bigint ? T
+  : T extends (...args: any[]) => unknown ? T
+  : T extends ReadonlyArray<infer V> ? Array<V>
+  : T extends ReadonlyMap<infer K, infer V> ? Map<K, V>
+  : T extends ReadonlySet<infer V> ? Set<V>
+  : T extends object ? { -readonly [K in keyof T]: UnwrapDeepReadonly<T[K]> }
+  // : T extends symbol ? (T extends FreezedStateMark ? never : T)
+  : never
+
+const unwrapReadonly: MinOpContext<any>['unwrapReadonly'] = (v) => v as any
 
 /**
  * Create fleur minimal ops
@@ -85,13 +126,19 @@ export const minOps = <
         store.emitChange()
       }
 
-      const getState = () => {
+      const getState = (): DeepReadonly<S> => {
         // TODO: proxyDeepFreeze(store.state)
-        return store.state
+        return store.state as DeepReadonly<S>
       }
 
       await domain.ops[key](
-        { ...context, commit, state: store.state, getState },
+        {
+          ...context,
+          commit,
+          state: store.state as DeepReadonly<S>,
+          getState,
+          unwrapReadonly,
+        },
         ...args,
       )
     }

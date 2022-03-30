@@ -20,7 +20,7 @@ export const [SomeStore, someOps] = minOps('SomeDomain', {
       // Update store state via `x.commit`.
       // No more need to define extra actions.
       // It's shallow merged to state.
-      x.commit({ fetching: true})
+      x.commit({ fetching: true })
 
       const data = await (await fetch(`/api/entities/${id}`)).json()
 
@@ -36,6 +36,13 @@ export const [SomeStore, someOps] = minOps('SomeDomain', {
 
       // Get the latest state with `x.getState()`.
       x.getState()
+
+      // if you want to mutable type on TypeScript
+      // use `x.unwrapReadonly(state)` (It's no any effect in runtime)
+      //
+      // DON'T MUTATE `state` DIRECTLY WITH `x.unwrapReadonly`!
+      // use `x.commit` if you want!!
+      exioticFunc(x.unwrapReadonly(x))
     },
   },
   /** Can be listened to another domain actions */

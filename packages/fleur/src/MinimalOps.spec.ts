@@ -46,6 +46,11 @@ describe('MinimalOps', () => {
         await new Promise((r) => setTimeout(r, 100))
         x.commit({ text: 'WOPP' })
       },
+      unwrapReadonlyType(x) {
+        const state = x.unwrapReadonly(x.state)
+        const canvas = x.unwrapReadonly(x.state.canvas)
+        x.unwrapReadonly({ notAPartOfState: 'yes' })
+      },
     },
   })
 
@@ -119,5 +124,10 @@ describe('MinimalOps', () => {
     await ctx.executeOperation(externalOps.dispatch)
 
     expect(ctx.getStore(Store).state.text).toBe('ok')
+  })
+
+  it('unwrapReadonlyType', async () => {
+    const ctx = app.createContext()
+    await ctx.executeOperation(testOps.unwrapReadonlyType)
   })
 })
