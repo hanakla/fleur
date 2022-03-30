@@ -91,10 +91,10 @@ export class MockContextBase {
     this.mockStores.forEach(({ store }) => {
       Object.keys(store)
         .filter(
-          key =>
+          (key) =>
             (store as any)[key] != null && (store as any)[key].__fleurHandler,
         )
-        .forEach(key => {
+        .forEach((key) => {
           if ((store as any)[key].__action === action) {
             ;(store as any)[key].producer(payload)
           }
@@ -107,10 +107,14 @@ export class MockContextBase {
     ...args: OperationArgs<O>
   ): Promise<void> => {
     const controller = new AbortController()
+    const finals: Array<() => void> = []
 
     const context: OperationContext = {
       ...this,
       abort: null as any,
+      finally: (fn: () => void) => {
+        finals.push(fn)
+      },
       acceptAbort: () => {},
     }
 
@@ -130,12 +134,16 @@ export class MockContextBase {
       },
     })
 
-    await Promise.resolve(operation(context, ...args))
+    try {
+      await Promise.resolve(operation(context, ...args))
+    } finally {
+      finals.forEach((fn) => fn())
+    }
     this.mock.executes.push({ op: operation, args })
   }
 
   public derive(modifier?: DeriveController): this {
-    const cloneStores = this.mockStores.map(entry =>
+    const cloneStores = this.mockStores.map((entry) =>
       mockStore(entry.StoreClass, entry.store.state),
     )
     const clonedMocks = new Map(this.mockObjects)
@@ -143,7 +151,9 @@ export class MockContextBase {
     const mockStores = createDraft(cloneStores)
 
     const deriveStore: StoreDeriver = (StoreClass, modifier) => {
-      const mock = mockStores.find(entry => entry.name === StoreClass.storeName)
+      const mock = mockStores.find(
+        (entry) => entry.name === StoreClass.storeName,
+      )
 
       if (!mock) {
         throw new Error(

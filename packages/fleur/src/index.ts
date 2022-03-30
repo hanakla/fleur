@@ -8,9 +8,10 @@ export { AppContext, StoreGetter } from './AppContext'
 export {
   operations,
   operation,
-  OperationDef as Operation,
+  AnyOperationDef as Operation,
   OperationArgs,
 } from './Operations'
+export { minOps, MinOpContext } from './MinimalOps'
 export { selector } from './selector'
 export { selectorWithStore } from './selectorWithStore'
 export { withReduxDevTools } from './withReduxDevtools'

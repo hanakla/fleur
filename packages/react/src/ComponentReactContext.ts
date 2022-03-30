@@ -48,8 +48,8 @@ const FleurContext = ({
       executeOperation: (o, ...args) => {
         context.executeOperation(o, ...args)
       },
-      getStore: S => context.getStore(S),
-      depend: o => context.depend(o),
+      getStore: (S) => context.getStore(S),
+      depend: (o) => context.depend(o),
     }),
     [context],
   )
