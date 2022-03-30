@@ -5,7 +5,7 @@ import {
 
 export type AnyOperationDef = (
   _: OperationContext,
-  ...args: any
+  ...args: any[]
 ) => Promise<void> | void
 
 /** Marked as `operations` wrappped Operation type */

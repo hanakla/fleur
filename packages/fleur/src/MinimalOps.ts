@@ -45,7 +45,7 @@ type ListenerRegister<S> = <T extends ActionIdentifier<any>>(
 //   : false
 
 declare const FreezeMark: unique symbol
-type FreezedStateMark = typeof FreezeMark
+type FreezedStateMark = { [FreezeMark]: never }
 
 // prettier-ignore
 type DeepReadonly<T>  =
@@ -59,7 +59,7 @@ T extends string | number | boolean | symbol | undefined | null | bigint ? T
 
 // prettier-ignore
 type UnwrapDeepReadonly<T> =
-  T extends FreezedStateMark & infer R ? UnwrapDeepReadonly<R>
+  T extends FreezedStateMark ? UnwrapDeepReadonly<Omit<T, keyof FreezedStateMark>>
   : T extends string | number | boolean | symbol | undefined | null | bigint ? T
   : T extends (...args: any[]) => unknown ? T
   : T extends ReadonlyArray<infer V> ? Array<V>

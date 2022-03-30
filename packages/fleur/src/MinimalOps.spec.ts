@@ -49,6 +49,8 @@ describe('MinimalOps', () => {
       unwrapReadonlyType(x) {
         const state = x.unwrapReadonly(x.state)
         const canvas = x.unwrapReadonly(x.state.canvas)
+
+        // @ts-expect-error
         x.unwrapReadonly({ notAPartOfState: 'yes' })
       },
     },
