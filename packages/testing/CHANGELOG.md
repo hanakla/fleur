@@ -1,5 +1,9 @@
 # @fleur/testing Changelog
 
+### 4.2.0
+
+- [#484](https://github.com/fleur-js/fleur/pull/484) Support `context.finally`
+
 ### 4.1.1
 
 - Fix type error to `@fleur/fleur`
