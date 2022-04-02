@@ -1,5 +1,5 @@
 import { Operation, OperationArgs, StoreClass } from '@fleur/fleur'
-import React, { useCallback, useMemo, useReducer, useRef } from 'react'
+import { useCallback, useMemo, useReducer, useRef } from 'react'
 import { useInternalFleurContext } from './useFleurContext'
 import {
   useIsomorphicLayoutEffect,
