@@ -1,5 +1,9 @@
 # @fleur/react Changelog
 
+### 5.0.3
+
+- [#526](https://github.com/fleur-js/fleur/pull/526) Fix shallow equaled objects judged to not shallow equals
+
 ### 5.0.2
 
 - [#496](https://github.com/fleur-js/fleur/pull/496) Annotate this type for typescript-eslint/unbound-method (Fix #447)
