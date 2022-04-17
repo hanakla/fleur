@@ -43,7 +43,7 @@ const is = (x: any, y: any): boolean => {
 }
 
 /** Shallow equality check */
-const isEqual = (prev: any, next: any) => {
+export const isEqual = (prev: any, next: any) => {
   if (is(prev, next)) return true
   if (typeof prev !== typeof next) return false
 
@@ -53,6 +53,8 @@ const isEqual = (prev: any, next: any) => {
     for (const idx in prev) {
       if (!is(prev[idx], next[idx])) return false
     }
+
+    return true
   }
 
   if (
@@ -65,6 +67,8 @@ const isEqual = (prev: any, next: any) => {
       if (!hasOwnKey.call(next, key)) continue
       if (!is(prev[key], next[key])) return false
     }
+
+    return true
   }
 
   return false

@@ -9,8 +9,22 @@ import Fleur, {
 import * as React from 'react'
 import { renderHook, act } from '@testing-library/react-hooks'
 
-import { useStore } from './useStore'
+import { isEqual, useStore } from './useStore'
 import { FleurContext } from './ComponentReactContext'
+
+describe('isEqual', () => {
+  it('equals', () => {
+    expect(isEqual(1, 1)).toBe(true)
+    expect(isEqual([1, 2, 3], [1, 2, 3])).toBe(true)
+    expect(isEqual({ a: 1, b: 2 }, { a: 1, b: 2 })).toBe(true)
+  })
+
+  it('not equals', () => {
+    expect(isEqual(1, 2)).toBe(false)
+    expect(isEqual([1, 2, 3], [3, 2, 1])).toBe(false)
+    expect(isEqual({ a: 1, b: 2 }, { a: 1, b: null })).toBe(false)
+  })
+})
 
 describe('useStore', () => {
   // Action Identifier
