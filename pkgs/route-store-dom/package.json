@@ -1,0 +1,32 @@
+{
+  "name": "@fleur/route-store-dom",
+  "version": "2.2.0",
+  "description": "Router for fleur",
+  "homepage": "https://github.com/fleur-js/fleur/tree/master/pkgs/fleur-route-store-dom",
+  "main": "lib/index.js",
+  "types": "typings/index.d.ts",
+  "author": "Ragg<ragg.devpr@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "prepublishOnly": "rm -rf typings && tsc --emitDeclarationOnly --declaration --outDir ./typings && tsc --outDir lib"
+  },
+  "peerDependencies": {
+    "@fleur/fleur": ">= 3.0.0",
+    "@fleur/react": ">= 2.0.0"
+  },
+  "dependencies": {
+    "fast-deep-equal": "^3.1.3",
+    "history": "^4.9.0",
+    "invariant": "^2.2.4",
+    "path-to-regexp": "^3.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/react-hooks": "^5.0.3",
+    "@types/history": "4.7.2",
+    "@types/invariant": "2.2.34",
+    "@types/react-test-renderer": "17.0.1",
+    "react-test-renderer": "17.0.1"
+  },
+  "sideEffects": false
+}
