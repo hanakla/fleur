@@ -4,7 +4,7 @@
     "build": "wsrun --exclude-missing --serial -c prepublishOnly"
   },
   "workspaces": [
-    "packages/*"
+    "pkgs/*"
   ],
   "devDependencies": {
     "@types/jest": "26.0.20",
