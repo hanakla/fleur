@@ -29,7 +29,7 @@
     "@types/react-test-renderer": "17.0.1",
     "@types/request-promise": "4.1.47",
     "cheerio": "1.0.0-rc.5",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-test-renderer": "17.0.1",
