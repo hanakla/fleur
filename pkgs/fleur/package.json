@@ -1,0 +1,28 @@
+{
+  "name": "@fleur/fleur",
+  "version": "3.1.0",
+  "homepage": "https://github.com/fleur-js/fleur/tree/master/pkgs/fleur",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "author": "Ragg<ragg.devpr@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --verbose",
+    "clean-dist": "rm -rf ./dist",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build:esm": "bili",
+    "build": "run-p build:*",
+    "prepublishOnly": "yarn clean-dist && yarn build"
+  },
+  "devDependencies": {
+    "@types/invariant": "2.2.34",
+    "rollup-plugin-typescript2": "0.31.1",
+    "tslib": "2.1.0"
+  },
+  "dependencies": {
+    "immer": "^9.0.12",
+    "invariant": "^2.2.4"
+  },
+  "sideEffects": false
+}

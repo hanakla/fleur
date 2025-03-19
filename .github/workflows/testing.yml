@@ -28,27 +28,27 @@ jobs:
         run: yarn install
       - name: Testing @fleur/fleur
         run: |
-          cd packages/fleur
+          cd pkgs/fleur
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/di
         run: |
-          cd packages/di
+          cd pkgs/di
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/react
         run: |
-          cd packages/react
+          cd pkgs/react
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/testing
         run: |
-          cd packages/testing
+          cd pkgs/testing
           yarn prepublishOnly
           yarn test --coverage --verbose
       - name: Testing @fleur/create-next-app
         run: |
-          cd packages/create-next-app
+          cd pkgs/create-next-app
           yarn prepublishOnly
           node ./bin/index test-app
           cd test-app
@@ -56,9 +56,9 @@ jobs:
           yarn run build
       - name: Testing @fleur/next
         run: |
-          cd packages/next
+          cd pkgs/next
           yarn prepublishOnly
       - name: Benchmarking
         run: |
-          cd packages/fleur-benchmarks
+          cd pkgs/fleur-benchmarks
           yarn test
